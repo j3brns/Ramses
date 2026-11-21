@@ -23,6 +23,12 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 - Test-world publications use the ramses_esp envelope: `{"msg": "<frame>", "ts": "<ISO-8601-with-timezone>"}`.
 - Test-world topics must begin `RAMSES/TEST/`.
 
+## Test climate command contract
+
+- A temporary target requires an explicit, timezone-aware expiry later than its command time.
+- The climate seam validates the bounded target, changes only virtual-controller state, and returns a test `tx` envelope; it does not publish, call Home Assistant, or create a permanent override.
+- Expiry returns through the existing schedule/override contract.
+
 ## Virtual TRV contract
 
 - A virtual TRV accepts a setpoint only for its bound zone.

@@ -13,7 +13,7 @@ from datetime import datetime
 
 from ramses_twin.coordinator import ZoneCoordinator
 from ramses_twin.model import SwitchPoint, WeeklySchedule
-from ramses_twin.mqtt import topics
+from ramses_twin.mqtt import topics, tx_envelope
 
 
 TEST_ENTITY_PREFIX = "ramses_test"
@@ -38,6 +38,8 @@ def _entity_fragment(value: str) -> str:
 @dataclass(frozen=True)
 class TestAdapterDescriptor:
     """Test-only names and transport settings for one future HA zone adapter."""
+
+    __test__ = False
 
     gateway_id: str
     zone_id: str
@@ -67,10 +69,29 @@ class TestAdapterDescriptor:
 class TestZoneDiagnostics:
     """Read-only state that a later HA adapter may expose for one test zone."""
 
+    __test__ = False
+
     effective_target: float
     next_change: datetime | None
     optimiser_ready: bool
     planned_start: datetime | None
+
+
+@dataclass(frozen=True)
+class TestClimateCommand:
+    """A test-world temporary target command ready for isolated transport.
+
+    The command is data only. Publishing it remains the responsibility of an
+    adapter outside this pure module.
+    """
+
+    __test__ = False
+
+    entity_id: str
+    target_temperature: float
+    expires_at: datetime
+    topic: str
+    payload: dict[str, str]
 
 
 def read_test_zone_diagnostics(
@@ -94,6 +115,37 @@ def read_test_zone_diagnostics(
         next_change=next_change,
         optimiser_ready=coordinator.thermal_model.ready,
         planned_start=planned.start_at if planned is not None else None,
+    )
+
+
+def apply_test_temporary_override(
+    descriptor: TestAdapterDescriptor,
+    coordinator: ZoneCoordinator,
+    target_temperature: object,
+    expires_at: datetime,
+    now: datetime,
+) -> TestClimateCommand:
+    """Apply a virtual temporary target and return its test-only TX command.
+
+    This is the narrow write seam for a future climate entity. It changes the
+    virtual controller only; it opens no broker connection and cannot select a
+    live topic. The normal controller expiry path returns the zone to schedule.
+    """
+    if now.tzinfo is None or now.utcoffset() is None:
+        raise ValueError("command time must be timezone-aware")
+    if expires_at.tzinfo is None or expires_at.utcoffset() is None:
+        raise ValueError("override expiry must be timezone-aware")
+    if expires_at <= now:
+        raise ValueError("override expiry must be later than command time")
+    target = _temperature(target_temperature, "target_temperature")
+    coordinator.controller.boost(target, expires_at)
+    frame = coordinator.controller.setpoint_frame(now)
+    return TestClimateCommand(
+        entity_id=descriptor.climate_entity_id,
+        target_temperature=target,
+        expires_at=expires_at,
+        topic=descriptor.mqtt_topics["tx"],
+        payload=tx_envelope(frame, now),
     )
 
 
@@ -202,8 +254,10 @@ __all__ = [
     "HaScheduleSnapshot",
     "TEST_ENTITY_PREFIX",
     "TestAdapterDescriptor",
+    "TestClimateCommand",
     "TestZoneDiagnostics",
     "schedule_snapshot_from_ha",
+    "apply_test_temporary_override",
     "read_test_zone_diagnostics",
     "weekly_schedule_from_ha_blocks",
 ]
