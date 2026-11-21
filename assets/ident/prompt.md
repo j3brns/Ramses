@@ -1,11 +1,17 @@
 ---
-asset: sundial-wireframe.png
-selected_version: v2
+asset: explorations/voxel-house-white-v4.png
+selected_version: v4
 method: built-in image generation, then local computer-use review
 reviewed: 2026-11-21
 ---
 
 # Sundial wireframe ident prompt history
+
+## Production README asset: white voxel house v4
+
+**Prompt v4:** Refine the white voxel cutaway house into the production README banner for the Ramses heating-programmer project. Keep the isometric house cross-section, roof sundial, travelling sun, programme/thermostat nodes, burner, water vessel, valves, radiator and return loop. Use crisp, denser modular blockwork and a clear causal story from passing time to heat. The background must be exact pure white (`#FFFFFF`): no cream, parchment, beige, sepia, paper grain, aged effect, vignette, texture or shadowing. Use only bright, clear, high-contrast cyan/blue for time and water, yellow/orange for sun and burner, red for heat, green for controls and dark-slate outlines. Keep it original and game-adjacent rather than copying Minecraft or another game. No words, logos, UI screenshots, characters or watermarks.
+
+**Review:** selected after visual generation and banner-context review. The pure-white background is suitable for the README; strong colours preserve its technical reading without an aged-document appearance. Stored as `explorations/voxel-house-white-v4.png` and promoted to the top-level README.
 
 ## Intent
 

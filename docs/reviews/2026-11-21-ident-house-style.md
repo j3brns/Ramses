@@ -1,5 +1,7 @@
 # Adversarial review: ident house-style exploration
 
+> Superseded for the README position by `2026-11-21-white-voxel-readme-ident.md`; retained as the record of the initial exploration.
+
 ## Scope
 
 Three refined visual directions prompted by the public Symphonic README/banner and documentation images: practical engineering vessel, dark action overlay and voxel matrix model.
