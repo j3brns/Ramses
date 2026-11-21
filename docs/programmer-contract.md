@@ -4,6 +4,8 @@ status: baseline
 reference_model: ATC928G3000 Evohome controller
 reference_user_guide: 32303496-001 C (2020)
 verification: manual-derived; implementation pending
+source_url: https://automatikcentret.dk/files/data/doc/products/ATC928G3000/evohome-userguide_EN.pdf
+source_checked: 2026-11-21
 ---
 
 # Programmer Contract
@@ -22,9 +24,35 @@ This contract defines the user-visible behaviour Home Assistant will provide for
 | Optimisation | Optimum start/stop is optional and visibly indicated. It advances or reduces use of scheduled targets; it does not change the saved schedule. | pp. 6–7 |
 | Explainability | The user can see active target, origin/mode, expiry or next event, and alerts. | pp. 2, 11, 16 |
 
-## State precedence
+## Evidence and implementation status
 
-From highest to lowest priority: `Heating Off`/frost-protect, active timed whole-system action, active permanent whole-system action, active zone override, scheduled target. A cancelled or expired state is removed and the next lower state takes effect immediately. This precedence is an HA implementation decision inferred from the guide's modes, not a claimed Evohome state machine; its detailed behaviour is tested before it is exposed as control.
+`manual-derived` means the guide describes a user-visible capability. It does
+not establish an HA data model, RF message, timing tolerance, persistence
+behaviour, or a CM67z implementation detail. `HA decision` means this project
+must specify and test the detail before it is offered. `Not implemented` is not
+a promise that a dashboard control exists.
+
+| Capability | Guide evidence | Project status |
+| --- | --- | --- |
+| Zones | pp. 4-5 | Core schedule model; UI pending |
+| Weekly programme | pp. 9-10 | Core model and pure HA mapping; UI pending |
+| Temporary override | p. 11 | Virtual test seam only |
+| Permanent override | p. 11 | Not implemented |
+| Eco/Boost | p. 12 | Not implemented |
+| Away | p. 13 | Not implemented |
+| Day Off | p. 14 | Not implemented |
+| Heating Off / Custom | pp. 12, 15-16 | Not implemented |
+| Optimisation | pp. 6-7 | Test-world proposal only |
+| Explainability | pp. 2, 11, 16 | UI contract defined; UI pending |
+
+## HA decisions still requiring implementation
+
+Proposed precedence is `Heating Off`/frost-protect > active timed whole-system
+action > active permanent whole-system action > active zone override > scheduled
+target. A cancelled or expired state would reveal the next lower state
+immediately. This is an HA decision inferred from the guide's modes, not a
+claimed Evohome state machine. It must not become a control feature without a
+dedicated state model and deterministic tests.
 
 ## Virtual TRV local override
 
@@ -41,6 +69,16 @@ A virtual TRV local override is separate from the programmer's zone override. In
 7. Given Heating Off, the UI identifies frost-protect/off rather than asserting zero heat, and tests its configured resulting target separately.
 8. Given an override ending on a schedule edge, or expiry across DST, one documented state transition occurs with no duplicate setpoint publication.
 9. Given a schedule edit while an override is active, the UI preserves and explains the active override; cancellation applies the newly current schedule target.
+
+## Verification map
+
+| Contract slice | Present evidence | Required before control-capable release |
+| --- | --- | --- |
+| Weekly schedule and temporary expiry | `tests/test_timer.py`; `tests/test_model.py`; `tests/test_ha_climate.py` | Test View and computer-use acceptance |
+| HA schedule mapping | `tests/test_ha_schedule.py` | Rendered test-only cards and UI-01â€“UI-07 |
+| Permanent override and Quick Actions | Manual-derived only | State model, deterministic tests, UI acceptance and adversarial review |
+| Optimisation | Manual-derived indication; test-world model contract | Bounded observation/replay evidence, accuracy criteria and UI acceptance |
+| Restart/reconnect | Project rule, not guide evidence | Ordered evidence plus replay contract |
 
 ## Deliberate exclusions
 
