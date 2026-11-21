@@ -27,6 +27,13 @@ Boiler enable: BDR91 642
 
 The simulator uses test MQTT topics only. It does not transmit RF.
 
+## User-facing documentation
+
+- [Programmer Contract](docs/programmer-contract.md) — the manual-derived behaviour Home Assistant will implement.
+- [Test-system user guide](docs/user-guide.md) — the canonical, versioned guide for the future Ramses Test dashboard.
+- [Repertoire](docs/repertoire/index.md) — concise, source-traceable concepts shared by agents, documentation and the eventual Help subview.
+- [Skills inventory](docs/skills-inventory.md) — capability contracts required to maintain the project.
+
 ## Repository layout
 
 - `docs/` — protocol notes, scenarios and acceptance criteria.

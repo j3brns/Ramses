@@ -1,11 +1,14 @@
 # Test contracts
 
+The source of user-visible scheduler semantics is the [Programmer Contract](programmer-contract.md). These are executable implementation contracts; where evidence is incomplete, they must be labelled rather than silently treated as product behaviour.
+
 ## Zone state contract
 
 - A scheduled target is the active target unless an unexpired temporary override exists.
 - A temporary override applies only to its own zone.
 - At expiry, the zone immediately returns to its scheduled target.
 - A weekly schedule uses timezone-aware local wall-clock switch points; a boost-until-next-switch expires at the first later switch point.
+- Permanent override and whole-house quick actions are Programmer Contract capabilities, but are not implemented until their explicit state and restart tests exist.
 
 ## Packet contract
 

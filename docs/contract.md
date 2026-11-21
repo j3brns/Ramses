@@ -1,4 +1,4 @@
-# Test RF contract
+# Test RF transport contract
 
 The test world mirrors the gateway boundary, not the dashboard boundary.
 
@@ -15,3 +15,5 @@ Initial observed frame types:
 - `30C9` temperature report
 - `1060` battery status
 - `3EF0` BDR relay state
+
+The transport contract is deliberately separate from the [Programmer Contract](programmer-contract.md): the latter defines what a user-visible heating programmer must do; this document defines the test MQTT boundary that carries those decisions.
