@@ -18,7 +18,7 @@ Virtual CM67z controllers <-> Virtual TRVs <-> Virtual BDR91
 |---|---|
 | Schedule adapter | Supplies a timezone-aware weekly timetable, active setpoint, and next switchpoint. |
 | Zone coordinator | Owns schedule, override, target and recovery state for one zone. |
-| Predictor | Estimates conservative early-start timing from completed heat-up events. |
+| Predictor | Learns each zone's heating gain and passive loss from bounded observations, then estimates conservative early-start timing. |
 | Packet encoder | Produces protocol-valid test frames. |
 | Test transport | Publishes/consumes only `RAMSES/TEST/...` MQTT messages. |
 | Fixture runner | Replays sanitised traces and checks expected outcomes. |

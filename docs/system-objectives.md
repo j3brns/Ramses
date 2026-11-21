@@ -10,6 +10,7 @@ Develop a software-only digital twin of the observed CM67z/HR80 RAMSES-II system
 - Model schedules, temporary boosts, expiry at the next schedule change, and restart recovery.
 - Give Home Assistant test entities that behave consistently with the simulated RF world.
 - Compare each simulated scenario against bounded, ordered observed `/rx` traces.
+- Learn an explainable, per-zone optimum-start policy from completed heat-up and cooling intervals; fall back to ordinary schedule timing until it is trained.
 
 ## Non-objectives
 
