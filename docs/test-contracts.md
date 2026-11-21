@@ -5,6 +5,7 @@
 - A scheduled target is the active target unless an unexpired temporary override exists.
 - A temporary override applies only to its own zone.
 - At expiry, the zone immediately returns to its scheduled target.
+- A weekly schedule uses timezone-aware local wall-clock switch points; a boost-until-next-switch expires at the first later switch point.
 
 ## Packet contract
 

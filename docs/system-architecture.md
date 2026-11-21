@@ -16,7 +16,7 @@ Virtual CM67z controllers <-> Virtual TRVs <-> Virtual BDR91
 
 | Component | Responsibility |
 |---|---|
-| Schedule adapter | Reads the active setpoint and next switchpoint from HA schedules. |
+| Schedule adapter | Supplies a timezone-aware weekly timetable, active setpoint, and next switchpoint. |
 | Zone coordinator | Owns schedule, override, target and recovery state for one zone. |
 | Predictor | Estimates conservative early-start timing from completed heat-up events. |
 | Packet encoder | Produces protocol-valid test frames. |
