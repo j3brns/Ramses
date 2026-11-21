@@ -16,6 +16,7 @@
 - Documentation is a release artifact: update the relevant architecture, objective, contract, rule, target-system, or ADR document in the same change.
 - Refresh observed data through the collector; raw RAMSES-II packet fixtures may be committed only through its bounded packet-corpus output.
 - Keep derived observation data bounded. The collector replaces its fixtures and caps representative samples; do not introduce append-only logs or captures.
+- Treat cache snapshots as topology/state evidence only. Any claimed timed behaviour requires a bounded ordered `/rx` scenario under `data/scenarios/` and a replay test.
 - Keep the simulator software-only until an explicit, separately approved RF test plan exists.
 
 ## Test and commit gates

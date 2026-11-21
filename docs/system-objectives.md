@@ -9,7 +9,7 @@ Develop a software-only digital twin of the observed CM67z/HR80 RAMSES-II system
 - Reproduce the observed controller-to-valve packet contract in `RAMSES/TEST`.
 - Model schedules, temporary boosts, expiry at the next schedule change, and restart recovery.
 - Give Home Assistant test entities that behave consistently with the simulated RF world.
-- Compare each simulated scenario against sanitised observed traces.
+- Compare each simulated scenario against bounded, ordered observed `/rx` traces.
 
 ## Non-objectives
 
