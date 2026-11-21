@@ -7,6 +7,8 @@
 3. Inspect `git diff` and `git status`.
 4. Commit with its test/fixture/documentation update.
 
+For observed data, refresh the sanitised fixture locally, review the derived topology and target-system map, then run the same gate. Hosted CI validates committed evidence; it never connects to the private Home Assistant or MQTT network.
+
 ## Review and push
 
 1. Push a branch to GitHub.

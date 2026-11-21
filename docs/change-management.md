@@ -8,6 +8,7 @@
 | Observed topology | Sanitised trace/manifest and target-system update. |
 | MQTT contract | Contract test and architecture review. |
 | Schedule/boost semantics | Scenario fixture and ADR if behaviour changes. |
+| Observed live data refresh | Sanitised derived fixture, target-system review, and contract test. |
 | RF transmission or binding | New ADR plus explicit approval; out of current scope. |
 
 ## Review checklist

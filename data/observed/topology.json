@@ -1,0 +1,38 @@
+{
+  "format": 1,
+  "description": "Sanitised zone membership derived from ramses_cc packet cache",
+  "zones": [
+    {
+      "controller": "487",
+      "zone": "01",
+      "trvs": [
+        "027",
+        "030",
+        "049"
+      ]
+    },
+    {
+      "controller": "487",
+      "zone": "02",
+      "trvs": [
+        "048",
+        "389"
+      ]
+    },
+    {
+      "controller": "751",
+      "zone": "01",
+      "trvs": [
+        "387",
+        "472"
+      ]
+    },
+    {
+      "controller": "751",
+      "zone": "02",
+      "trvs": [
+        "040"
+      ]
+    }
+  ]
+}

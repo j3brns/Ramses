@@ -5,11 +5,15 @@ stages:
 
 verify:
   stage: verify
+  before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends git
   script:
     - python -m pip install --upgrade pip
     - python -m pip install '.[dev]'
     - python scripts/secret_scan.py
     - python -m compileall -q src
-    - python -m pytest
+    - python -m pytest -m "not integration"
+    - python -m pytest -m integration
   rules:
     - if: $CI_PIPELINE_SOURCE

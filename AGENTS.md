@@ -13,6 +13,8 @@
 - Keep the target-system map in `target-system/` current and cite packet evidence for topology changes.
 - Add or update an ADR for decisions affecting architecture, controller identity, RF transport, or cutover.
 - Add a deterministic test for every schedule, override, encoding, or state-transition change.
+- Documentation is a release artifact: update the relevant architecture, objective, contract, rule, target-system, or ADR document in the same change.
+- Refresh observed data through the sanitising collector; never commit raw production captures.
 - Keep the simulator software-only until an explicit, separately approved RF test plan exists.
 
 ## Test and commit gates
