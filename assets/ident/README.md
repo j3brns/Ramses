@@ -9,7 +9,18 @@
 - `sundial-wireframe-v2.png` — selected composition: the clearest small-banner reading and strongest programmer cue.
 - `sundial-wireframe-v3.png` — final geometry experiment; retained as an alternative, but its simplified tick ring communicates scheduling less clearly.
 - `prompt.md` — reproducible prompt history and review criteria.
+- `explorations/` — three refined house-style directions retained for later docs, panels and dashboard concepts.
 
 ## Iteration policy
 
 Treat the prompt and the visual criteria as source. Keep all non-trivial candidate versions, add a numbered prompt revision, review at README-banner scale, and record why an iteration was selected or rejected. For a truly scalable replacement, add a hand-authored SVG with the same composition rather than claiming this PNG is literal vector artwork.
+
+## Expanded house-style exploration
+
+The current README ident remains the selected minimal dark overlay. Three additional directions were generated and reviewed after studying the public `j3brns/symphonic` documentation imagery:
+
+- `explorations/symphonic-vessel-v2.png` — recommended future documentation/banner style: practical water-heating machinery, sundial timing and pale engineering-paper HUD framing.
+- `explorations/overlay-v2.png` — recommended future dashboard/panel style: flat dark instrumentation overlay with the causal loop from sun/schedule to vessel, valve and radiator.
+- `explorations/voxel-matrix-v2.png` — retained as an explanatory learning or digital-twin illustration; it is intentionally more playful and less appropriate as the core brand ident.
+
+The Symphonic influence is limited to broad principles—pale paper, forest-green technical framing, small status diagrams and readable instrumentation—not its names, robots, text or compositions.

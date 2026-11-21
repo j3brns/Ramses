@@ -36,3 +36,23 @@ Create an original README ident for Ramses: a quiet, vector-like heating-program
 3. High contrast on a dark background; no text required to understand the idea.
 4. Avoid product UI imitation, literal tank imagery, weapons and photorealism.
 5. Preserve prompt, version, visual review result and selection rationale in this directory.
+
+## Expanded repertoire: v2 prompts and outcomes
+
+### Symphonic-derived practical vessel
+
+**Prompt principle:** warm drafting-paper background; forest-green technical frame; a brass/iron water vessel with visible water and burner; a radiator loop, valve, sundial and sun arc; abstract charts only; no words or copied assets.
+
+**Outcome:** the best documentation house-style candidate. It turns the heating system into understandable physical engineering while preserving the sundial's time metaphor. Stored as `explorations/symphonic-vessel-v2.png`.
+
+### Dark action overlay
+
+**Prompt principle:** flat near-black HUD, no perspective/parallax; central wireframe sundial over a heated vessel; sun/shadow feeding a schedule step trace; burner, valve and radiator forming one closed loop; sparse abstract measurements.
+
+**Outcome:** the best future dashboard/panel candidate. It extends the existing README ident without becoming a literal product interface. Stored as `explorations/overlay-v2.png`.
+
+### Voxel matrix model
+
+**Prompt principle:** original modular voxel engineering rig, not a copied game world: water heater, burner, radiator, valves, thermostat nodes, block sundial and schedule-status matrices on charcoal.
+
+**Outcome:** strongest digital-twin explainer, but too game-like for the primary identity. Stored as `explorations/voxel-matrix-v2.png`.
