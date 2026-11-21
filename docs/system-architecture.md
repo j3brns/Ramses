@@ -23,7 +23,7 @@ Virtual CM67z controllers <-> Virtual TRVs <-> Virtual BDR91
 | Predictor | Learns each zone's heating gain and passive loss from bounded observations, then estimates conservative early-start timing. |
 | Packet encoder | Produces protocol-valid test frames. |
 | Test transport | Publishes/consumes only `RAMSES/TEST/...` MQTT messages. |
-| HA adapter descriptor | Pure-Python test-zone names and validated test topics; it imports no Home Assistant runtime. |
+| HA adapter descriptor | Pure-Python test-zone names, validated test topics, and read-only effective-target/next-change/optimiser/planned-start diagnostics; it imports no Home Assistant runtime. |
 | Fixture runner | Replays sanitised traces and checks expected outcomes. |
 | Runtime/state store | Learns per-zone coefficients and atomically persists only those coefficients across restart. |
 

@@ -11,6 +11,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime
 
+from ramses_twin.coordinator import ZoneCoordinator
 from ramses_twin.model import SwitchPoint, WeeklySchedule
 from ramses_twin.mqtt import topics
 
@@ -49,6 +50,51 @@ class TestAdapterDescriptor:
     def mqtt_topics(self) -> dict[str, str]:
         """Return only the already-validated test-world topics."""
         return topics(self.gateway_id)
+
+    @property
+    def diagnostic_entity_ids(self) -> dict[str, str]:
+        """Return read-only, test-only identifiers for one zone's state."""
+        fragment = _entity_fragment(self.zone_id)
+        return {
+            "effective_target": f"sensor.{TEST_ENTITY_PREFIX}_{fragment}_effective_target",
+            "next_change": f"sensor.{TEST_ENTITY_PREFIX}_{fragment}_next_change",
+            "optimiser_ready": f"binary_sensor.{TEST_ENTITY_PREFIX}_{fragment}_optimiser_ready",
+            "planned_start": f"sensor.{TEST_ENTITY_PREFIX}_{fragment}_planned_start",
+        }
+
+
+@dataclass(frozen=True)
+class TestZoneDiagnostics:
+    """Read-only state that a later HA adapter may expose for one test zone."""
+
+    effective_target: float
+    next_change: datetime | None
+    optimiser_ready: bool
+    planned_start: datetime | None
+
+
+def read_test_zone_diagnostics(
+    coordinator: ZoneCoordinator,
+    now: datetime,
+    room_temp: float,
+    outdoor_temp: float,
+) -> TestZoneDiagnostics:
+    """Project zone state into diagnostics without changing model state.
+
+    The optimiser may propose a future start only when it is trained. This
+    function never applies that proposal, sends a frame, or accesses HA/MQTT.
+    """
+    if now.tzinfo is None or now.utcoffset() is None:
+        raise ValueError("diagnostic time must be timezone-aware")
+    controller = coordinator.controller
+    next_change = controller.schedule.next_change_after(now) if controller.schedule else None
+    planned = coordinator.plan(now, room_temp, outdoor_temp)
+    return TestZoneDiagnostics(
+        effective_target=controller.target_at(now),
+        next_change=next_change,
+        optimiser_ready=coordinator.thermal_model.ready,
+        planned_start=planned.start_at if planned is not None else None,
+    )
 
 
 def _temperature(value: object, label: str) -> float:
@@ -156,6 +202,8 @@ __all__ = [
     "HaScheduleSnapshot",
     "TEST_ENTITY_PREFIX",
     "TestAdapterDescriptor",
+    "TestZoneDiagnostics",
     "schedule_snapshot_from_ha",
+    "read_test_zone_diagnostics",
     "weekly_schedule_from_ha_blocks",
 ]
