@@ -9,7 +9,6 @@ authority_order:
   - task queue
 precedence: "ADR > contract > repertoire > generated UI; tests/evidence constrain implementation; task queue tracks work"
 load:
-  always: [docs/system-objectives.md, docs/repository-contract.md]
   route:
     behaviour: [docs/programmer-contract.md, docs/repertoire/programmer-behaviour.md, docs/test-contracts.md]
     model: [docs/system-architecture.md, docs/test-contracts.md, docs/task-breakdown.md]
