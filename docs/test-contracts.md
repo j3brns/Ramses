@@ -19,10 +19,10 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 ## Virtual TRV contract
 
 - A virtual TRV accepts a setpoint only for its bound zone.
-- Local override becomes the effective target until explicitly cleared by the test-world controller.
+- Local override becomes the effective target until the next accepted bound-zone controller setpoint; that setpoint explicitly returns the virtual TRV to coordinated control.
 - An open window forces virtual heat demand to zero.
 - Demand follows the declared clamped proportional response; it is not claimed to be Honeywell's internal algorithm.
-- The local-override expiry rule is unresolved. No calibration or RF-decision milestone may rely on a TRV override until it is reconciled with the scheduler contract.
+- This local-override rule is a simulator decision, not a claimed physical-TRV behaviour. Calibration and RF decisions still require ordered observed scenarios before asserting physical fidelity.
 
 ## Restart contract
 

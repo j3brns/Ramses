@@ -30,3 +30,17 @@ def test_foreign_zone_is_ignored_and_naive_reports_are_rejected() -> None:
     assert valve.target == 20.0
     with pytest.raises(ValueError, match="timezone-aware"):
         valve.report(datetime(2026, 11, 21))
+
+
+def test_next_bound_controller_setpoint_ends_local_override() -> None:
+    valve = VirtualTrv("04:900027", "12:900487", 1, temperature=18.0, target=20.0)
+    valve.set_local_override(23.0)
+
+    assert not valve.receive_setpoint(2, 16.0)
+    assert valve.effective_target == 23.0
+
+    assert valve.receive_setpoint(1, 19.0)
+    assert valve.local_override is None
+    assert valve.effective_target == 19.0
+    report = valve.report(datetime(2026, 11, 21, 18, 0, tzinfo=timezone.utc))
+    assert report.target == 19.0

@@ -26,6 +26,10 @@ This contract defines the user-visible behaviour Home Assistant will provide for
 
 From highest to lowest priority: `Heating Off`/frost-protect, active timed whole-system action, active permanent whole-system action, active zone override, scheduled target. A cancelled or expired state is removed and the next lower state takes effect immediately. This precedence is an HA implementation decision inferred from the guide's modes, not a claimed Evohome state machine; its detailed behaviour is tested before it is exposed as control.
 
+## Virtual TRV local override
+
+A virtual TRV local override is separate from the programmer's zone override. In the test model, it stays active until the virtual TRV accepts its next bound-zone controller setpoint; that accepted setpoint clears the local override and becomes the effective target. A foreign-zone frame does neither. This is an explicit simulator coordination rule, chosen so the controller can restore one authoritative zone target at a known event. The public guide and current passive packet corpus do not establish the physical TRV's internal expiry behaviour.
+
 ## Acceptance examples
 
 1. Given a Kitchen schedule changes from 18 °C to 21 °C at 06:30, at 06:30 the active target is 21 °C and the UI shows the next change.

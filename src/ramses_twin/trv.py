@@ -62,11 +62,18 @@ class VirtualTrv:
         return max(0.0, min(1.0, (self.effective_target - self.temperature) / self.proportional_band))
 
     def receive_setpoint(self, zone_index: int, target: float) -> bool:
-        """Apply a bound-zone target; unrelated zone packets are ignored."""
+        """Apply a bound-zone target and end any local override.
+
+        This is a declared test-world ownership rule: the next accepted command
+        from the bound zone is the explicit controller action that returns the
+        virtual valve to coordinated control. It is not a claim about physical
+        Honeywell valve firmware.
+        """
         _validate_temperature(target)
         if zone_index != self.zone_index:
             return False
         self.target = target
+        self.local_override = None
         return True
 
     def set_temperature(self, temperature: float) -> None:
