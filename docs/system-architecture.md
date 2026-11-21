@@ -16,7 +16,7 @@ Virtual CM67z controllers <-> Virtual TRVs <-> Virtual BDR91
 
 | Component | Responsibility |
 |---|---|
-| Schedule adapter | Supplies a timezone-aware weekly timetable, active setpoint, and next switchpoint. |
+| Schedule adapter | Maps HA Schedule helper blocks plus `target_temperature` additional data to a timezone-aware weekly timetable. It maps active entity data and `next_event` to the current target/next switchpoint; off periods use an explicit frost/off target. |
 | Zone coordinator | Owns schedule, override, target and recovery state for one zone. |
 | Virtual TRV | Applies only its bound-zone target, tracks local override/window state, and emits a declared heat-demand response. |
 | Virtual BDR | Uses the highest current virtual-TRV demand as an explicit test-only demand value and turns a virtual relay on above a declared threshold. |

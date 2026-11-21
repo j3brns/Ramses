@@ -12,7 +12,7 @@ This file is the versioned delivery roadmap. The project-local `tk` queue manage
 | 3. Thermal model | per-zone gain/loss learner | trained/untrained and capped-prediction tests pass; aligned telemetry is available | complete core; evidence pending |
 | 4. Virtual devices | TRV and BDR response model | TRV core plus resolved local-override semantics and BDR demand response | complete test-world model; physical calibration pending |
 | 5. Test transport | isolated MQTT runner | consume test TX, publish simulated RX, and reject non-`RAMSES/TEST` roots at runtime | complete |
-| 6. HA adapter | packaging, schedule mapping, diagnostics, climate and cards | pure library import is proven; all entities and commands are test-only | import proof complete; remainder staged |
+| 6. HA adapter | packaging, schedule mapping, diagnostics, climate and cards | pure library import is proven; all entities and commands are test-only | import proof and schedule mapping complete; diagnostics/climate/cards staged |
 | 7. Calibration | decoder and replay harness | required scenario coverage and explicit replay tolerances pass | pending |
 | 8. RF decision | separate ADR | all test-world slices and calibration complete; explicit go/no-go | blocked |
 

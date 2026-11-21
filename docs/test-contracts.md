@@ -10,6 +10,13 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 - A weekly schedule uses timezone-aware local wall-clock switch points; a boost-until-next-switch expires at the first later switch point.
 - Permanent override and whole-house quick actions are Programmer Contract capabilities, but are not implemented until their explicit state and restart tests exist.
 
+## Home Assistant Schedule helper contract
+
+- The adapter consumes HA Get schedule blocks as the weekly source and requires `data.target_temperature` for every active block.
+- The current helper state plus active additional data provides the active target; `next_event` provides the next switchpoint and must be timezone-aware.
+- A helper that is `off` has no active target. The weekly adapter requires an explicit frost/off target for gaps, so it never silently invents a temperature.
+- The adapter rejects malformed, non-minute-aligned, cross-midnight, timezone-naive or out-of-range input rather than issuing an ambiguous target.
+
 ## Packet contract
 
 - Setpoint frames use `2309` with a one-byte zone index and centi-degree temperature.
