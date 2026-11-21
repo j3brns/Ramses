@@ -13,6 +13,7 @@ from typing import Any
 
 
 OBSERVED_CODES = {"1F09", "2309", "3150", "30C9", "1060", "3EF0"}
+MAX_SAMPLES_PER_CODE = 16
 PAYLOAD_FIELDS = {
     "1F09": ("remaining_seconds", "seqx_num", "zone_index"),
     "2309": ("setpoint", "seqx_num", "zone_index"),
@@ -69,11 +70,22 @@ def build_samples(payload: dict[str, Any]) -> dict[str, Any]:
             sample["destination"] = destination
         samples.append(sample)
     samples.sort(key=lambda item: (item["code"], item["source"] or "", item.get("destination", ""), str(item["values"])))
+    retained: list[dict[str, Any]] = []
+    retained_by_code: dict[str, int] = defaultdict(int)
+    discarded = 0
+    for sample in samples:
+        code = sample["code"]
+        if retained_by_code[code] >= MAX_SAMPLES_PER_CODE:
+            discarded += 1
+            continue
+        retained_by_code[code] += 1
+        retained.append(sample)
     return {
         "format": 1,
         "description": "Sanitised RAMSES-II examples derived from ramses_cc packet cache",
         "snapshot": True,
-        "samples": samples,
+        "retention": {"per_code_limit": MAX_SAMPLES_PER_CODE, "discarded": discarded},
+        "samples": retained,
     }
 
 

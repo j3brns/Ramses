@@ -2,6 +2,10 @@
   "format": 1,
   "description": "Sanitised RAMSES-II examples derived from ramses_cc packet cache",
   "snapshot": true,
+  "retention": {
+    "per_code_limit": 16,
+    "discarded": 0
+  },
   "samples": [
     {
       "code": "1060",
@@ -141,7 +145,7 @@
       "source": "487",
       "values": {
         "remaining_seconds": 260.0,
-        "seqx_num": "209",
+        "seqx_num": "215",
         "zone_index": "00"
       },
       "destination": "487"
@@ -151,7 +155,7 @@
       "source": "751",
       "values": {
         "remaining_seconds": 264.0,
-        "seqx_num": "071",
+        "seqx_num": "076",
         "zone_index": "00"
       },
       "destination": "751"
@@ -242,7 +246,7 @@
       "source": "487",
       "values": {
         "setpoint": 10.0,
-        "seqx_num": "211",
+        "seqx_num": "217",
         "zone_index": "01"
       },
       "destination": "487"
@@ -252,7 +256,7 @@
       "source": "751",
       "values": {
         "setpoint": 12.0,
-        "seqx_num": "073",
+        "seqx_num": "078",
         "zone_index": "01"
       },
       "destination": "751"
@@ -261,7 +265,7 @@
       "code": "30C9",
       "source": "027",
       "values": {
-        "temperature": 22.85,
+        "temperature": 22.78,
         "zone_index": "00"
       },
       "destination": "027"
@@ -279,7 +283,7 @@
       "code": "30C9",
       "source": "040",
       "values": {
-        "temperature": 16.46,
+        "temperature": 16.4,
         "zone_index": "00"
       },
       "destination": "040"
@@ -315,7 +319,7 @@
       "code": "30C9",
       "source": "387",
       "values": {
-        "temperature": 18.98,
+        "temperature": 18.91,
         "zone_index": "00"
       },
       "destination": "387"
@@ -342,8 +346,8 @@
       "code": "30C9",
       "source": "487",
       "values": {
-        "temperature": 17.44,
-        "seqx_num": "212",
+        "temperature": 17.41,
+        "seqx_num": "218",
         "zone_index": "01"
       },
       "destination": "487"
@@ -352,8 +356,8 @@
       "code": "30C9",
       "source": "751",
       "values": {
-        "temperature": 18.46,
-        "seqx_num": "074",
+        "temperature": 18.38,
+        "seqx_num": "079",
         "zone_index": "01"
       },
       "destination": "751"

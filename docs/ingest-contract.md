@@ -28,6 +28,8 @@ The refresh creates two tracked derived fixtures:
 
 Both use format `1`, retain only the final three device-ID digits, omit raw frames and cache keys, and contain no credentials, IP addresses, topics, or timestamps. Decoded values may be numbers, booleans, strings, or `null` when a device reports an unknown value (for example, battery percentage).
 
+`samples.json` is bounded to 16 examples per packet code (96 maximum across the six supported codes). Excess cache examples are deterministically discarded and counted in its `retention` object. Each refresh replaces the previous derived fixtures; no raw log or historical capture is retained by this repository.
+
 ## Acceptance rules
 
 1. The extractor consumes stdin or an explicit local export; it never writes raw input.
@@ -35,3 +37,4 @@ Both use format `1`, retain only the final three device-ID digits, omit raw fram
 3. A topology refresh updates the target-system assessment when membership changes.
 4. CI checks the fixture schema and virtual-controller representation.
 5. The secret scan and `scripts/check.ps1` pass before commit.
+6. Purging live Home Assistant, MQTT, or board logs is a separate operational change: identify the exact files and retention policy before deletion.
