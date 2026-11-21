@@ -22,11 +22,12 @@ Capture a short window only. The default cap is 500 events; the recorder writes 
 
 ## Invocation
 
-Pipe a local MQTT subscriber that emits one JSON object per line into the recorder. The recorder deliberately does not contain broker credentials or open its own connection:
+Pipe a locally authenticated MQTT subscriber through the bounded feeder, then into the recorder. Neither repository script contains broker credentials or opens a connection. The feeder rejects every non-RX topic and prints its retained/discarded count to stderr:
 
 ```powershell
 <local MQTT subscriber producing NDJSON> |
+  py scripts/feed_live_rx.py --max-events 500 |
   py scripts/record_scenario.py kitchen-schedule-change
 ```
 
-Review the raw packets, commit the scenario, and add a replay test before claiming that behaviour is modelled.
+The feeder accepts only JSON lines shaped as `{"topic":"RAMSES/GATEWAY/<gateway-id>/rx","payload":{"msg":"...","ts":"..."}}`. It can also replace one explicit local NDJSON file with `--output <path>`; it never appends a log. Review the raw packets, commit the scenario, and add a replay test before claiming that behaviour is modelled.
