@@ -11,10 +11,10 @@ For observed data, refresh the sanitised fixture locally, review the derived top
 
 ## Review and push
 
-1. Push a branch to GitHub.
-2. Open a pull request for behavioural or architectural changes.
-3. Require the CI verify job and review checklist to pass.
-4. Merge only after the documentation and tests agree with the code.
+1. Use a pull request for multi-author or multi-commit behavioural/architectural work when the branch workflow is available.
+2. For an owner-authorised single-integrator direct push, pass the local gate and independent review before pushing.
+3. Require the CI verify job and review checklist to pass before calling a shared release ready.
+4. Release only after the documentation and tests agree with the code.
 
 ### Review-record boundary
 

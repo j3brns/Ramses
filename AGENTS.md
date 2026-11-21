@@ -1,37 +1,33 @@
-# Ramses experiment rules
+# Ramses operating contract
 
-## Safety boundary
+## Mission
 
-- This repository models and tests RAMSES-II behaviour only.
-- Do not transmit RF, alter gateway transmit settings, bind devices, or change live heating configuration.
-- Use only `RAMSES/TEST/...` MQTT topics in simulator code and fixtures.
-- Never store credentials, Home Assistant tokens, broker passwords, or Home Assistant configuration in Git. Bounded RAMSES-II packet corpora under `data/observed/` are explicitly allowed.
+Build a Home Assistant replacement for the heating controls only after the test world proves it. Retain the TRVs, add cylinder-temperature visibility, and keep live authority outside development.
 
-## Working agreement
+## Non-negotiable boundaries
 
-- Treat observed packet traces as evidence; record source, time range, and scenario in `data/` metadata.
-- Keep the target-system map in `target-system/` current and cite packet evidence for topology changes.
-- Add or update an ADR for decisions affecting architecture, controller identity, RF transport, or cutover.
-- Add a deterministic test for every schedule, override, encoding, or state-transition change.
-- Add a concise adversarial review under `docs/reviews/` for every model, collector, scenario, transport, CI, or deployment change; it must name failure modes, evidence, decision, and rollback.
-- Treat reviews as durable engineering records, not conversation transcripts. Do not include prompts, user dialogue, transient writing instructions, personal preferences, or withdrawn alternatives. Record only the scoped change, failure modes, evidence, decision and rollback. Deliberately versioned asset prompts belong with the asset provenance, not in review prose.
-- Documentation is a release artifact: update the relevant architecture, objective, contract, rule, target-system, or ADR document in the same change.
-- Maintain `docs/repertoire/` as the versioned Programmer Contract knowledge bundle: concise Markdown concepts with YAML frontmatter, provenance, verification state, and links to their tests. It is the human- and agent-readable source for the user guide and Home Assistant help content; do not let a dashboard card become the only documentation.
-- Treat public manuals as behavioural sources, not as implementation source code. Record the source and page range, distil rules in our own words, and keep implementation-specific guarantees separate.
-- Refresh observed data through the collector; raw RAMSES-II packet fixtures may be committed only through its bounded packet-corpus output.
-- Keep derived observation data bounded. The collector replaces its fixtures and caps representative samples; do not introduce append-only logs or captures.
-- Treat cache snapshots as topology/state evidence only. Any claimed timed behaviour requires a bounded ordered `/rx` scenario under `data/scenarios/` and a replay test.
-- Keep the simulator software-only until an explicit, separately approved RF test plan exists.
+- Use only `RAMSES/TEST/...` in model code, tests and fixtures so a defect cannot address live equipment.
+- Never transmit RF, alter bindings, reflash or configure the live gateway, change live heating, or store credentials so the experiment stays reversible and shareable.
+- Keep captures bounded and sanitised so evidence remains reviewable and Git never becomes a log archive.
 
-## Test and commit gates
+## Evidence and decisions
 
-- Run `scripts/check.ps1` before every commit.
-- Unit tests use `pytest`; they must be deterministic and use a fixed clock.
-- Contract tests consume sanitised fixtures only and must never access the live MQTT broker.
-- Integration tests are opt-in and use `RAMSES/TEST/...` only.
-- UI acceptance tests are computer-use tests against Home Assistant Test View. They must cover correctness and usability at desktop and mobile widths, retain sanitised screenshot/evidence references, and never change live heating.
-- Keep commits small, imperative, and scoped to one behaviour or decision.
-- CI must pass before merging; no RF-capable code is merged without an ADR and explicit approval.
-- Install `.githooks` with `scripts/install_hooks.ps1`; do not bypass the adversarial-review hook.
-- Use `scripts/tk.ps1`: claim one ready task before editing, respect dependencies, and log evidence before closing it. `tk` coordinates local agents; Git documents remain the release authority.
-- Prefer parallel, delegated work for independent research, review, documentation and implementation leaves. Before delegating, make task boundaries non-overlapping and record their dependencies in `tk`; retain one integrator responsible for the final contract, tests, review and merge.
+- Treat cache snapshots as topology/state evidence. Claim timed behaviour only from bounded ordered `/rx` scenarios and replay tests, because snapshots have no chronology.
+- Keep the target map current with packet evidence. Update the relevant contract, architecture, objective, rule or ADR when scope, authority or behaviour changes, so documentation and implementation do not diverge.
+- Use public manuals as behavioural sources, with source/page range. Separate observed facts and HA design choices, so fidelity is not overclaimed.
+- Keep reviews to scope, failure modes, evidence, decision and rollback. Exclude prompts, dialogue and transient preferences so reviews remain durable engineering records. Store deliberate asset prompts with asset provenance instead.
+- Keep `docs/repertoire/` as the canonical human/agent knowledge bundle and render UI help from it, so a dashboard card never becomes the sole documentation.
+
+## Parallel delivery
+
+- Claim a ready `tk` task and partition overlapping writes before editing, so parallel agents do not overwrite evidence or decisions. Read-only reviewers may inspect shared files without owning them.
+- Delegate independent research, review and test leaves by default. One integrator owns the final contract, tests, review and merge, so parallel findings converge into one accountable change.
+- Record dependencies before parallel work starts and log evidence before closing a task, so the queue explains both progress and blockers.
+
+## Verification and release
+
+- Add deterministic fixed-clock tests for behavioural, state, encoding and transport changes, so failures reproduce.
+- Run `scripts/check.ps1`, inspect the diff/status, then make one scoped commit, so every change is reproducible and reversible. Test-world integration is required by this gate; broker or live integration is forbidden unless separately approved.
+- Use an adversarial review for behavioural, boundary, data, scenario, transport, CI or deployment changes, and for documentation that changes contract or safety meaning, so release decisions can be challenged later.
+- Install and enforce the repository hooks; do not bypass the review gate, so local work cannot silently omit required evidence.
+- Use a pull request for multi-author or multi-commit behavioural/architectural work when the branch workflow is available. For an owner-authorised single-integrator direct push, require the local gate and independent review first, then require CI to pass before calling the shared release ready.

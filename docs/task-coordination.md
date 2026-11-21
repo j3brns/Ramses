@@ -17,8 +17,8 @@ This repository uses the project-local `tk` binary from Tacks 0.2.4 for concurre
 
 ## Parallel work rules
 
-1. Work only a claimed task.
-2. One task owns one code area; split or sequence work if files would overlap.
+1. Claim a task before writing; read-only reviewers may inspect shared files without owning them.
+2. One task owns one code area; split or sequence writes that would overlap.
 3. Add dependencies before parallel work starts; a blocked task is not an invitation to guess.
-4. Each agent records its finding, test result, and commit in the task before closing it.
+4. Each agent records its finding, test result and commit in the task before closing it.
 5. Reconcile `tk` status with the Git roadmap at each release review.
