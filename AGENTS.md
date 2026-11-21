@@ -14,3 +14,12 @@
 - Add or update an ADR for decisions affecting architecture, controller identity, RF transport, or cutover.
 - Add a deterministic test for every schedule, override, encoding, or state-transition change.
 - Keep the simulator software-only until an explicit, separately approved RF test plan exists.
+
+## Test and commit gates
+
+- Run `scripts/check.ps1` before every commit.
+- Unit tests use `pytest`; they must be deterministic and use a fixed clock.
+- Contract tests consume sanitised fixtures only and must never access the live MQTT broker.
+- Integration tests are opt-in and use `RAMSES/TEST/...` only.
+- Keep commits small, imperative, and scoped to one behaviour or decision.
+- CI must pass before merging; no RF-capable code is merged without an ADR and explicit approval.
