@@ -1,48 +1,57 @@
-# Ramses — heating programmer digital twin
+# Ramses
 
 ![Voxel cutaway heating-programmer ident](assets/ident/voxel-house-white.svg)
 
-Ramses is a **software-only digital twin** of an observed Honeywell RAMSES-II heating network. Its strategic target is replacement of the existing physical heating-control hardware while retaining the installed TRVs. The hot-water-cylinder temperature gauge is an in-scope planned addition to the Sunnydays system. This is the engineering workspace for proving the replacement in software before anyone changes a live controller, valve binding, gateway setting, or boiler circuit.
+I am building a Home Assistant heating programmer that can replace the current heating controls—when it works well enough for everyone who lives here to accept it.
 
-> **Current status: experimental, read-only and test-world only.** The model, timer, temporary/permanent overrides, optimiser core, virtual TRV behaviour and contract tests exist. The live installation remains the authority; this repository must not transmit RF or publish to the live MQTT root.
+I want the system to feel calm, clear and dependable. People should be able to see the temperature, the target, the schedule and the next change. They should be able to make a simple temporary change without needing to understand radio packets or controller firmware.
 
-> **Operational rule: prove first.** During development, every control behaviour must prove itself through deterministic tests, bounded evidence, isolated test transport and UI acceptance before it can be considered for any live role. A passing simulation does not authorise live hardware change.
+## Prime directive
 
-## Why this exists
+I use Home Assistant to replace the heating controls to the acceptance of the other people in the house.
 
-The goal is not to casually replace working heating controls. It is to establish a repeatable evidence chain:
+I use Lovelace where it provides the clearest everyday interface. I use Home Assistant entities to represent the heating system:
 
-1. Observe bounded RAMSES-II traffic from the existing system.
-2. Model the timer, target precedence, virtual devices and thermal response.
-3. Exercise the model exclusively through `RAMSES/TEST/...` MQTT topics.
-4. Compare simulated scenarios with ordered passive captures.
-5. Only then make a separately reviewed RF decision.
+- **Climate entities** show a zone's temperature, target and operating mode.
+- **Temperature entities** report room and cylinder temperature.
+- **Schedule helpers** hold the weekly heating programme.
+- **Status entities** show demand, battery, freshness, boiler interlock and faults.
 
-The [Programmer Contract](docs/programmer-contract.md) defines the user-visible behaviour we want Home Assistant to reproduce. The Evohome controller guide is a behavioural reference; it is not copied firmware or a claim that undocumented RF behaviour has been replicated.
+The UI must explain what is happening. It must not surprise anyone, hide an override, or look like it controls a system when it does not.
 
-## Hardware foundation
+## What I am replacing
 
-This experiment is predicated on the **Elecram Sub‑GHz 855–925 MHz Bridge – ESP32‑C6 WiFi/Zigbee**, running the `ramses_esp` firmware. It is the physical RAMSES-II receiver/gateway boundary: it observes the radio network and exposes the testable MQTT interface that the software model mirrors.
+The long-term aim is to replace the existing physical heating-control hardware with a Home Assistant-centred system. I retain the installed RAMSES-II TRVs. I add cylinder-temperature visibility to the Sunnydays plan. I do not decide the cylinder sensor or wiring arrangement in this repository.
 
-- Hardware producer: [Elecram](https://elecram.com/) — an independent shop created by [Marcel](https://elecram.com/pages/about).
-- Board: [Elecram Sub‑GHz 855–925 MHz Bridge – ESP32‑C6 WiFi/Zigbee](https://elecram.com/products/esp32-c6-wifi-zigbee-to-855-925mhz-wireless?variant=52605637099853).
-- Gateway firmware and configuration reference: [IMMRMKW/ramses_esp](https://github.com/IMMRMKW/ramses_esp).
-- Software protocol and Home Assistant integration reference: [ramses-rf/ramses_cc](https://github.com/ramses-rf/ramses_cc).
+The boiler interlock remains a separate concern. It uses standard 868 MHz RAMSES-II components. I model and test that relationship before I consider replacing any live boiler-control hardware.
 
-The board may be USB-powered and connect to the broker over Wi-Fi; it does not require a PC-resident serial bridge. Its individual gateway ID, Wi-Fi credentials, broker password and Home Assistant token are intentionally excluded from this repository. The model uses a separate `RAMSES/TEST/...` namespace, never the live board’s control path.
+## How the parts connect
 
-## Safety boundary
+I use the **Elecram Sub-GHz 855–925 MHz Bridge – ESP32-C6 WiFi/Zigbee** (an ESP32-C6 board with a Sub-GHz radio and Wi-Fi/Zigbee support) as the gateway between the 868 MHz RAMSES-II network and MQTT. It runs [`ramses_esp`](https://github.com/IMMRMKW/ramses_esp).
 
-| This repository does | This repository does not do |
-| --- | --- |
-| Models timers, overrides, TRVs, schedule targets and thermal behaviour. | Transmit RF, alter a gateway, bind devices, or alter live heating. |
-| Uses the isolated `RAMSES/TEST/...` test namespace. | Read from or write to `RAMSES/GATEWAY/...` from simulator code. |
-| Stores bounded, sanitised observation fixtures. | Store credentials, tokens, Home Assistant configuration, or unbounded logs. |
-| Produces an eventual Home Assistant **Test View** and help content. | Claim that an illustration, dashboard mock-up, or test entity controls the house. |
+```text
+868 MHz RAMSES-II devices
+          |
+          v
+Elecram bridge + ramses_esp
+          |
+          v
+MQTT broker <-> Home Assistant <-> Ramses test model
+```
 
-If an apparent test action could affect the live system, stop and investigate it; that is a defect in the experiment boundary.
+The board can use Wi-Fi and USB power. It does not need a PC-resident serial bridge. Its gateway ID, Wi-Fi details, broker credentials and Home Assistant token stay out of Git.
 
-## Target system — current observed map
+For the exact upstream hardware and software references, see [Hardware foundation](docs/hardware-foundation.md): [Elecram](https://elecram.com/), [the board](https://elecram.com/products/esp32-c6-wifi-zigbee-to-855-925mhz-wireless?variant=52605637099853), [ramses_esp](https://github.com/IMMRMKW/ramses_esp), and [ramses_cc](https://github.com/ramses-rf/ramses_cc).
+
+## Prove first
+
+During development, the system must prove itself before it gets a live role.
+
+I prove each behaviour with a clear contract, deterministic tests, bounded observation data, isolated `RAMSES/TEST/...` MQTT traffic and—where people use it—computer-use UI checks. A dashboard mock-up, a decoded radio frame or a working simulation is useful evidence. None of them authorises a live heating change on its own.
+
+For now, this repository is read-only and test-world only. It does not transmit RF, change bindings, reflash the board, modify live MQTT settings or control the boiler.
+
+## Current system map
 
 ```text
 Controller 487
@@ -56,83 +65,61 @@ Controller 751
 Independent boiler enable: thermostat 226 -> BDR91 642
 ```
 
-This is topology evidence, not a promise of device control. The canonical evidence map and its sources live in [`target-system/`](target-system/).
+This map records what I have observed. It is not permission to control a device. The evidence lives in [`target-system/`](target-system/).
 
-## System at a glance
+## What works now
 
-```text
-Home Assistant Test View
-          | schedule / temporary override / diagnostics
-          v
-  Programmer + zone coordinator + optimiser
-          | only structured test frames
-          v
-RAMSES/TEST/<gateway-id>/{tx,rx} MQTT boundary
-          |
-          v
-Virtual CM67z controllers <-> Virtual TRVs <-> Virtual BDR response
+| Area | Where it stands |
+| --- | --- |
+| Weekly timer | I can model the active target and next scheduled switch with a fixed clock. |
+| Temporary and permanent changes | I have a baseline contract and deterministic behaviour tests. |
+| Optimum start | I have a model core. It needs real, bounded evidence before it learns from the house. |
+| Virtual TRVs | I have the core response model. Some local-override detail remains open. |
+| MQTT test transport | This is the next implementation step. It must reject live MQTT roots. |
+| Home Assistant and Lovelace | I will add test-only entities and cards after the isolated transport is proven. |
+| Live control | Deliberately not started. It needs a separate cutover decision. |
 
-Live RF and RAMSES/GATEWAY/... remain outside the system.
-```
+The [delivery breakdown](docs/task-breakdown.md) shows the versioned roadmap. The local `tk` queue records the work in progress.
 
-For responsibilities, state ownership, persistence and the trust boundary, see the [system architecture](docs/system-architecture.md) and the [test transport contract](docs/contract.md).
+## Check the project
 
-## What works today
-
-| Area | State | Evidence |
-| --- | --- | --- |
-| Weekly timer and target selection | Implemented | Fixed-clock tests for active and next switchpoints. |
-| Zone and whole-system override rules | Baseline modelled | [Programmer Contract](docs/programmer-contract.md); unresolved semantics remain explicitly queued. |
-| Thermal/optimum-start core | Implemented, evidence not yet calibrated | Deterministic model tests; no live learning/control. |
-| Virtual TRV response | Core implemented | Unit tests; local-override expiry still requires contract resolution. |
-| MQTT test transport | Planned next | Must reject non-test roots at runtime. |
-| Home Assistant entities/cards | Planned and test-only | No live HA control path exists here. |
-| RF validation/cutover | Blocked by design | Requires a separate ADR and explicit approval. |
-
-The [delivery breakdown](docs/task-breakdown.md) is the versioned roadmap; the local `tk` queue records active, delegated work.
-
-## Run the verification gate
-
-Requirements: Python 3.11+ and PowerShell. The project has no broker, radio, or Home Assistant dependency for its local tests.
+You need Python 3.11+ and PowerShell. Local checks do not need a broker, radio board or Home Assistant.
 
 ```powershell
 py -m pip install -e ".[dev]"
 .\scripts\check.ps1
 ```
 
-The gate runs a secret scan, documentation-review validation, compilation, deterministic unit tests and test-world integration fixtures. It must pass before a commit. It never connects to the private Home Assistant or MQTT network.
+The gate scans for secrets, checks the documentation review structure, compiles the code, and runs unit and test-world integration checks. It does not connect to the house.
 
-## Documentation
+## Read the right document
 
-Start here according to the question you need answered:
-
-| Need | Canonical document |
+| Question | Start here |
 | --- | --- |
-| What must the programmer do for a user? | [Programmer Contract](docs/programmer-contract.md) |
-| How will a user operate the future test dashboard? | [Ramses Test user guide](docs/user-guide.md) |
-| What is in and out of scope? | [System objectives](docs/system-objectives.md) |
-| How do the model, MQTT boundary and virtual devices fit together? | [System architecture](docs/system-architecture.md) |
-| What frames cross the simulated radio boundary? | [Test transport contract](docs/contract.md) |
-| What physical board and firmware anchor the observed gateway boundary? | [Hardware foundation](docs/hardware-foundation.md) |
-| How are observations acquired without log growth? | [Ingest contract](docs/ingest-contract.md) and [scenario recording](docs/scenario-recording.md) |
-| How are tests, reviews, commits and rollback managed? | [Repository contract](docs/repository-contract.md), [test contracts](docs/test-contracts.md), [change management](docs/change-management.md) |
-| What has been decided and why? | [ADRs](docs/adr/) |
-| What can agents depend on? | [Skills inventory](docs/skills-inventory.md) and [repertoire](docs/repertoire/index.md) |
-| Where is the complete document index? | [Documentation map](docs/README.md) |
+| What should the programmer do? | [Programmer Contract](docs/programmer-contract.md) |
+| How will people use the future Test View? | [Ramses Test user guide](docs/user-guide.md) |
+| What am I trying to achieve? | [System objectives](docs/system-objectives.md) |
+| How do the parts fit together? | [System architecture](docs/system-architecture.md) |
+| What crosses the MQTT boundary? | [Test transport contract](docs/contract.md) |
+| How do I collect observations without growing logs forever? | [Ingest contract](docs/ingest-contract.md) and [scenario recording](docs/scenario-recording.md) |
+| How do I make, review and roll back a change? | [Repository contract](docs/repository-contract.md) and [change management](docs/change-management.md) |
+| What decisions are already made? | [ADRs](docs/adr/) |
+| What can another agent rely on? | [Skills inventory](docs/skills-inventory.md) and [repertoire](docs/repertoire/index.md) |
+| Where is every document? | [Documentation map](docs/README.md) |
 
-The Markdown user guide is canonical. A future Home Assistant Help subview will render the same content; it will never be the sole copy of the documentation.
+The Markdown user guide is the source of truth. The future Home Assistant Help view will render the same material. It will not be the only copy.
 
-## Contributing and releasing
+## Work on the project
 
-1. Read [`AGENTS.md`](AGENTS.md), then claim one ready `tk` task.
-2. Keep one observable change per task. Record dependencies before delegating parallel work.
-3. Update the relevant contract, architecture, target-system evidence, ADR or user guide with the change.
-4. Add deterministic tests for all state, schedule, override, encoding and transport changes.
-5. Add an adversarial review in [`docs/reviews/`](docs/reviews/) for model, data, scenario, transport, CI or deployment changes.
-6. Run `.\scripts\check.ps1`, inspect the diff, make a scoped commit, then push.
+1. Read [`AGENTS.md`](AGENTS.md). Claim one ready `tk` task.
+2. Keep the change small. Record dependencies before parallel work begins.
+3. Update the relevant contract, architecture, evidence map, ADR or user guide.
+4. Add deterministic tests for state, schedules, overrides, encoding and transport changes.
+5. Add an adversarial review for model, data, scenario, transport, CI or deployment changes.
+6. Run `.\scripts\check.ps1`. Review the diff. Commit and push.
 
-For shared history, use a revert commit rather than rewriting published history. The detailed workflow and rollback rules are in the [repository contract](docs/repository-contract.md).
+I use revert commits for shared history. I do not rewrite published experiment history.
 
-## Visual identity assets
+## Visual assets
 
-The README uses the accessible, hand-authored [SVG ident](assets/ident/voxel-house-white.svg): bright, pure white, editable and source-reviewable. The higher-fidelity raster reference, its generations, prompt history and visual/adversarial review are kept under [`assets/ident/`](assets/ident/). The image is a metaphor for time influencing a physical heating loop; it is not a dashboard or live-system diagram.
+I use the editable [SVG ident](assets/ident/voxel-house-white.svg) here. It is a bright, pure-white metaphor for time affecting a physical heating loop. The higher-fidelity PNG, prompt history and review notes live in [`assets/ident/`](assets/ident/). They are design assets, not a dashboard or live-system diagram.

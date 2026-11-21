@@ -23,6 +23,8 @@ The README links only to repository-local canonical documents and describes each
 
 Use the README as the brief, navigable front door: purpose, status, safety, topology, architecture, present capability, verification, documentation routing and contribution protocol. Make the strategic target visible, but put its phase boundary and future cutover requirements in ADR 0005. Keep behavioural details in the Programmer Contract and user guide, rather than duplicating them.
 
+The README uses a first-person, concise technical voice. It leads with the household outcome, then names the Home Assistant entities, Lovelace interface, Elecram bridge, boiler-interlock boundary and prove-first rule. It does not use a hobby-project disclaimer or a generic use-at-your-own-risk statement.
+
 ## Rollback
 
 Revert this documentation-only commit. No runtime, MQTT, RF, Home Assistant or target-system state is affected.
