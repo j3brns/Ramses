@@ -1,0 +1,10 @@
+# Captures may contain local device identities and timestamps.
+captures/
+*.log
+
+# Python
+__pycache__/
+.venv/
+
+# Editor files
+.vscode/
