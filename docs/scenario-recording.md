@@ -4,10 +4,12 @@ The packet cache discovers topology and current state. It cannot prove behaviour
 
 ## Contract
 
-An ordered scenario contains only gateway receive envelopes:
+An ordered scenario contains only gateway receive envelopes. Preserve the MQTT
+subscriber's broker receipt field (`tst` from `mosquitto_sub -F %J`) when it is
+available:
 
 ```json
-{"topic":"RAMSES/GATEWAY/18:016440/rx","payload":{"msg":" I --- ...","ts":"2026-11-21T07:00:00+00:00"}}
+{"tst":"2026-11-21T07:00:00+00:00","topic":"RAMSES/GATEWAY/18:016440/rx","payload":{"msg":" I --- ...","ts":"1970-01-01T00:00:00+00:00"}}
 ```
 
 The recorder rejects `/tx` input. `/tx` represents our proposed command; `/rx` is radio evidence of what actually happened.
@@ -30,4 +32,4 @@ Pipe a locally authenticated MQTT subscriber through the bounded feeder, then in
   py scripts/record_scenario.py kitchen-schedule-change
 ```
 
-The feeder accepts only JSON lines shaped as `{"topic":"RAMSES/GATEWAY/<gateway-id>/rx","payload":{"msg":"...","ts":"..."}}`. It can also replace one explicit local NDJSON file with `--output <path>`; it never appends a log. Review the raw packets, commit the scenario, and add a replay test before claiming that behaviour is modelled.
+The feeder accepts only JSON lines shaped as `{"topic":"RAMSES/GATEWAY/<gateway-id>/rx","payload":{"msg":"...","ts":"..."}}`; it preserves an optional top-level `tst` as `receipt_ts`. Gateway `payload.ts` is retained as `gateway_ts` and is only `unverified` unless independently calibrated. A `1970-01-01...` gateway timestamp is marked `epoch-invalid` and cannot support wall-clock or elapsed-time claims. It can also replace one explicit local NDJSON file with `--output <path>`; it never appends a log. Review the raw packets, commit the scenario, and add a replay test before claiming that behaviour is modelled.
