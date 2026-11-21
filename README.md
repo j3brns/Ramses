@@ -1,4 +1,4 @@
-# RAMSES Digital Twin
+# Ramses
 
 A software model of the existing CM67z/HR80 heating network, built before any live RF control changes.
 
@@ -31,4 +31,5 @@ The simulator uses test MQTT topics only. It does not transmit RF.
 
 - `docs/` — protocol notes, scenarios and acceptance criteria.
 - `fixtures/` — anonymised packet traces used by tests.
-- `src/` — virtual CM67z simulator (to be added after the contract is agreed).
+- `src/ramses_twin/` — virtual CM67z domain model and MQTT frame adapter.
+- `tests/` — deterministic schedule, boost and frame-contract tests.

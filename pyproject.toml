@@ -1,0 +1,12 @@
+[project]
+name = "ramses-digital-twin"
+version = "0.1.0"
+description = "Software-only RAMSES-II CM67z digital twin"
+requires-python = ">=3.11"
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

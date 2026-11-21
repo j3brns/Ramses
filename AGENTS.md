@@ -1,0 +1,16 @@
+# Ramses experiment rules
+
+## Safety boundary
+
+- This repository models and tests RAMSES-II behaviour only.
+- Do not transmit RF, alter gateway transmit settings, bind devices, or change live heating configuration.
+- Use only `RAMSES/TEST/...` MQTT topics in simulator code and fixtures.
+- Never store credentials, Home Assistant tokens, broker passwords, or raw production captures in Git.
+
+## Working agreement
+
+- Treat observed packet traces as evidence; record source, time range, and scenario in `data/` metadata.
+- Keep the target-system map in `target-system/` current and cite packet evidence for topology changes.
+- Add or update an ADR for decisions affecting architecture, controller identity, RF transport, or cutover.
+- Add a deterministic test for every schedule, override, encoding, or state-transition change.
+- Keep the simulator software-only until an explicit, separately approved RF test plan exists.
