@@ -27,4 +27,4 @@
 
 ## Task tracking
 
-`docs/task-breakdown.md` is the repository task authority until a shared task tool is deliberately adopted. A task tool must support versioned, reviewable task state and link each task to its evidence and commit; do not maintain duplicate backlogs.
+`tk` is the local coordination queue for concurrent agents: it holds claims, dependencies, and progress. `docs/task-breakdown.md` remains the versioned delivery roadmap, and commits/reviews/ADRs remain the authority for evidence. Reconcile the two at every release review; do not put architecture decisions or acceptance evidence only in the local `tk` database.

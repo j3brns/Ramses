@@ -34,3 +34,7 @@ __pycache__/
 
 # Editor files
 .vscode/
+
+# Local agent task coordination and pinned helper binaries.
+.tacks/
+.tools/

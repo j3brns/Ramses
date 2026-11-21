@@ -2,7 +2,7 @@
 
 Each task has one observable output, a narrow test, and a review before push. No task may silently broaden into live RF control.
 
-This file is the current task authority. `tk` is not installed in this workspace, so we will not create a parallel task database. Re-evaluate it only if this Markdown backlog ceases to support shared ownership, dependencies, or evidence links.
+This file is the versioned delivery roadmap. The project-local `tk` queue manages live claims and dependencies for concurrent agents; see `task-coordination.md`. It is intentionally not a competing release record.
 
 | Slice | Output | Done when | Status |
 |---|---|---|---|

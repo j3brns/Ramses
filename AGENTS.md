@@ -29,3 +29,4 @@
 - Keep commits small, imperative, and scoped to one behaviour or decision.
 - CI must pass before merging; no RF-capable code is merged without an ADR and explicit approval.
 - Install `.githooks` with `scripts/install_hooks.ps1`; do not bypass the adversarial-review hook.
+- Use `scripts/tk.ps1`: claim one ready task before editing, respect dependencies, and log evidence before closing it. `tk` coordinates local agents; Git documents remain the release authority.
