@@ -19,6 +19,7 @@
 - Local override becomes the effective target until explicitly cleared by the test-world controller.
 - An open window forces virtual heat demand to zero.
 - Demand follows the declared clamped proportional response; it is not claimed to be Honeywell's internal algorithm.
+- The local-override expiry rule is unresolved. No calibration or RF-decision milestone may rely on a TRV override until it is reconciled with the scheduler contract.
 
 ## Restart contract
 
@@ -32,7 +33,15 @@
 - Cap a predicted lead to 90 minutes and decline when a target cannot be reached within that cap.
 - The optimiser proposes an earlier use of an existing scheduled target; it does not create a new RF command type.
 - Persist only learned per-zone coefficients; do not retain an unbounded observation history in the runtime state store.
+- Training evidence aligns reference temperature, outdoor temperature, valve demand, boiler availability, and timestamps; isolated packet snapshots are insufficient.
+
+## Scenario and replay contract
+
+- Required evidence covers a scheduled rise, a local override through its expiry, and restart/reconnect while a zone is active.
+- A replay harness decodes ordered frames before asserting state transitions; it must not infer temporal behaviour from an unordered cache.
+- Each replay test states its permitted timing tolerance. Packet order and named state transitions are exact unless the fixture declares a retry/duplicate allowance.
 
 ## Non-negotiable boundary
 
 No unit, contract, integration, CI, or local-check test may publish to `RAMSES/GATEWAY` or transmit RF.
+The test transport must reject any non-`RAMSES/TEST` topic at runtime.
