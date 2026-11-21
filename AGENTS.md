@@ -14,6 +14,7 @@
 - Add or update an ADR for decisions affecting architecture, controller identity, RF transport, or cutover.
 - Add a deterministic test for every schedule, override, encoding, or state-transition change.
 - Add a concise adversarial review under `docs/reviews/` for every model, collector, scenario, transport, CI, or deployment change; it must name failure modes, evidence, decision, and rollback.
+- Treat reviews as durable engineering records, not conversation transcripts. Do not include prompts, user dialogue, transient writing instructions, personal preferences, or withdrawn alternatives. Record only the scoped change, failure modes, evidence, decision and rollback. Deliberately versioned asset prompts belong with the asset provenance, not in review prose.
 - Documentation is a release artifact: update the relevant architecture, objective, contract, rule, target-system, or ADR document in the same change.
 - Maintain `docs/repertoire/` as the versioned Programmer Contract knowledge bundle: concise Markdown concepts with YAML frontmatter, provenance, verification state, and links to their tests. It is the human- and agent-readable source for the user guide and Home Assistant help content; do not let a dashboard card become the only documentation.
 - Treat public manuals as behavioural sources, not as implementation source code. Record the source and page range, distil rules in our own words, and keep implementation-specific guarantees separate.

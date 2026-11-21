@@ -16,6 +16,10 @@ For observed data, refresh the sanitised fixture locally, review the derived top
 3. Require the CI verify job and review checklist to pass.
 4. Merge only after the documentation and tests agree with the code.
 
+### Review-record boundary
+
+Adversarial reviews are durable project records. They contain only the scope, failure modes, evidence, decision and rollback for the change. They do not reproduce prompts, conversation, transient writing direction, personal preference, or rejected alternatives. Keep deliberately versioned visual-generation prompts with the asset provenance instead.
+
 ## Reset and rollback
 
 - Prefer a new revert commit for shared/pushed history.
