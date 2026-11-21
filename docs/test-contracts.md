@@ -13,6 +13,13 @@
 - Test-world publications use the ramses_esp envelope: `{"msg": "<frame>", "ts": "<ISO-8601>"}`.
 - Test-world topics must begin `RAMSES/TEST/`.
 
+## Virtual TRV contract
+
+- A virtual TRV accepts a setpoint only for its bound zone.
+- Local override becomes the effective target until explicitly cleared by the test-world controller.
+- An open window forces virtual heat demand to zero.
+- Demand follows the declared clamped proportional response; it is not claimed to be Honeywell's internal algorithm.
+
 ## Restart contract
 
 - On startup or MQTT reconnect, recompute the active target from schedule and override state.
