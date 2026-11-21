@@ -7,6 +7,8 @@ RAMSES/TEST/<gateway-id>/rx  gateway-to-backend frames
 RAMSES/TEST/<gateway-id>/tx  backend-to-gateway frames
 ```
 
+The transport accepts commands only on its own `<gateway-id>/tx` topic and publishes responses only to its own `<gateway-id>/rx` topic. Both directions use `{"msg": "<frame>", "ts": "<ISO-8601-with-timezone>"}` envelopes. It rejects live roots, foreign gateways, RX topics, MQTT wildcard gateway IDs and malformed envelopes at runtime. It has no MQTT-client, in-memory message queue or RF dependency; an adapter may add broker I/O later, but cannot bypass runtime topic validation.
+
 Initial observed frame types:
 
 - `1F09` controller synchronisation
