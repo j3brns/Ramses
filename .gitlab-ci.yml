@@ -12,6 +12,7 @@ verify:
     - python -m pip install --upgrade pip
     - python -m pip install '.[dev]'
     - python scripts/secret_scan.py
+    - python scripts/check_adversarial_review.py
     - python -m compileall -q src
     - python -m pytest -m "not integration"
     - python -m pytest -m integration

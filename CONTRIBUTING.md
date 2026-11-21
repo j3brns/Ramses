@@ -34,6 +34,7 @@ GitHub Actions repeats the same checks in a clean Python environment. `.gitlab-c
 
 - Keep one behavioural change per commit.
 - Include the test or fixture proving the change.
+- For model, transport, collector, scenario, CI, or deployment changes, add a structured adversarial review under `docs/reviews/`.
 - Do not commit secrets, production traces, or generated captures.
 - When observed data changes, commit its sanitised fixture, target-system assessment, contract result, and related documentation together.
 - Record architectural decisions in `docs/adr/` before implementation when they affect identities, transport, scheduling, or cutover.

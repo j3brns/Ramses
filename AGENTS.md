@@ -13,6 +13,7 @@
 - Keep the target-system map in `target-system/` current and cite packet evidence for topology changes.
 - Add or update an ADR for decisions affecting architecture, controller identity, RF transport, or cutover.
 - Add a deterministic test for every schedule, override, encoding, or state-transition change.
+- Add a concise adversarial review under `docs/reviews/` for every model, collector, scenario, transport, CI, or deployment change; it must name failure modes, evidence, decision, and rollback.
 - Documentation is a release artifact: update the relevant architecture, objective, contract, rule, target-system, or ADR document in the same change.
 - Refresh observed data through the collector; raw RAMSES-II packet fixtures may be committed only through its bounded packet-corpus output.
 - Keep derived observation data bounded. The collector replaces its fixtures and caps representative samples; do not introduce append-only logs or captures.
@@ -27,3 +28,4 @@
 - Integration tests are opt-in and use `RAMSES/TEST/...` only.
 - Keep commits small, imperative, and scoped to one behaviour or decision.
 - CI must pass before merging; no RF-capable code is merged without an ADR and explicit approval.
+- Install `.githooks` with `scripts/install_hooks.ps1`; do not bypass the adversarial-review hook.
