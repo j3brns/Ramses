@@ -33,6 +33,8 @@ Use a native **Sections** view. It is the default responsive Home Assistant layo
 
 Sunnydays is the visual reference: calm hierarchy, compact room grouping, legible temperatures and restrained status. Ramses Test keeps native card semantics, names and state colours. It does not imitate Sunnydays card code or make a test entity look live.
 
+The version-controlled native-card blueprint is [`../target-system/ramses-test-dashboard.yaml`](../target-system/ramses-test-dashboard.yaml). It is deliberately not loaded by Home Assistant: a separate Test View deployment and computer-use evidence are required before it becomes an HA dashboard. Its current cards name the required test entities, including diagnostic/override entities that the future adapter must expose before deployment.
+
 ## Explainability requirements
 
 Every visible zone must answer, without opening another card:

@@ -1,0 +1,84 @@
+# Version-controlled Lovelace blueprint. It is intentionally not included by
+# Home Assistant configuration: importing it is a separate, Test View-only
+# deployment step after UI acceptance.
+title: Ramses Test
+views:
+  - title: Ramses Test
+    path: ramses-test
+    icon: mdi:thermostat-box
+    type: sections
+    max_columns: 3
+    dense_section_placement: true
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Kitchen
+            heading_style: title
+          - type: thermostat
+            entity: climate.ramses_test_kitchen
+            name: Kitchen test zone
+            show_current_as_primary: true
+          - type: entities
+            title: Programme status
+            entities:
+              - entity: sensor.ramses_test_kitchen_effective_target
+                name: Effective target
+              - entity: schedule.ramses_test_kitchen_programme
+                name: Weekly programme
+              - entity: sensor.ramses_test_kitchen_next_change
+                name: Next change
+              - entity: sensor.ramses_test_kitchen_override_until
+                name: Temporary override ends
+          - type: tile
+            entity: binary_sensor.ramses_test_kitchen_optimiser_ready
+            name: Optimiser readiness
+          - type: tile
+            entity: sensor.ramses_test_kitchen_planned_start
+            name: Planned start
+
+      - type: grid
+        cards:
+          - type: heading
+            heading: Test-world status
+            heading_style: title
+          - type: entities
+            title: Isolated transport
+            entities:
+              - entity: sensor.ramses_test_gateway_status
+                name: Gateway status
+              - entity: sensor.ramses_test_bdr_demand
+                name: Virtual boiler demand
+              - entity: binary_sensor.ramses_test_bdr_relay
+                name: Virtual boiler relay
+          - type: markdown
+            title: Test boundary
+            content: >-
+              **Ramses Test** uses the isolated `RAMSES/TEST/...` world.
+              It is not the live heating system.
+          - type: button
+            name: Help and programmer guide
+            icon: mdi:help-circle-outline
+            tap_action:
+              action: navigate
+              navigation_path: /ramses-test/help
+
+  - title: Help
+    path: help
+    subview: true
+    back_path: /ramses-test
+    icon: mdi:help-circle-outline
+    type: sections
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Ramses Test programmer guide
+            heading_style: title
+          - type: markdown
+            title: Source-controlled help
+            content: >-
+              This card is generated from `docs/user-guide.md` before a Test
+              View release. Until the export check exists, treat this
+              blueprint as a reference and use the Markdown guide as the
+              canonical source.

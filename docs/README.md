@@ -2,6 +2,8 @@
 
 - `lovelace-ui-contract.md` - test-only dashboard structure, Help subview and computer-use acceptance.
 
+- `../target-system/ramses-test-dashboard.yaml` - native Sections/Test View blueprint; not an active Home Assistant dashboard.
+
 - `hardware-foundation.md` — Elecram/ramses_esp gateway hardware, upstream attribution and the physical boundary.
 
 - `contract.md` — MQTT/RF gateway boundary for the test world.
