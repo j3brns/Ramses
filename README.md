@@ -7,7 +7,7 @@ A software model of the existing CM67z/HR80 heating network, built before any li
 - Mirror the observed RAMSES-II packet contract over a separate `RAMSES/TEST` MQTT namespace.
 - Model two CM67z controllers, their zones, TRVs, schedules and temporary boosts.
 - Compare simulated packet sequences against passive captures from the live system.
-- Keep the BDR91/thermostat 326 boiler-enable loop independent during the first phase.
+- Keep the BDR91/thermostat 226 boiler-enable loop independent during the first phase.
 
 ## Current topology
 

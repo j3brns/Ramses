@@ -15,5 +15,5 @@ The source of membership is the derived fixture at `data/observed/topology.json`
 
 ## Related devices and limits
 
-- Thermostat `326` and boiler relay `642` are recorded as a separate boiler-demand path; their exact binding is not yet proven by the derived topology fixture.
+- Thermostat `226` and boiler relay `642` are recorded as a separate boiler-demand path; their exact binding is not yet proven by the derived topology fixture.
 - The target model is a software-only controller and test MQTT world. Live RF operation remains out of scope pending a separate ADR and explicit approval.

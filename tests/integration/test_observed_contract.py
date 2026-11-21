@@ -18,3 +18,17 @@ def test_observed_zones_can_be_represented_by_the_virtual_contract() -> None:
         message = rx_envelope(zone.setpoint_frame(now), now)
         assert "2309 003" in message["msg"]
         assert message["msg"].endswith(f"{int(entry['zone'], 16):02X}0708")
+
+
+@pytest.mark.integration
+def test_observed_samples_follow_the_ingest_contract() -> None:
+    observed = json.loads(Path("data/observed/samples.json").read_text(encoding="utf-8"))
+    allowed_codes = {"1F09", "2309", "3150", "30C9", "1060", "3EF0"}
+    assert observed["format"] == 1
+    assert observed["snapshot"] is True
+    assert observed["samples"]
+    for sample in observed["samples"]:
+        assert sample["code"] in allowed_codes
+        assert sample["source"] is None or len(sample["source"]) == 3
+        assert set(sample) <= {"code", "source", "destination", "values"}
+        assert all(value is None or isinstance(value, (bool, int, float, str)) for value in sample["values"].values())
