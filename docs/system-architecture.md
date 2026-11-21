@@ -22,6 +22,7 @@ Virtual CM67z controllers <-> Virtual TRVs <-> Virtual BDR91
 | Packet encoder | Produces protocol-valid test frames. |
 | Test transport | Publishes/consumes only `RAMSES/TEST/...` MQTT messages. |
 | Fixture runner | Replays sanitised traces and checks expected outcomes. |
+| Runtime/state store | Learns per-zone coefficients and atomically persists only those coefficients across restart. |
 
 ## Boundary
 

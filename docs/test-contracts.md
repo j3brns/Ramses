@@ -24,6 +24,7 @@
 - Require three clean observations of each kind before planning an early start.
 - Cap a predicted lead to 90 minutes and decline when a target cannot be reached within that cap.
 - The optimiser proposes an earlier use of an existing scheduled target; it does not create a new RF command type.
+- Persist only learned per-zone coefficients; do not retain an unbounded observation history in the runtime state store.
 
 ## Non-negotiable boundary
 
