@@ -1,6 +1,6 @@
 # Ramses
 
-![Voxel cutaway heating-programmer ident](assets/ident/voxel-house-white.svg)
+![Voxel cutaway heating-programmer ident](assets/ident/explorations/voxel-house-white-v4.png)
 
 I am building a Home Assistant heating programmer that can replace the current heating controls—when it works well enough for everyone who lives here to accept it.
 
@@ -122,4 +122,4 @@ I use revert commits for shared history. I do not rewrite published experiment h
 
 ## Visual assets
 
-I use the editable [SVG ident](assets/ident/voxel-house-white.svg) here. It is a bright, pure-white metaphor for time affecting a physical heating loop. The higher-fidelity PNG, prompt history and review notes live in [`assets/ident/`](assets/ident/). They are design assets, not a dashboard or live-system diagram.
+I use the high-fidelity [PNG ident](assets/ident/explorations/voxel-house-white-v4.png) here. It is a bright, pure-white metaphor for time affecting a physical heating loop. The editable [SVG](assets/ident/voxel-house-white.svg), prompt history and review notes live in [`assets/ident/`](assets/ident/). They are design assets, not a dashboard or live-system diagram.

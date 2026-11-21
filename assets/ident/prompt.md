@@ -9,7 +9,7 @@ reviewed: 2026-11-21
 
 ## Hand-authored SVG companion
 
-`voxel-house-white.svg` is a maintainable, semantic vector re-expression of the selected design, not an automatic trace of its raster. It preserves the pure-white ground, travelling sun/time arc, roof sundial, programme node, burner, vessel, valves, radiator and cool return. Its SVG source has a title and description for accessibility, explicit colour values, and no embedded raster or external dependency. It is the production README asset; the v4 PNG is retained as the high-fidelity reference.
+`voxel-house-white.svg` is a maintainable, semantic vector study of the selected design, not an automatic trace of its raster. It preserves the pure-white ground, travelling sun/time arc, roof sundial, programme node, burner, vessel, valves, radiator and cool return. Its SVG source has a title and description for accessibility, explicit colour values, and no embedded raster or external dependency. The v4 PNG is the production README asset; the SVG remains an editable alternative.
 
 ## Production README asset: white voxel house v4
 

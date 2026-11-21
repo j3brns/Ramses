@@ -13,7 +13,7 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 ## Packet contract
 
 - Setpoint frames use `2309` with a one-byte zone index and centi-degree temperature.
-- Test-world publications use the ramses_esp envelope: `{"msg": "<frame>", "ts": "<ISO-8601>"}`.
+- Test-world publications use the ramses_esp envelope: `{"msg": "<frame>", "ts": "<ISO-8601-with-timezone>"}`.
 - Test-world topics must begin `RAMSES/TEST/`.
 
 ## Virtual TRV contract

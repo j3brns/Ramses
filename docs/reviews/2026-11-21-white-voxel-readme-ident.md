@@ -18,7 +18,7 @@ The candidate was generated from explicitly original, asset-free constraints and
 
 ## Decision
 
-Use `voxel-house-white.svg` in the README. Keep v4 as the high-fidelity reference and the preceding v3/dark candidates for provenance and alternatives. Retain `sundial-wireframe.png` for dark dashboard/panel uses. The asset is an explanatory ident, not a product UI.
+Use `voxel-house-white-v4.png` in the README. Keep the SVG as an editable alternative and retain the preceding v3/dark candidates for provenance and alternatives. Retain `sundial-wireframe.png` for dark dashboard/panel uses. The asset is an explanatory ident, not a product UI.
 
 ## Rollback
 
