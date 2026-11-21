@@ -57,6 +57,13 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 - A replay harness decodes ordered frames before asserting state transitions; it must not infer temporal behaviour from an unordered cache.
 - Each replay test states its permitted timing tolerance. Packet order and named state transitions are exact unless the fixture declares a retry/duplicate allowance.
 
+## Dashboard contract
+
+- The Ramses Test dashboard uses only test entities and `RAMSES/TEST/...` transport; a live entity/topic is a release-blocking defect.
+- Its canonical requirements and computer-use acceptance IDs are in [the Lovelace UI contract](lovelace-ui-contract.md).
+- UI-01 through UI-07 must pass at desktop and mobile widths before a control-capable Test View release.
+- The Help subview renders or links to `user-guide.md`; the Markdown source remains canonical.
+
 ## Non-negotiable boundary
 
 No unit, contract, integration, CI, or local-check test may publish to `RAMSES/GATEWAY` or transmit RF.
