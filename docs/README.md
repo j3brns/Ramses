@@ -1,5 +1,7 @@
 # Documentation map
 
+- `hardware-foundation.md` — Elecram/ramses_esp gateway hardware, upstream attribution and the physical boundary.
+
 - `contract.md` — MQTT/RF gateway boundary for the test world.
 - `system-objectives.md` — goals and non-goals.
 - `system-architecture.md` — component and transport design.

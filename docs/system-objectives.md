@@ -2,7 +2,7 @@
 
 ## Primary objective
 
-Develop a software-only digital twin of the observed CM67z/HR80 RAMSES-II system before any live RF control is considered.
+Replace the existing physical heating-control hardware with a Home Assistant–centred, RAMSES-II-compatible control system, while retaining the installed TRVs and the hot-water-cylinder temperature gauge. The required first phase is a software-only digital twin of the observed CM67z/HR80 RAMSES-II system; no live RF control is considered until that phase has met its evidence and cutover criteria.
 
 ## Success criteria
 
@@ -13,9 +13,10 @@ Develop a software-only digital twin of the observed CM67z/HR80 RAMSES-II system
 - Evaluate the Test View with computer-use tests for functional correctness and usability, using Sunnydays as the visual reference.
 - Compare each simulated scenario against bounded, ordered observed `/rx` traces.
 - Learn an explainable, per-zone optimum-start policy from completed heat-up and cooling intervals; fall back to ordinary schedule timing until it is trained.
+- Produce a staged, reversible replacement plan for the current controller/programmer and associated heating-control hardware, while preserving the retained TRVs and cylinder temperature gauge as explicitly mapped devices.
 
 ## Non-objectives
 
-- Transmitting RF or replacing a live CM67z.
-- Altering BDR91/boiler behaviour in the first phase.
+- Transmitting RF or replacing live hardware in the first phase.
+- Altering BDR91/boiler behaviour before a separately approved cutover phase.
 - Building a general-purpose RAMSES protocol library.
