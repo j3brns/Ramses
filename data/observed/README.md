@@ -1,6 +1,6 @@
 # Observed derived data
 
-`topology.json` and `samples.json` are generated from the live `ramses_cc` packet cache by the sanitising collector. They keep only last-three-digit device labels and an allow-list of decoded values. The full ingestion contract is in `docs/ingest-contract.md`.
+`topology.json`, `samples.json`, and `packets.json` are generated from the live `ramses_cc` packet cache. The first two are sanitised; `packets.json` is an intentionally retained, bounded raw RAMSES-II packet corpus. The full ingestion contract is in `docs/ingest-contract.md`.
 
 Refresh locally with a pipeline that does not save the raw export:
 

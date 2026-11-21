@@ -5,7 +5,7 @@
 - This repository models and tests RAMSES-II behaviour only.
 - Do not transmit RF, alter gateway transmit settings, bind devices, or change live heating configuration.
 - Use only `RAMSES/TEST/...` MQTT topics in simulator code and fixtures.
-- Never store credentials, Home Assistant tokens, broker passwords, or raw production captures in Git.
+- Never store credentials, Home Assistant tokens, broker passwords, or Home Assistant configuration in Git. Bounded RAMSES-II packet corpora under `data/observed/` are explicitly allowed.
 
 ## Working agreement
 
@@ -14,7 +14,7 @@
 - Add or update an ADR for decisions affecting architecture, controller identity, RF transport, or cutover.
 - Add a deterministic test for every schedule, override, encoding, or state-transition change.
 - Documentation is a release artifact: update the relevant architecture, objective, contract, rule, target-system, or ADR document in the same change.
-- Refresh observed data through the sanitising collector; never commit raw production captures.
+- Refresh observed data through the collector; raw RAMSES-II packet fixtures may be committed only through its bounded packet-corpus output.
 - Keep derived observation data bounded. The collector replaces its fixtures and caps representative samples; do not introduce append-only logs or captures.
 - Keep the simulator software-only until an explicit, separately approved RF test plan exists.
 

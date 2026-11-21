@@ -37,3 +37,18 @@ def test_observed_samples_follow_the_ingest_contract() -> None:
         assert all(value is None or isinstance(value, (bool, int, float, str)) for value in sample["values"].values())
         counts[sample["code"]] = counts.get(sample["code"], 0) + 1
     assert all(count <= observed["retention"]["per_code_limit"] for count in counts.values())
+
+
+@pytest.mark.integration
+def test_raw_packet_corpus_is_bounded_and_self_consistent() -> None:
+    corpus = json.loads(Path("data/observed/packets.json").read_text(encoding="utf-8"))
+    assert corpus["format"] == 1
+    assert corpus["snapshot"] is True
+    assert corpus["retention"]["per_code_limit"] == 32
+    assert corpus["packets"]
+    counts = {}
+    for packet in corpus["packets"]:
+        assert set(packet) <= {"verb", "src", "dst", "code", "frame", "payload"}
+        assert packet["code"] in packet["frame"]
+        counts[packet["code"]] = counts.get(packet["code"], 0) + 1
+    assert all(count <= corpus["retention"]["per_code_limit"] for count in counts.values())

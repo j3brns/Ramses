@@ -1,0 +1,677 @@
+{
+  "format": 1,
+  "description": "Bounded raw RAMSES-II packet corpus extracted from ramses_cc cache",
+  "snapshot": true,
+  "retention": {
+    "per_code_limit": 32,
+    "discarded": 0
+  },
+  "packets": [
+    {
+      "verb": " I",
+      "src": "12:216487",
+      "dst": "12:216487",
+      "code": "0008",
+      "frame": " I --- --:------ --:------ 12:216487 0008 002 0000",
+      "payload": {
+        "zone_index": "00",
+        "domain_index": "00",
+        "relay_demand": 0.0,
+        "seqx_num": "220"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "12:216751",
+      "dst": "12:216751",
+      "code": "0008",
+      "frame": " I --- --:------ --:------ 12:216751 0008 002 0000",
+      "payload": {
+        "zone_index": "00",
+        "domain_index": "00",
+        "relay_demand": 0.0,
+        "seqx_num": "092"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "22:013226",
+      "dst": "22:013226",
+      "code": "0008",
+      "frame": " I --- 22:013226 --:------ 22:013226 0008 002 00C8",
+      "payload": {
+        "domain_index": "00",
+        "relay_demand": 1.0
+      }
+    },
+    {
+      "verb": "RP",
+      "src": "13:193642",
+      "dst": "18:016440",
+      "code": "0008",
+      "frame": "RP --- 13:193642 18:016440 --:------ 0008 002 00C8",
+      "payload": {
+        "domain_index": "00",
+        "relay_demand": 1.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "12:216487",
+      "dst": "12:216487",
+      "code": "000A",
+      "frame": " I --- --:------ --:------ 12:216487 000A 012 010001F40898020001F40898",
+      "payload": [
+        {
+          "zone_index": "01",
+          "min_temp": 5.0,
+          "max_temp": 22.0,
+          "local_override": true,
+          "openwindow_function": true,
+          "multiroom_mode": true,
+          "seqx_num": "231"
+        },
+        {
+          "zone_index": "02",
+          "min_temp": 5.0,
+          "max_temp": 22.0,
+          "local_override": true,
+          "openwindow_function": true,
+          "multiroom_mode": true,
+          "seqx_num": "231"
+        }
+      ]
+    },
+    {
+      "verb": " I",
+      "src": "12:216751",
+      "dst": "12:216751",
+      "code": "000A",
+      "frame": " I --- --:------ --:------ 12:216751 000A 012 010001F40898020001F40898",
+      "payload": [
+        {
+          "zone_index": "01",
+          "min_temp": 5.0,
+          "max_temp": 22.0,
+          "local_override": true,
+          "openwindow_function": true,
+          "multiroom_mode": true,
+          "seqx_num": "091"
+        },
+        {
+          "zone_index": "02",
+          "min_temp": 5.0,
+          "max_temp": 22.0,
+          "local_override": true,
+          "openwindow_function": true,
+          "multiroom_mode": true,
+          "seqx_num": "091"
+        }
+      ]
+    },
+    {
+      "verb": " I",
+      "src": "04:090387",
+      "dst": "04:090387",
+      "code": "1060",
+      "frame": " I --- 04:090387 --:------ 04:090387 1060 003 00FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:090387",
+      "dst": "12:216751",
+      "code": "1060",
+      "frame": " I --- 04:090387 --:------ 12:216751 1060 003 01FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null,
+        "zone_index": "01"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:090389",
+      "dst": "04:090389",
+      "code": "1060",
+      "frame": " I --- 04:090389 --:------ 04:090389 1060 003 00FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:090389",
+      "dst": "12:216487",
+      "code": "1060",
+      "frame": " I --- 04:090389 --:------ 12:216487 1060 003 02FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null,
+        "zone_index": "02"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118027",
+      "dst": "04:118027",
+      "code": "1060",
+      "frame": " I --- 04:118027 --:------ 04:118027 1060 003 00FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118027",
+      "dst": "12:216487",
+      "code": "1060",
+      "frame": " I --- 04:118027 --:------ 12:216487 1060 003 01FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null,
+        "zone_index": "01"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118030",
+      "dst": "04:118030",
+      "code": "1060",
+      "frame": " I --- 04:118030 --:------ 04:118030 1060 003 00FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118030",
+      "dst": "12:216487",
+      "code": "1060",
+      "frame": " I --- 04:118030 --:------ 12:216487 1060 003 01FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null,
+        "zone_index": "01"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118040",
+      "dst": "04:118040",
+      "code": "1060",
+      "frame": " I --- 04:118040 --:------ 04:118040 1060 003 00FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118040",
+      "dst": "12:216751",
+      "code": "1060",
+      "frame": " I --- 04:118040 --:------ 12:216751 1060 003 02FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null,
+        "zone_index": "02"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118048",
+      "dst": "04:118048",
+      "code": "1060",
+      "frame": " I --- 04:118048 --:------ 04:118048 1060 003 00FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118048",
+      "dst": "12:216487",
+      "code": "1060",
+      "frame": " I --- 04:118048 --:------ 12:216487 1060 003 02FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null,
+        "zone_index": "02"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118049",
+      "dst": "04:118049",
+      "code": "1060",
+      "frame": " I --- 04:118049 --:------ 04:118049 1060 003 00FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118049",
+      "dst": "12:216487",
+      "code": "1060",
+      "frame": " I --- 04:118049 --:------ 12:216487 1060 003 01FF01",
+      "payload": {
+        "battery_low": false,
+        "battery_level": null,
+        "zone_index": "01"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:006472",
+      "dst": "12:216751",
+      "code": "12B0",
+      "frame": " I --- 04:006472 --:------ 12:216751 12B0 003 010000",
+      "payload": {
+        "zone_index": "01",
+        "window_open": false
+      }
+    },
+    {
+      "verb": " I",
+      "src": "12:216487",
+      "dst": "12:216487",
+      "code": "1F09",
+      "frame": " I --- --:------ --:------ 12:216487 1F09 003 000A28",
+      "payload": {
+        "zone_index": "00",
+        "remaining_seconds": 260.0,
+        "seqx_num": "227"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "12:216751",
+      "dst": "12:216751",
+      "code": "1F09",
+      "frame": " I --- --:------ --:------ 12:216751 1F09 003 000A50",
+      "payload": {
+        "zone_index": "00",
+        "remaining_seconds": 264.0,
+        "seqx_num": "087"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "12:216487",
+      "dst": "12:216487",
+      "code": "2309",
+      "frame": " I --- --:------ --:------ 12:216487 2309 003 0103E8",
+      "payload": {
+        "zone_index": "01",
+        "setpoint": 10.0,
+        "seqx_num": "229"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "12:216751",
+      "dst": "12:216751",
+      "code": "2309",
+      "frame": " I --- --:------ --:------ 12:216751 2309 003 0104B0",
+      "payload": {
+        "zone_index": "01",
+        "setpoint": 12.0,
+        "seqx_num": "089"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:006472",
+      "dst": "12:216751",
+      "code": "2309",
+      "frame": " I --- 04:006472 --:------ 12:216751 2309 003 0104B0",
+      "payload": {
+        "zone_index": "01",
+        "setpoint": 12.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:090387",
+      "dst": "12:216751",
+      "code": "2309",
+      "frame": " I --- 04:090387 --:------ 12:216751 2309 003 0104B0",
+      "payload": {
+        "zone_index": "01",
+        "setpoint": 12.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:090389",
+      "dst": "12:216487",
+      "code": "2309",
+      "frame": " I --- 04:090389 --:------ 12:216487 2309 003 020578",
+      "payload": {
+        "zone_index": "02",
+        "setpoint": 14.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118027",
+      "dst": "12:216487",
+      "code": "2309",
+      "frame": " I --- 04:118027 --:------ 12:216487 2309 003 0103E8",
+      "payload": {
+        "zone_index": "01",
+        "setpoint": 10.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118030",
+      "dst": "12:216487",
+      "code": "2309",
+      "frame": " I --- 04:118030 --:------ 12:216487 2309 003 0103E8",
+      "payload": {
+        "zone_index": "01",
+        "setpoint": 10.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118040",
+      "dst": "12:216751",
+      "code": "2309",
+      "frame": " I --- 04:118040 --:------ 12:216751 2309 003 0204B0",
+      "payload": {
+        "zone_index": "02",
+        "setpoint": 12.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118048",
+      "dst": "12:216487",
+      "code": "2309",
+      "frame": " I --- 04:118048 --:------ 12:216487 2309 003 020578",
+      "payload": {
+        "zone_index": "02",
+        "setpoint": 14.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118049",
+      "dst": "12:216487",
+      "code": "2309",
+      "frame": " I --- 04:118049 --:------ 12:216487 2309 003 0103E8",
+      "payload": {
+        "zone_index": "01",
+        "setpoint": 10.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "22:013226",
+      "dst": "22:013226",
+      "code": "2309",
+      "frame": " I --- 22:013226 --:------ 22:013226 2309 003 000DAC",
+      "payload": {
+        "zone_index": "00",
+        "setpoint": 35.0
+      }
+    },
+    {
+      "verb": " I",
+      "src": "12:216487",
+      "dst": "12:216487",
+      "code": "30C9",
+      "frame": " I --- --:------ --:------ 12:216487 30C9 003 0106C7",
+      "payload": {
+        "zone_index": "01",
+        "temperature": 17.35,
+        "seqx_num": "230"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "12:216751",
+      "dst": "12:216751",
+      "code": "30C9",
+      "frame": " I --- --:------ --:------ 12:216751 30C9 003 01071F",
+      "payload": {
+        "zone_index": "01",
+        "temperature": 18.23,
+        "seqx_num": "090"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:006472",
+      "dst": "04:006472",
+      "code": "30C9",
+      "frame": " I --- 04:006472 --:------ 04:006472 30C9 003 000689",
+      "payload": {
+        "zone_index": "00",
+        "temperature": 16.73
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:090387",
+      "dst": "04:090387",
+      "code": "30C9",
+      "frame": " I --- 04:090387 --:------ 04:090387 30C9 003 000751",
+      "payload": {
+        "zone_index": "00",
+        "temperature": 18.73
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:090389",
+      "dst": "04:090389",
+      "code": "30C9",
+      "frame": " I --- 04:090389 --:------ 04:090389 30C9 003 000744",
+      "payload": {
+        "zone_index": "00",
+        "temperature": 18.6
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118027",
+      "dst": "04:118027",
+      "code": "30C9",
+      "frame": " I --- 04:118027 --:------ 04:118027 30C9 003 0008DF",
+      "payload": {
+        "zone_index": "00",
+        "temperature": 22.71
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118030",
+      "dst": "04:118030",
+      "code": "30C9",
+      "frame": " I --- 04:118030 --:------ 04:118030 30C9 003 000698",
+      "payload": {
+        "zone_index": "00",
+        "temperature": 16.88
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118040",
+      "dst": "04:118040",
+      "code": "30C9",
+      "frame": " I --- 04:118040 --:------ 04:118040 30C9 003 000662",
+      "payload": {
+        "zone_index": "00",
+        "temperature": 16.34
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118048",
+      "dst": "04:118048",
+      "code": "30C9",
+      "frame": " I --- 04:118048 --:------ 04:118048 30C9 003 00064F",
+      "payload": {
+        "zone_index": "00",
+        "temperature": 16.15
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118049",
+      "dst": "04:118049",
+      "code": "30C9",
+      "frame": " I --- 04:118049 --:------ 04:118049 30C9 003 000680",
+      "payload": {
+        "zone_index": "00",
+        "temperature": 16.64
+      }
+    },
+    {
+      "verb": " I",
+      "src": "22:013226",
+      "dst": "22:013226",
+      "code": "30C9",
+      "frame": " I --- 22:013226 --:------ 22:013226 30C9 003 0007CF",
+      "payload": {
+        "zone_index": "00",
+        "temperature": 19.99
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:006472",
+      "dst": "12:216751",
+      "code": "3150",
+      "frame": " I --- 04:006472 --:------ 12:216751 3150 002 0100",
+      "payload": {
+        "heat_demand": 0.0,
+        "zone_index": "01"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:090387",
+      "dst": "12:216751",
+      "code": "3150",
+      "frame": " I --- 04:090387 --:------ 12:216751 3150 002 0100",
+      "payload": {
+        "heat_demand": 0.0,
+        "zone_index": "01"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:090389",
+      "dst": "12:216487",
+      "code": "3150",
+      "frame": " I --- 04:090389 --:------ 12:216487 3150 002 0200",
+      "payload": {
+        "heat_demand": 0.0,
+        "zone_index": "02"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118027",
+      "dst": "12:216487",
+      "code": "3150",
+      "frame": " I --- 04:118027 --:------ 12:216487 3150 002 0100",
+      "payload": {
+        "heat_demand": 0.0,
+        "zone_index": "01"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118030",
+      "dst": "12:216487",
+      "code": "3150",
+      "frame": " I --- 04:118030 --:------ 12:216487 3150 002 0100",
+      "payload": {
+        "heat_demand": 0.0,
+        "zone_index": "01"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118040",
+      "dst": "12:216751",
+      "code": "3150",
+      "frame": " I --- 04:118040 --:------ 12:216751 3150 002 0200",
+      "payload": {
+        "heat_demand": 0.0,
+        "zone_index": "02"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118048",
+      "dst": "12:216487",
+      "code": "3150",
+      "frame": " I --- 04:118048 --:------ 12:216487 3150 002 0200",
+      "payload": {
+        "heat_demand": 0.0,
+        "zone_index": "02"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "04:118049",
+      "dst": "12:216487",
+      "code": "3150",
+      "frame": " I --- 04:118049 --:------ 12:216487 3150 002 0100",
+      "payload": {
+        "heat_demand": 0.0,
+        "zone_index": "01"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "12:216487",
+      "dst": "12:216487",
+      "code": "3B00",
+      "frame": " I --- --:------ --:------ 12:216487 3B00 002 00C8",
+      "payload": {
+        "zone_index": "00",
+        "actuator_sync": true,
+        "seqx_num": "226"
+      }
+    },
+    {
+      "verb": " I",
+      "src": "13:193642",
+      "dst": "13:193642",
+      "code": "3EF0",
+      "frame": " I --- 13:193642 --:------ 13:193642 3EF0 003 00C8FF",
+      "payload": {
+        "modulation_level": 1.0
+      }
+    },
+    {
+      "verb": "RP",
+      "src": "13:193642",
+      "dst": "22:013226",
+      "code": "3EF1",
+      "frame": "RP --- 13:193642 22:013226 --:------ 3EF1 007 0000370037C8FF",
+      "payload": {
+        "cycle_countdown": 55,
+        "actuator_countdown": 55,
+        "modulation_level": 1.0
+      }
+    }
+  ]
+}

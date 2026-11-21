@@ -145,7 +145,7 @@
       "source": "487",
       "values": {
         "remaining_seconds": 260.0,
-        "seqx_num": "215",
+        "seqx_num": "227",
         "zone_index": "00"
       },
       "destination": "487"
@@ -155,7 +155,7 @@
       "source": "751",
       "values": {
         "remaining_seconds": 264.0,
-        "seqx_num": "076",
+        "seqx_num": "087",
         "zone_index": "00"
       },
       "destination": "751"
@@ -246,7 +246,7 @@
       "source": "487",
       "values": {
         "setpoint": 10.0,
-        "seqx_num": "217",
+        "seqx_num": "229",
         "zone_index": "01"
       },
       "destination": "487"
@@ -256,7 +256,7 @@
       "source": "751",
       "values": {
         "setpoint": 12.0,
-        "seqx_num": "078",
+        "seqx_num": "089",
         "zone_index": "01"
       },
       "destination": "751"
@@ -265,7 +265,7 @@
       "code": "30C9",
       "source": "027",
       "values": {
-        "temperature": 22.78,
+        "temperature": 22.71,
         "zone_index": "00"
       },
       "destination": "027"
@@ -274,7 +274,7 @@
       "code": "30C9",
       "source": "030",
       "values": {
-        "temperature": 16.94,
+        "temperature": 16.88,
         "zone_index": "00"
       },
       "destination": "030"
@@ -283,7 +283,7 @@
       "code": "30C9",
       "source": "040",
       "values": {
-        "temperature": 16.4,
+        "temperature": 16.34,
         "zone_index": "00"
       },
       "destination": "040"
@@ -301,7 +301,7 @@
       "code": "30C9",
       "source": "049",
       "values": {
-        "temperature": 16.7,
+        "temperature": 16.64,
         "zone_index": "00"
       },
       "destination": "049"
@@ -310,7 +310,7 @@
       "code": "30C9",
       "source": "226",
       "values": {
-        "temperature": 20.22,
+        "temperature": 19.99,
         "zone_index": "00"
       },
       "destination": "226"
@@ -319,7 +319,7 @@
       "code": "30C9",
       "source": "387",
       "values": {
-        "temperature": 18.91,
+        "temperature": 18.73,
         "zone_index": "00"
       },
       "destination": "387"
@@ -337,7 +337,7 @@
       "code": "30C9",
       "source": "472",
       "values": {
-        "temperature": 16.93,
+        "temperature": 16.73,
         "zone_index": "00"
       },
       "destination": "472"
@@ -346,8 +346,8 @@
       "code": "30C9",
       "source": "487",
       "values": {
-        "temperature": 17.41,
-        "seqx_num": "218",
+        "temperature": 17.35,
+        "seqx_num": "230",
         "zone_index": "01"
       },
       "destination": "487"
@@ -356,8 +356,8 @@
       "code": "30C9",
       "source": "751",
       "values": {
-        "temperature": 18.38,
-        "seqx_num": "079",
+        "temperature": 18.23,
+        "seqx_num": "090",
         "zone_index": "01"
       },
       "destination": "751"

@@ -21,14 +21,15 @@ The ingester accepts one JSON cache export containing `data.client_state.packets
 
 ## Output schema
 
-The refresh creates two tracked derived fixtures:
+The refresh creates three tracked fixtures:
 
 - `data/observed/topology.json`: controller-zone membership from `2309` and `3150` records.
 - `data/observed/samples.json`: examples of `1F09`, `2309`, `3150`, `30C9`, `1060`, and `3EF0` with a fixed allow-list of decoded values.
+- `data/observed/packets.json`: exact RAMSES-II frames and decoded packet fields for independent protocol-contract tests.
 
-Both use format `1`, retain only the final three device-ID digits, omit raw frames and cache keys, and contain no credentials, IP addresses, topics, or timestamps. Decoded values may be numbers, booleans, strings, or `null` when a device reports an unknown value (for example, battery percentage).
+`topology.json` and `samples.json` retain only final three device-ID digits. `packets.json` intentionally retains full RAMSES-II device IDs and raw frames. No fixture contains Home Assistant configuration, credentials, IP addresses, topics, or timestamps. Decoded values may be numbers, booleans, strings, or `null` when a device reports an unknown value (for example, battery percentage).
 
-`samples.json` is bounded to 16 examples per packet code (96 maximum across the six supported codes). Excess cache examples are deterministically discarded and counted in its `retention` object. Each refresh replaces the previous derived fixtures; no raw log or historical capture is retained by this repository.
+`samples.json` is bounded to 16 examples per packet code (96 maximum across the six supported codes). `packets.json` is bounded to 32 packets per packet code. Excess examples are deterministically discarded and counted in each `retention` object. Each refresh replaces the previous fixtures; no Home Assistant log or historical capture is retained by this repository.
 
 ## Acceptance rules
 
