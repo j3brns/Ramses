@@ -2,9 +2,11 @@
 
 ![Voxel cutaway heating-programmer ident](assets/ident/voxel-house-white.svg)
 
-Ramses is a **software-only digital twin** of an observed Honeywell RAMSES-II heating network. Its strategic target is replacement of the existing physical heating-control hardware while retaining the installed TRVs and hot-water-cylinder temperature gauge. It is the engineering workspace for proving that replacement in software before anyone changes a live controller, valve binding, gateway setting, or boiler circuit.
+Ramses is a **software-only digital twin** of an observed Honeywell RAMSES-II heating network. Its strategic target is replacement of the existing physical heating-control hardware while retaining the installed TRVs. The hot-water-cylinder temperature gauge is an in-scope planned addition to the Sunnydays system. This is the engineering workspace for proving the replacement in software before anyone changes a live controller, valve binding, gateway setting, or boiler circuit.
 
 > **Current status: experimental, read-only and test-world only.** The model, timer, temporary/permanent overrides, optimiser core, virtual TRV behaviour and contract tests exist. The live installation remains the authority; this repository must not transmit RF or publish to the live MQTT root.
+
+> **Operational rule: prove first.** During development, every control behaviour must prove itself through deterministic tests, bounded evidence, isolated test transport and UI acceptance before it can be considered for any live role. A passing simulation does not authorise live hardware change.
 
 ## Why this exists
 

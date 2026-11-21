@@ -4,7 +4,7 @@
 
 Expand the top-level README from a compact project stub into the documentation entry point for the Ramses experiment.
 
-The release also corrects the strategic objective: replacement of physical heating-control hardware is the target, while the installed TRVs and hot-water-cylinder temperature gauge are retained devices. Present work stays software-only.
+The release also corrects the strategic objective: replacement of physical heating-control hardware is the target, while the installed TRVs are retained. Cylinder temperature is an in-scope planned Sunnydays addition, not a prematurely specified retained physical-control component. Present work stays software-only.
 
 ## Failure modes
 
