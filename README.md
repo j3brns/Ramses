@@ -2,6 +2,8 @@
 
 A software model of the existing CM67z/HR80 heating network, built before any live RF control changes.
 
+![Wireframe sundial ident](assets/ident/sundial-wireframe.png)
+
 ## Scope
 
 - Mirror the observed RAMSES-II packet contract over a separate `RAMSES/TEST` MQTT namespace.
