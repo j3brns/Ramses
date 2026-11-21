@@ -24,6 +24,12 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 - Demand follows the declared clamped proportional response; it is not claimed to be Honeywell's internal algorithm.
 - This local-override rule is a simulator decision, not a claimed physical-TRV behaviour. Calibration and RF decisions still require ordered observed scenarios before asserting physical fidelity.
 
+## Virtual BDR contract
+
+- The virtual BDR aggregates current virtual-TRV demand using the maximum demand; it exposes that value and its contributing virtual devices.
+- It reports relay on when demand is at or above its declared threshold, and off when no demand reaches that threshold.
+- This is an explicit test-world coordination model. It does not claim the BDR91's physical relay timing, modulation, or boiler-control behaviour.
+
 ## Restart contract
 
 - On startup or MQTT reconnect, recompute the active target from schedule and override state.

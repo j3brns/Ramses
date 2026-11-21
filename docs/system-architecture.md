@@ -19,6 +19,7 @@ Virtual CM67z controllers <-> Virtual TRVs <-> Virtual BDR91
 | Schedule adapter | Supplies a timezone-aware weekly timetable, active setpoint, and next switchpoint. |
 | Zone coordinator | Owns schedule, override, target and recovery state for one zone. |
 | Virtual TRV | Applies only its bound-zone target, tracks local override/window state, and emits a declared heat-demand response. |
+| Virtual BDR | Uses the highest current virtual-TRV demand as an explicit test-only demand value and turns a virtual relay on above a declared threshold. |
 | Predictor | Learns each zone's heating gain and passive loss from bounded observations, then estimates conservative early-start timing. |
 | Packet encoder | Produces protocol-valid test frames. |
 | Test transport | Publishes/consumes only `RAMSES/TEST/...` MQTT messages. |
