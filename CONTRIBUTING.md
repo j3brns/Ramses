@@ -8,7 +8,7 @@ Run `scripts/check.ps1`. It compiles the package and runs the deterministic unit
 
 ### GitLab loop
 
-`.gitlab-ci.yml` repeats the same checks in a clean Python environment. GitLab is the merge gate; it does not connect to MQTT, Home Assistant, or RF hardware.
+GitHub Actions repeats the same checks in a clean Python environment. `.gitlab-ci.yml` provides the equivalent pipeline if the repository is mirrored to GitLab. Neither connects to MQTT, Home Assistant, or RF hardware.
 
 ## Test layers
 

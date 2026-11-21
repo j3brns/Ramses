@@ -1,6 +1,32 @@
 # Captures may contain local device identities and timestamps.
 captures/
+data/raw/
+data/private/
 *.log
+*.pcap
+*.pcapng
+*.jsonl
+
+# Local Home Assistant and broker configuration.
+homeassistant/
+mosquitto/
+local/
+configuration.local.yaml
+secrets.yaml
+secrets.*.yaml
+.storage/
+
+# Credentials and key material.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+id_rsa
+id_ed25519
 
 # Python
 __pycache__/

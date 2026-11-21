@@ -8,6 +8,7 @@ verify:
   script:
     - python -m pip install --upgrade pip
     - python -m pip install '.[dev]'
+    - python scripts/secret_scan.py
     - python -m compileall -q src
     - python -m pytest
   rules:
