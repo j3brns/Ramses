@@ -2,7 +2,7 @@
 
 ## Scope
 
-Promotion of `assets/ident/explorations/voxel-house-white-v4.png` as the production top-level README ident.
+Promotion of the white voxel house as the production top-level README ident, using hand-authored `assets/ident/voxel-house-white.svg` and retaining `voxel-house-white-v4.png` as its high-fidelity reference.
 
 ## Failure modes
 
@@ -10,6 +10,7 @@ Promotion of `assets/ident/explorations/voxel-house-white-v4.png` as the product
 - A voxel visual language could be mistaken for a copied game asset or for a literal Home Assistant UI.
 - An off-white or aged background could look muddy against GitHub Markdown and weaken the requested clarity.
 - A later edit could lose the prompt, decision, and review context that makes the generated asset repeatable.
+- An automatic vector trace could preserve raster artefacts and be less maintainable than the PNG.
 
 ## Evidence and tests
 
@@ -17,7 +18,7 @@ The candidate was generated from explicitly original, asset-free constraints and
 
 ## Decision
 
-Use `voxel-house-white-v4.png` in the README. Keep the preceding `v3` and all dark candidates for provenance and alternatives. Retain `sundial-wireframe.png` for dark dashboard/panel uses. The asset is an explanatory ident, not a product UI.
+Use `voxel-house-white.svg` in the README. Keep v4 as the high-fidelity reference and the preceding v3/dark candidates for provenance and alternatives. Retain `sundial-wireframe.png` for dark dashboard/panel uses. The asset is an explanatory ident, not a product UI.
 
 ## Rollback
 

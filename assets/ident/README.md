@@ -1,5 +1,7 @@
 # Ramses ident
 
+`voxel-house-white.svg` is the hand-authored production README asset: a scalable, editable vector re-expression of the white voxel house. It is deliberately simpler than the rendered PNG so every shape and colour can be reviewed in source. `explorations/voxel-house-white-v4.png` remains the higher-fidelity reference image. Both use a pure-white background and bright, clear engineering colours.
+
 `explorations/voxel-house-white-v4.png` is the selected production README ident. It combines the cross-section insight of the first voxel-house composition with a denser modular engineering model: roof sundial, passing sun, programme traces, burner, hot-water vessel, valves, radiator and return loop. Its backdrop is pure white, not paper, cream, sepia or an aged finish; the bright cyan, yellow, orange, red and green palette is intentional for Markdown legibility. The dark wireframe sundial remains retained for dark dashboard and panel surfaces.
 
 `sundial-wireframe.png` is the selected README ident. It is an original vector-like raster illustration: a sundial, schedule ticks and a travelling sun are viewed through an abstract wireframe arcade instrument window. The visual language nods to early wireframe arcade simulators without reproducing a game, vehicle, logo, interface, or other protected asset.

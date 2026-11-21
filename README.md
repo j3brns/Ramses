@@ -2,7 +2,7 @@
 
 A software model of the existing CM67z/HR80 heating network, built before any live RF control changes.
 
-![Voxel cutaway heating-programmer ident](assets/ident/explorations/voxel-house-white-v4.png)
+![Voxel cutaway heating-programmer ident](assets/ident/voxel-house-white.svg)
 
 ## Scope
 

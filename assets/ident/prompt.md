@@ -7,6 +7,10 @@ reviewed: 2026-11-21
 
 # Sundial wireframe ident prompt history
 
+## Hand-authored SVG companion
+
+`voxel-house-white.svg` is a maintainable, semantic vector re-expression of the selected design, not an automatic trace of its raster. It preserves the pure-white ground, travelling sun/time arc, roof sundial, programme node, burner, vessel, valves, radiator and cool return. Its SVG source has a title and description for accessibility, explicit colour values, and no embedded raster or external dependency. It is the production README asset; the v4 PNG is retained as the high-fidelity reference.
+
 ## Production README asset: white voxel house v4
 
 **Prompt v4:** Refine the white voxel cutaway house into the production README banner for the Ramses heating-programmer project. Keep the isometric house cross-section, roof sundial, travelling sun, programme/thermostat nodes, burner, water vessel, valves, radiator and return loop. Use crisp, denser modular blockwork and a clear causal story from passing time to heat. The background must be exact pure white (`#FFFFFF`): no cream, parchment, beige, sepia, paper grain, aged effect, vignette, texture or shadowing. Use only bright, clear, high-contrast cyan/blue for time and water, yellow/orange for sun and burner, red for heat, green for controls and dark-slate outlines. Keep it original and game-adjacent rather than copying Minecraft or another game. No words, logos, UI screenshots, characters or watermarks.
