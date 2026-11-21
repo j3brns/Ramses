@@ -15,6 +15,8 @@ This is a small, version-controlled Open Knowledge Format (OKF) bundle. It store
 - [Programmer behaviour](programmer-behaviour.md) — manual-derived user-visible rules and acceptance examples.
 - [Lovelace help and UI assurance](lovelace-help-and-ui-assurance.md) — documentation rendering and computer-use evaluation requirements.
 
+- [Baseline RX observations](baseline-rx-observations.md) â€” bounded message-code and topology evidence, not a timing model.
+
 ## Source policy
 
 Every concept identifies its source, scope and verification state. Manual sources are paraphrased; copied prose, images, serial numbers, credentials, HA configuration and live packet logs are excluded. The canonical rendered user guide remains ordinary Markdown under `docs/`.
