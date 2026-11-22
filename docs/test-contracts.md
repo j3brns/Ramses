@@ -64,7 +64,7 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 - A replay harness decodes ordered frames before asserting state transitions; it must not infer temporal behaviour from an unordered cache.
 - Each replay test states its permitted timing tolerance. Packet order and named state transitions are exact unless the fixture declares a retry/duplicate allowance.
 - Structural replay preserves RX list order and validates the RAMSES frame envelope before semantic interpretation. It may count packet codes, but cannot infer physical state changes without a named scenario contract.
-- Only broker receipt timestamps can support elapsed-time assertions. Gateway timestamps marked `epoch-invalid` or `unverified` remain diagnostic metadata.
+- Only strictly increasing, timezone-aware broker receipt timestamps can support elapsed-time assertions. Gateway timestamps marked `epoch-invalid` or `unverified` remain diagnostic metadata.
 
 ## Dashboard contract
 

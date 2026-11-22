@@ -121,4 +121,8 @@ def _timestamps_reliable(frames: tuple[ObservedFrame, ...]) -> bool:
         dates = [datetime.fromisoformat(frame.receipt_ts) for frame in frames if frame.receipt_ts]
     except ValueError:
         return False
-    return len(dates) == len(frames) and all(date.tzinfo is not None and date.year >= 2000 for date in dates)
+    return (
+        len(dates) == len(frames)
+        and all(date.tzinfo is not None and date.year >= 2000 for date in dates)
+        and all(previous < current for previous, current in zip(dates, dates[1:]))
+    )

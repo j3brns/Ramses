@@ -32,6 +32,29 @@ def test_replay_rejects_epoch_clock_for_timing_claims_but_keeps_order() -> None:
     assert trace.frames[0].ordinal < trace.frames[1].ordinal
 
 
+def test_replay_requires_strictly_increasing_broker_receipt_times_for_timing_claims() -> None:
+    scenario = {
+        "format": 1,
+        "kind": "ordered-rx-scenario",
+        "name": "receipt-order",
+        "retention": {"event_limit": 2, "discarded": 0},
+        "events": [
+            {
+                "topic": "RAMSES/GATEWAY/18:016440/rx",
+                "receipt_ts": "2026-11-22T08:00:01+00:00",
+                "payload": {"msg": "066 I --- 01:000001 --:------ 02:000002 2309 003 010700", "ts": "1970-01-01T00:00:00+00:00"},
+            },
+            {
+                "topic": "RAMSES/GATEWAY/18:016440/rx",
+                "receipt_ts": "2026-11-22T08:00:01+00:00",
+                "payload": {"msg": "066 I --- 01:000001 --:------ 02:000002 2309 003 010700", "ts": "1970-01-01T00:00:00+00:00"},
+            },
+        ],
+    }
+
+    assert replay_scenario(scenario).timestamps_reliable is False
+
+
 @pytest.mark.parametrize(
     "message, reason",
     [
