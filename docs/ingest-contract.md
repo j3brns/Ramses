@@ -15,7 +15,7 @@ ssh ha "sudo -n cat /homeassistant/.storage/ramses_cc" |
 
 An HA API adapter may be added later only if it produces the same source schema. Its token belongs in local secret storage and must never be committed or logged.
 
-Ordered radio evidence uses the separate, credential-free `scripts/feed_live_rx.py` filter. A locally authenticated subscriber supplies NDJSON; the filter accepts passive `RAMSES/GATEWAY/<gateway-id>/rx` envelopes only, caps them, and hands them to `scripts/record_scenario.py`. It does not connect to MQTT, publish, or append a log.
+Ordered radio evidence uses the separate, credential-free `scripts/feed_live_rx.py` filter. A locally authenticated subscriber supplies NDJSON; the filter accepts only concrete passive `RAMSES/GATEWAY/<NN:NNNNNN>/rx` envelopes, caps them, and hands them to `scripts/record_scenario.py`. It rejects wildcard, nested, malformed, and TX topics. It does not connect to MQTT, publish, or append a log.
 
 ## Source schema
 

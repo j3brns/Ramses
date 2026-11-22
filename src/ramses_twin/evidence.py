@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
+import re
 from typing import Any
+
+
+_GATEWAY_ID = re.compile(r"[0-9]{2}:[0-9]{6}")
 
 
 def normalise_rx_event(event: dict[str, Any], topic_root: str = "RAMSES/GATEWAY") -> dict[str, str]:
@@ -14,7 +18,7 @@ def normalise_rx_event(event: dict[str, Any], topic_root: str = "RAMSES/GATEWAY"
     must not become evidence of elapsed wall-clock time.
     """
     topic = event.get("topic")
-    if not isinstance(topic, str) or not topic.startswith(f"{topic_root}/") or not topic.endswith("/rx"):
+    if not _is_rx_topic(topic, topic_root):
         raise ValueError("event must come from an RX topic below the configured gateway root")
     payload = event.get("payload", event)
     if not isinstance(payload, dict):
@@ -41,6 +45,17 @@ def normalise_rx_event(event: dict[str, Any], topic_root: str = "RAMSES/GATEWAY"
     if isinstance(receipt_timestamp, str) and receipt_timestamp:
         result["receipt_ts"] = receipt_timestamp
     return result
+
+
+def _is_rx_topic(topic: object, topic_root: str) -> bool:
+    """Accept one concrete gateway RX topic, never a wildcard or nested path."""
+    if not isinstance(topic, str) or not isinstance(topic_root, str) or not topic_root:
+        return False
+    prefix = f"{topic_root}/"
+    if not topic.startswith(prefix):
+        return False
+    suffix = topic[len(prefix) :].split("/")
+    return len(suffix) == 2 and _GATEWAY_ID.fullmatch(suffix[0]) is not None and suffix[1] == "rx"
 
 
 def _gateway_time_quality(timestamp: str) -> str:

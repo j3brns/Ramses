@@ -35,3 +35,26 @@ def test_recorder_rejects_tx_and_invalid_scenario_names() -> None:
         normalise_rx_event({"topic": "RAMSES/GATEWAY/18:016440/tx", "msg": "frame", "ts": "now"})
     with pytest.raises(ValueError, match="scenario name"):
         scenario_document("Kitchen boost", [], 10)
+
+
+@pytest.mark.parametrize(
+    "topic",
+    [
+        "RAMSES/GATEWAY/18:016440/tx",
+        "RAMSES/GATEWAY/18:016440/rx/extra",
+        "RAMSES/GATEWAY/+/rx",
+        "RAMSES/GATEWAY/18:016440/+/rx",
+        "RAMSES/GATEWAY/not-a-device/rx",
+    ],
+)
+def test_normalise_rx_event_rejects_nonconcrete_or_nested_rx_topics(topic: str) -> None:
+    with pytest.raises(ValueError, match="RX topic"):
+        normalise_rx_event(
+            {
+                "topic": topic,
+                "payload": {
+                    "msg": " I --- 04:000001 12:000001 3150 002 0100",
+                    "ts": "2026-11-21T07:00:00+00:00",
+                },
+            }
+        )
