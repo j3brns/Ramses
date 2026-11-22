@@ -98,7 +98,7 @@ class WeeklySchedule:
 
 @dataclass
 class ZoneController:
-    """One CM67z zone with a scheduled target and optional temporary boost."""
+    """One test-world zone with scheduled, temporary, or permanent target."""
 
     controller_id: str
     zone_index: int
@@ -106,6 +106,7 @@ class ZoneController:
     schedule: WeeklySchedule | None = None
     override_target: float | None = None
     override_until: datetime | None = None
+    permanent_override_target: float | None = None
 
     def __post_init__(self) -> None:
         if self.schedule is None and self.scheduled_target is None:
@@ -120,6 +121,8 @@ class ZoneController:
         return self.scheduled_target
 
     def target_at(self, now: datetime) -> float:
+        if self.permanent_override_target is not None:
+            return self.permanent_override_target
         if self.override_target is not None and self.override_until and now < self.override_until:
             return self.override_target
         self.clear_expired_override(now)
@@ -129,8 +132,22 @@ class ZoneController:
         if until.tzinfo is None:
             raise ValueError("override expiry must be timezone-aware")
         _validate_temperature(target)
+        self.permanent_override_target = None
         self.override_target = target
         self.override_until = until
+
+    def set_permanent_override(self, target: float) -> None:
+        """Replace any temporary override with an explicit permanent target."""
+        _validate_temperature(target)
+        self.override_target = None
+        self.override_until = None
+        self.permanent_override_target = target
+
+    def return_to_schedule(self) -> None:
+        """Discard user overrides so the current schedule immediately applies."""
+        self.override_target = None
+        self.override_until = None
+        self.permanent_override_target = None
 
     def boost_until_next_switch(self, target: float, now: datetime) -> datetime:
         """Apply the standard temporary override and return its exact expiry."""

@@ -8,7 +8,8 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 - A temporary override applies only to its own zone.
 - At expiry, the zone immediately returns to its scheduled target.
 - A weekly schedule uses timezone-aware local wall-clock switch points; a boost-until-next-switch expires at the first later switch point.
-- Permanent override and whole-house quick actions are Programmer Contract capabilities, but are not implemented until their explicit state and restart tests exist.
+- A permanent zone override replaces a temporary zone override and survives a schedule edge; a later temporary override replaces it. **Return to schedule** clears either and immediately exposes the current schedule target.
+- This permanent-override rule is pure test-world state only: it has no UI, persistence or live-control seam. Whole-house quick actions remain unimplemented.
 
 ## Home Assistant Schedule helper contract
 

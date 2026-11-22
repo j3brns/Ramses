@@ -37,7 +37,7 @@ a promise that a dashboard control exists.
 | Zones | pp. 4-5 | Core schedule model; UI pending |
 | Weekly programme | pp. 9-10 | Core model and pure HA mapping; UI pending |
 | Temporary override | p. 11 | Virtual test seam only |
-| Permanent override | p. 11 | Not implemented |
+| Permanent override | p. 11 | Test-world zone model only; UI and persistence pending |
 | Eco/Boost | p. 12 | Not implemented |
 | Away | p. 13 | Not implemented |
 | Day Off | p. 14 | Not implemented |
@@ -53,6 +53,15 @@ target. A cancelled or expired state would reveal the next lower state
 immediately. This is an HA decision inferred from the guide's modes, not a
 claimed Evohome state machine. It must not become a control feature without a
 dedicated state model and deterministic tests.
+
+### Implemented test-world zone override rule
+
+A permanent zone override replaces any temporary zone override and remains
+effective across schedule edges. A subsequent temporary override replaces the
+permanent override. **Return to schedule** clears either kind of zone override
+and immediately exposes the scheduled target. This is an explicit project
+decision for the pure test-world model, exercised with fixed clocks including a
+DST boundary; it does not claim physical-controller behaviour or persistence.
 
 ## Virtual TRV local override
 
@@ -76,7 +85,8 @@ A virtual TRV local override is separate from the programmer's zone override. In
 | --- | --- | --- |
 | Weekly schedule and temporary expiry | `tests/test_timer.py`; `tests/test_model.py`; `tests/test_ha_climate.py` | Test View and computer-use acceptance |
 | HA schedule mapping | `tests/test_ha_schedule.py` | Rendered test-only cards and UI-01â€“UI-08 |
-| Permanent override and Quick Actions | Manual-derived only | State model, deterministic tests, UI acceptance and adversarial review |
+| Permanent override | Pure test-world zone state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
+| Quick Actions | Manual-derived only | State model, deterministic tests, UI acceptance and adversarial review |
 | Optimisation | Manual-derived indication; test-world model contract | Bounded observation/replay evidence, accuracy criteria and UI acceptance |
 | Restart/reconnect | Project rule, not guide evidence | Ordered evidence plus replay contract |
 
