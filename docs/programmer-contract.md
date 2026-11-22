@@ -39,7 +39,7 @@ a promise that a dashboard control exists.
 | Temporary override | p. 11 | Virtual test seam only |
 | Permanent override | p. 11 | Test-world zone model only; UI and persistence pending |
 | Eco/Boost | p. 12 | Timed per-zone Boost test-world model only; Eco unimplemented |
-| Away | p. 13 | Not implemented |
+| Away | p. 13 | Pure in-memory test-world model; UI/persistence/live control pending |
 | Day Off | p. 14 | Not implemented |
 | Heating Off / Custom | pp. 12, 15-16 | Not implemented |
 | Optimisation | pp. 6-7 | Test-world proposal only |
@@ -49,10 +49,13 @@ a promise that a dashboard control exists.
 
 Proposed precedence is `Heating Off`/frost-protect > active timed whole-system
 action > active permanent whole-system action > active zone override > scheduled
-target. A cancelled or expired state would reveal the next lower state
-immediately. This is an HA decision inferred from the guide's modes, not a
-claimed Evohome state machine. It must not become a control feature without a
-dedicated state model and deterministic tests.
+target. The pure test-world timed Away action is the first implemented
+whole-system action: it applies 15 C to its declared zones for 1--99 days or
+until cancellation. It preserves zone-local state; expiry or cancellation
+immediately reveals the then-current lower-precedence target.
+This is an HA decision inferred from the guide's modes, not a claimed Evohome
+state machine. It must not become a control feature without a dedicated state
+model and deterministic tests.
 
 ### Implemented test-world zone override rule
 

@@ -15,6 +15,12 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
   current scheduled target across schedule edges, and returns to that target at
   expiry. The model caps the absolute result at 35 C. It is a pure test-world
   decision, not a physical-controller, UI, persistence, MQTT, or RF claim.
+- A timed Away action applies 15 C to every explicitly declared zone for an
+  aware 1--99-day duration or until explicit cancellation. While active it
+  outranks every zone-local target but does not mutate it; cancellation or
+  expiry immediately exposes each zone's then-current target. `Programmer` is
+  an in-memory test-world boundary with no persistence, HA, MQTT, RF, or UI
+  seam.
 
 ## Home Assistant Schedule helper contract
 
