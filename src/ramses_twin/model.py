@@ -80,8 +80,13 @@ class WeeklySchedule:
         return max(candidates, key=lambda item: item[0])[1]
 
     def next_change_after(self, now: datetime) -> datetime:
-        """Return the first scheduled switch strictly after ``now``."""
+        """Return the first later switch that changes the active target.
+
+        HA schedule conversion may add a day-start marker with the same target
+        as the preceding block. It is structural data, not a setpoint change.
+        """
         self._require_aware(now)
+        active_target = self.target_at(now)
         candidates = []
         for days_forward in range(8):
             weekday = (now.weekday() + days_forward) % 7
@@ -89,7 +94,7 @@ class WeeklySchedule:
                 if point.weekday != weekday:
                     continue
                 candidate = self._at_local_time(now, days_forward, point)
-                if candidate > now:
+                if candidate > now and point.target != active_target:
                     candidates.append(candidate)
         if not candidates:  # A repeating weekly schedule always has a next point.
             raise RuntimeError("no next schedule switch point")
@@ -106,6 +111,8 @@ class ZoneController:
     schedule: WeeklySchedule | None = None
     override_target: float | None = None
     override_until: datetime | None = None
+    boost_delta: float | None = None
+    boost_until: datetime | None = None
     permanent_override_target: float | None = None
 
     def __post_init__(self) -> None:
@@ -123,6 +130,12 @@ class ZoneController:
     def target_at(self, now: datetime) -> float:
         if self.permanent_override_target is not None:
             return self.permanent_override_target
+        if self.boost_delta is not None and self.boost_until and now < self.boost_until:
+            # A timed Boost follows the current scheduled target rather than
+            # freezing an old target across a schedule edge.  The configured
+            # delta is bounded; the resulting target still respects the zone
+            # model's absolute upper bound.
+            return min(35.0, self.scheduled_target_at(now) + self.boost_delta)
         if self.override_target is not None and self.override_until and now < self.override_until:
             return self.override_target
         self.clear_expired_override(now)
@@ -133,20 +146,47 @@ class ZoneController:
             raise ValueError("override expiry must be timezone-aware")
         _validate_temperature(target)
         self.permanent_override_target = None
+        self.boost_delta = None
+        self.boost_until = None
         self.override_target = target
         self.override_until = until
+
+    def timed_boost(self, delta: float, until: datetime, now: datetime) -> None:
+        """Raise this zone's scheduled target by up to 3 C until ``until``.
+
+        This is a test-world expression of the manual-derived Boost action.
+        It is relative to the then-current schedule, so a schedule edge remains
+        visible while Boost is active. It replaces other zone overrides.
+        """
+        if now.tzinfo is None or now.utcoffset() is None:
+            raise ValueError("boost time must be timezone-aware")
+        if until.tzinfo is None or until.utcoffset() is None:
+            raise ValueError("boost expiry must be timezone-aware")
+        if until <= now:
+            raise ValueError("boost expiry must be after boost time")
+        if not 0.0 < delta <= 3.0:
+            raise ValueError("boost delta must be greater than 0 and at most 3 C")
+        self.override_target = None
+        self.override_until = None
+        self.permanent_override_target = None
+        self.boost_delta = delta
+        self.boost_until = until
 
     def set_permanent_override(self, target: float) -> None:
         """Replace any temporary override with an explicit permanent target."""
         _validate_temperature(target)
         self.override_target = None
         self.override_until = None
+        self.boost_delta = None
+        self.boost_until = None
         self.permanent_override_target = target
 
     def return_to_schedule(self) -> None:
         """Discard user overrides so the current schedule immediately applies."""
         self.override_target = None
         self.override_until = None
+        self.boost_delta = None
+        self.boost_until = None
         self.permanent_override_target = None
 
     def boost_until_next_switch(self, target: float, now: datetime) -> datetime:
@@ -161,6 +201,9 @@ class ZoneController:
         if self.override_until and now >= self.override_until:
             self.override_target = None
             self.override_until = None
+        if self.boost_until and now >= self.boost_until:
+            self.boost_delta = None
+            self.boost_until = None
 
     def setpoint_frame(self, now: datetime) -> str:
         target = self.target_at(now)

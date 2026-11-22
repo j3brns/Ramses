@@ -10,13 +10,18 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 - A weekly schedule uses timezone-aware local wall-clock switch points; a boost-until-next-switch expires at the first later switch point.
 - A permanent zone override replaces a temporary zone override and survives a schedule edge; a later temporary override replaces it. **Return to schedule** clears either and immediately exposes the current schedule target.
 - This permanent-override rule is pure test-world state only: it has no UI, persistence or live-control seam. Whole-house quick actions remain unimplemented.
+- A timed zone Boost is a positive delta no greater than 3 C, with an explicit
+  timezone-aware future expiry. It replaces other zone overrides, follows the
+  current scheduled target across schedule edges, and returns to that target at
+  expiry. The model caps the absolute result at 35 C. It is a pure test-world
+  decision, not a physical-controller, UI, persistence, MQTT, or RF claim.
 
 ## Home Assistant Schedule helper contract
 
 - The adapter consumes HA Get schedule blocks as the weekly source and requires `data.target_temperature` for every active block.
 - The current helper state plus active additional data provides the active target; `next_event` provides the next switchpoint and must be timezone-aware.
 - A helper that is `off` has no active target. The weekly adapter requires an explicit frost/off target for gaps, so it never silently invents a temperature.
-- The adapter rejects malformed, non-minute-aligned, cross-midnight, timezone-naive or out-of-range input rather than issuing an ambiguous target.
+- The adapter rejects malformed, overlapping, non-minute-aligned, cross-midnight, timezone-naive or out-of-range input rather than issuing an ambiguous target.
 
 ## Packet contract
 

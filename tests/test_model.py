@@ -51,6 +51,73 @@ def test_permanent_override_replaces_temporary_override_and_a_new_boost_replaces
     assert zone.target_at(now) == 19.0
 
 
+def test_timed_boost_is_capped_relative_to_schedule_and_expires() -> None:
+    schedule = WeeklySchedule((
+        SwitchPoint(0, 6 * 60, 16.0),
+        SwitchPoint(0, 9 * 60, 20.0),
+    ))
+    started = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)
+    zone = ZoneController("12:900001", 1, schedule=schedule)
+
+    zone.timed_boost(3.0, started + timedelta(hours=3), started)
+    assert zone.target_at(started) == 19.0
+    # The boost remains a relative action at the schedule edge, rather than
+    # silently retaining the old 19 C target.
+    assert zone.target_at(datetime(2026, 11, 23, 9, 30, tzinfo=timezone.utc)) == 23.0
+    assert zone.target_at(started + timedelta(hours=3)) == 20.0
+
+
+def test_timed_boost_replaces_other_zone_overrides_and_validates_bounds() -> None:
+    started = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)
+    zone = ZoneController("12:900001", 1, scheduled_target=16.0)
+    zone.set_permanent_override(22.0)
+    zone.timed_boost(2.0, started + timedelta(hours=1), started)
+    assert zone.target_at(started) == 18.0
+
+    for delta in (0.0, 3.1):
+        try:
+            zone.timed_boost(delta, started + timedelta(hours=1), started)
+        except ValueError:
+            pass
+        else:
+            raise AssertionError("out-of-range boost delta was accepted")
+    try:
+        zone.timed_boost(1.0, started, started)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("non-future boost expiry was accepted")
+
+
+def test_timed_boost_rejects_naive_times_across_dst_offset() -> None:
+    started = datetime(2026, 3, 29, 1, 30, tzinfo=timezone(timedelta(hours=0), "GMT"))
+    expires = datetime(2026, 3, 29, 3, 30, tzinfo=timezone(timedelta(hours=1), "BST"))
+    zone = ZoneController("12:900001", 1, scheduled_target=34.0)
+    zone.timed_boost(3.0, expires, started)
+    # The requested delta is legal, but the absolute test-world target stays bounded.
+    assert zone.target_at(started) == 35.0
+    try:
+        zone.timed_boost(1.0, expires, datetime(2026, 3, 29, 1, 30))
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("naive boost start was accepted")
+
+
+def test_next_change_skips_same_target_day_start_marker() -> None:
+    schedule = WeeklySchedule((
+        SwitchPoint(0, 0, 16.0),
+        SwitchPoint(0, 6 * 60, 20.0),
+        SwitchPoint(1, 0, 20.0),
+        SwitchPoint(1, 9 * 60, 16.0),
+    ))
+    monday_evening = datetime(2026, 11, 23, 23, 0, tzinfo=timezone.utc)
+
+    assert schedule.next_change_after(monday_evening) == datetime(
+        2026, 11, 24, 9, 0, tzinfo=timezone.utc
+    )
+
+
 def test_return_to_schedule_is_timezone_aware_across_dst_boundary() -> None:
     schedule = WeeklySchedule((
         SwitchPoint(6, 0, 16.0),

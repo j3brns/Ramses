@@ -38,7 +38,7 @@ a promise that a dashboard control exists.
 | Weekly programme | pp. 9-10 | Core model and pure HA mapping; UI pending |
 | Temporary override | p. 11 | Virtual test seam only |
 | Permanent override | p. 11 | Test-world zone model only; UI and persistence pending |
-| Eco/Boost | p. 12 | Not implemented |
+| Eco/Boost | p. 12 | Timed per-zone Boost test-world model only; Eco unimplemented |
 | Away | p. 13 | Not implemented |
 | Day Off | p. 14 | Not implemented |
 | Heating Off / Custom | pp. 12, 15-16 | Not implemented |
@@ -63,6 +63,16 @@ and immediately exposes the scheduled target. This is an explicit project
 decision for the pure test-world model, exercised with fixed clocks including a
 DST boundary; it does not claim physical-controller behaviour or persistence.
 
+### Implemented test-world timed Boost rule
+
+A timed zone Boost is a positive delta of at most 3 C, with an explicit,
+timezone-aware expiry. It replaces any other zone override and applies to the
+current scheduled target, so a later schedule edge remains visible while the
+Boost is active. The resulting target is capped at the model's 35 C upper
+bound. At expiry it immediately returns to the current scheduled target. This
+is a project decision for an isolated test-world state model, not a claim about
+Evohome or CM67z internals, RF messages, persistence, UI, or live control.
+
 ## Virtual TRV local override
 
 A virtual TRV local override is separate from the programmer's zone override. In the test model, it stays active until the virtual TRV accepts its next bound-zone controller setpoint; that accepted setpoint clears the local override and becomes the effective target. A foreign-zone frame does neither. This is an explicit simulator coordination rule, chosen so the controller can restore one authoritative zone target at a known event. The public guide and current passive packet corpus do not establish the physical TRV's internal expiry behaviour.
@@ -86,7 +96,8 @@ A virtual TRV local override is separate from the programmer's zone override. In
 | Weekly schedule and temporary expiry | `tests/test_timer.py`; `tests/test_model.py`; `tests/test_ha_climate.py` | Test View and computer-use acceptance |
 | HA schedule mapping | `tests/test_ha_schedule.py` | Rendered test-only cards and UI-01â€“UI-08 |
 | Permanent override | Pure test-world zone state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
-| Quick Actions | Manual-derived only | State model, deterministic tests, UI acceptance and adversarial review |
+| Timed zone Boost | Pure test-world state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
+| Other Quick Actions | Manual-derived only | State model, deterministic tests, UI acceptance and adversarial review |
 | Optimisation | Manual-derived indication; test-world model contract | Bounded observation/replay evidence, accuracy criteria and UI acceptance |
 | Restart/reconnect | Project rule, not guide evidence | Ordered evidence plus replay contract |
 
