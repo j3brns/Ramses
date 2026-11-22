@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from ramses_twin.model import SwitchPoint, WeeklySchedule, ZoneController
-from ramses_twin.programmer import AWAY_TARGET, Programmer
+from ramses_twin.programmer import AWAY_TARGET, ECO_REDUCTION, Programmer
 
 
 def _programmer() -> tuple[Programmer, ZoneController, ZoneController]:
@@ -104,3 +104,50 @@ def test_day_off_requires_schedules_and_aware_valid_duration() -> None:
         scheduled.start_day_off(now.replace(tzinfo=None) + timedelta(days=1), now)
     with pytest.raises(ValueError, match="between 1 and 99"):
         scheduled.start_day_off(now, now)
+
+
+def test_eco_reduces_each_current_zone_target_without_erasing_zone_state() -> None:
+    now = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)
+    programmer, kitchen, lounge = _programmer()
+    kitchen.set_permanent_override(22.0)
+    lounge.boost(18.0, now + timedelta(hours=3))
+
+    programmer.start_eco(now + timedelta(hours=2), now)
+    assert programmer.target_at("kitchen", now) == 22.0 - ECO_REDUCTION
+    assert programmer.target_at("lounge", now) == 18.0 - ECO_REDUCTION
+
+    programmer.cancel_eco()
+    assert programmer.target_at("kitchen", now) == 22.0
+    assert programmer.target_at("lounge", now) == 18.0
+
+
+def test_eco_follows_schedule_edges_clamps_and_replaces_whole_system_actions() -> None:
+    now = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)
+    schedule = WeeklySchedule((
+        SwitchPoint(0, 6 * 60, 7.0),
+        SwitchPoint(0, 9 * 60, 20.0),
+    ))
+    kitchen = ZoneController("12:900001", 1, schedule=schedule)
+    lounge = ZoneController("12:900002", 2, schedule=schedule)
+    programmer = Programmer({"kitchen": kitchen, "lounge": lounge})
+    monday_early = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)
+    programmer.start_away(monday_early + timedelta(days=2), monday_early)
+    programmer.start_eco(monday_early + timedelta(hours=4), monday_early)
+
+    assert programmer.away_until is None
+    assert programmer.target_at("kitchen", monday_early) == 5.0
+    assert programmer.target_at("kitchen", monday_early.replace(hour=10)) == 17.0
+    assert programmer.target_at("kitchen", monday_early + timedelta(hours=4)) == 20.0
+    assert programmer.eco_until is None
+
+
+def test_eco_requires_aware_one_to_24_hour_duration() -> None:
+    now = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)
+    programmer, _, _ = _programmer()
+
+    with pytest.raises(ValueError, match="timezone-aware"):
+        programmer.start_eco(now.replace(tzinfo=None) + timedelta(hours=1), now)
+    with pytest.raises(ValueError, match="between 1 and 24"):
+        programmer.start_eco(now + timedelta(minutes=59), now)
+    with pytest.raises(ValueError, match="between 1 and 24"):
+        programmer.start_eco(now + timedelta(hours=25), now)

@@ -13,6 +13,7 @@ from ramses_twin.model import ZoneController, setpoint_payload
 
 
 AWAY_TARGET = 15.0
+ECO_REDUCTION = 3.0
 SATURDAY = 5
 
 
@@ -35,6 +36,7 @@ class Programmer:
     zones: dict[str, ZoneController]
     away_until: datetime | None = None
     day_off_until: datetime | None = None
+    eco_until: datetime | None = None
 
     def __post_init__(self) -> None:
         if not self.zones:
@@ -50,11 +52,32 @@ class Programmer:
         if not timedelta(days=1) <= duration <= timedelta(days=99):
             raise ValueError("Away duration must be between 1 and 99 days")
         self.day_off_until = None
+        self.eco_until = None
         self.away_until = until
 
     def cancel_away(self) -> None:
         """Return all zones immediately to their independent state."""
         self.away_until = None
+
+    def start_eco(self, until: datetime, now: datetime) -> None:
+        """Reduce each declared zone by 3 C for a one-to-24-hour interval.
+
+        Eco follows each zone's then-current lower-precedence target, so a
+        schedule edge remains visible while it is active.  This is a project
+        decision for the isolated test world, not a firmware claim.
+        """
+        _require_aware(now, "Eco time")
+        _require_aware(until, "Eco expiry")
+        duration = until - now
+        if not timedelta(hours=1) <= duration <= timedelta(hours=24):
+            raise ValueError("Eco duration must be between 1 and 24 hours")
+        self.away_until = None
+        self.day_off_until = None
+        self.eco_until = until
+
+    def cancel_eco(self) -> None:
+        """Return all zones immediately to their independent state."""
+        self.eco_until = None
 
     def start_day_off(self, until: datetime, now: datetime) -> None:
         """Apply each weekly zone's Saturday programme until ``until``.
@@ -71,6 +94,7 @@ class Programmer:
         if any(zone.schedule is None for zone in self.zones.values()):
             raise ValueError("Day Off requires a weekly schedule for every zone")
         self.away_until = None
+        self.eco_until = None
         self.day_off_until = until
 
     def cancel_day_off(self) -> None:
@@ -89,6 +113,12 @@ class Programmer:
             self.day_off_until = None
         return self.day_off_until is not None
 
+    def eco_active(self, now: datetime) -> bool:
+        _require_aware(now, "programmer time")
+        if self.eco_until is not None and now >= self.eco_until:
+            self.eco_until = None
+        return self.eco_until is not None
+
     def target_at(self, zone_name: str, now: datetime) -> float:
         """Return the effective target for one declared zone at ``now``."""
         try:
@@ -100,6 +130,8 @@ class Programmer:
         if self.day_off_active(now):
             assert zone.schedule is not None  # start_day_off validates this.
             return zone.schedule.target_for_weekday_at(SATURDAY, now)
+        if self.eco_active(now):
+            return max(5.0, zone.target_at(now) - ECO_REDUCTION)
         return zone.target_at(now)
 
     def setpoint_frame(self, zone_name: str, now: datetime) -> str:

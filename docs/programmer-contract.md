@@ -38,7 +38,7 @@ a promise that a dashboard control exists.
 | Weekly programme | pp. 9-10 | Core model and pure HA mapping; UI pending |
 | Temporary override | p. 11 | Virtual test seam only |
 | Permanent override | p. 11 | Test-world zone model only; UI and persistence pending |
-| Eco/Boost | p. 12 | Timed per-zone Boost test-world model only; Eco unimplemented |
+| Eco/Boost | p. 12 | Timed per-zone Boost and timed whole-system Eco test-world models only |
 | Away | p. 13 | Pure in-memory test-world model; UI/persistence/live control pending |
 | Day Off | p. 14 | Pure in-memory test-world model; UI/persistence/live control pending |
 | Heating Off / Custom | pp. 12, 15-16 | Not implemented |
@@ -56,7 +56,11 @@ weekly zone's Saturday programme at the current local wall time. Each runs for
 1--99 days or until cancellation, preserves zone-local state, and reveals the
 then-current lower-precedence target on expiry or cancellation. Day Off rejects
 a fixed-target zone rather than inventing a Saturday programme.
-This is an HA decision inferred from the guide's modes, not a claimed Evohome
+Timed Eco is mutually exclusive with Away and Day Off. It reduces each
+declared zone's then-current lower-precedence target by 3 C, never below the
+model's 5 C floor, for one through 24 hours or until cancellation. This
+preserves zone state and lets schedule edges remain visible while Eco is
+active. This is an HA decision inferred from the guide's modes, not a claimed Evohome
 state machine. It must not become a control feature without a dedicated state
 model and deterministic tests.
 
@@ -89,6 +93,16 @@ cancelling or expiring either reveals the then-current lower-precedence target.
 This is a pure project decision in the in-memory test-world model, not a claim
 about Evohome or CM67z internals, RF messages, persistence, UI, or live control.
 
+### Implemented test-world timed Eco rule
+
+Timed Eco reduces each declared zone's then-current lower-precedence target by
+3 C, never below 5 C, for an explicit timezone-aware one--24-hour interval.
+It masks but does not mutate zone-local state; schedule changes therefore
+remain visible. Starting Eco replaces Away or Day Off and cancellation or
+expiry reveals each zone's then-current lower-precedence target. This is a
+pure project decision in the in-memory test-world model, not a claim about
+Evohome or CM67z internals, RF messages, persistence, UI, or live control.
+
 ## Virtual TRV local override
 
 A virtual TRV local override is separate from the programmer's zone override. In the test model, it stays active until the virtual TRV accepts its next bound-zone controller setpoint; that accepted setpoint clears the local override and becomes the effective target. A foreign-zone frame does neither. This is an explicit simulator coordination rule, chosen so the controller can restore one authoritative zone target at a known event. The public guide and current passive packet corpus do not establish the physical TRV's internal expiry behaviour.
@@ -114,6 +128,7 @@ A virtual TRV local override is separate from the programmer's zone override. In
 | Permanent override | Pure test-world zone state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
 | Timed zone Boost | Pure test-world state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
 | Timed Day Off | Pure test-world state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
+| Timed Eco | Pure test-world state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
 | Other Quick Actions | Manual-derived only | State model, deterministic tests, UI acceptance and adversarial review |
 | Optimisation | Manual-derived indication; test-world model contract | Bounded observation/replay evidence, accuracy criteria and UI acceptance |
 | Restart/reconnect | Project rule, not guide evidence | Ordered evidence plus replay contract |

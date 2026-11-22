@@ -27,6 +27,12 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
   target. It outranks but does not mutate zone-local state, rejects a fixed
   target zone, and is mutually exclusive with Away. `Programmer` remains an
   in-memory test-world boundary with no persistence, HA, MQTT, RF, or UI seam.
+- A timed Eco action reduces each declared zone's then-current
+  lower-precedence target by 3 C, never below 5 C, for an aware one--24-hour
+  duration or until explicit cancellation. It is mutually exclusive with Away
+  and Day Off, preserves zone-local state, and follows schedule edges while
+  active. `Programmer` remains an in-memory test-world boundary with no
+  persistence, HA, MQTT, RF, or UI seam.
 
 ## Home Assistant Schedule helper contract
 
