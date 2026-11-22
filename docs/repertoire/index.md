@@ -17,6 +17,7 @@ This is a small, version-controlled Open Knowledge Format (OKF) bundle. It store
 
 - [Baseline RX observations](baseline-rx-observations.md) â€” bounded message-code and topology evidence, not a timing model.
 - [Kitchen schedule-capture selector](kitchen-schedule-capture.md) â€” candidate controller-target changes with receipt-time requirements.
+- [Scenario qualification](../scenario-qualification.md) â€” prevents candidate RX from becoming named behaviour evidence without corroboration.
 
 ## Source policy
 

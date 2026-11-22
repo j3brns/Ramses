@@ -33,3 +33,8 @@ Pipe a locally authenticated MQTT subscriber through the bounded feeder, then in
 ```
 
 The feeder accepts only JSON lines shaped as `{"topic":"RAMSES/GATEWAY/<gateway-id>/rx","payload":{"msg":"...","ts":"..."}}`; it preserves an optional top-level `tst` as `receipt_ts`. Gateway `payload.ts` is retained as `gateway_ts` and is only `unverified` unless independently calibrated. A `1970-01-01...` gateway timestamp is marked `epoch-invalid` and cannot support wall-clock or elapsed-time claims. It can also replace one explicit local NDJSON file with `--output <path>`; it never appends a log. Review the raw packets, commit the scenario, and add a replay test before claiming that behaviour is modelled.
+
+An ordered capture starts as baseline or candidate evidence. Before calling it a
+schedule, override, or restart scenario, add and validate its explicit
+[qualification manifest](scenario-qualification.md). A candidate hypothesis is
+not a qualified behaviour claim.
