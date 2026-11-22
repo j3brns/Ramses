@@ -21,6 +21,15 @@ class TwinRuntime:
             if zone_id in self.coordinators:
                 self.coordinators[zone_id].thermal_model = model
 
+    def recovery_frames(self, now: datetime) -> dict[str, str]:
+        """Recompute every configured target for a test-only recovery publication."""
+        if now.tzinfo is None or now.utcoffset() is None:
+            raise ValueError("recovery time must be timezone-aware")
+        return {
+            zone_id: self.coordinators[zone_id].controller.setpoint_frame(now)
+            for zone_id in sorted(self.coordinators)
+        }
+
     def observe(self, zone_id: str, observation: Observation) -> TrainingResult | None:
         coordinator = self.coordinators[zone_id]
         previous = self._last_observation.get(zone_id)

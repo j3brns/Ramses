@@ -48,6 +48,10 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 
 - On startup or MQTT reconnect, recompute the active target from schedule and override state.
 - Reissue the active target; do not wait for the next timetable boundary.
+- `TwinRuntime.recovery_frames(now)` is the pure test-world seam: it requires an
+  explicit timezone-aware time and returns one current setpoint frame per
+  configured zone in stable zone-ID order. A later test-only adapter owns
+  publication and durable schedule/override reconstruction.
 
 ## Optimiser contract
 
