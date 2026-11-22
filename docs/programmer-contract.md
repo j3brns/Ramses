@@ -75,7 +75,7 @@ A virtual TRV local override is separate from the programmer's zone override. In
 | Contract slice | Present evidence | Required before control-capable release |
 | --- | --- | --- |
 | Weekly schedule and temporary expiry | `tests/test_timer.py`; `tests/test_model.py`; `tests/test_ha_climate.py` | Test View and computer-use acceptance |
-| HA schedule mapping | `tests/test_ha_schedule.py` | Rendered test-only cards and UI-01â€“UI-07 |
+| HA schedule mapping | `tests/test_ha_schedule.py` | Rendered test-only cards and UI-01â€“UI-08 |
 | Permanent override and Quick Actions | Manual-derived only | State model, deterministic tests, UI acceptance and adversarial review |
 | Optimisation | Manual-derived indication; test-world model contract | Bounded observation/replay evidence, accuracy criteria and UI acceptance |
 | Restart/reconnect | Project rule, not guide evidence | Ordered evidence plus replay contract |

@@ -70,7 +70,7 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 
 - The Ramses Test dashboard uses only test entities and `RAMSES/TEST/...` transport; a live entity/topic is a release-blocking defect.
 - Its canonical requirements and computer-use acceptance IDs are in [the Lovelace UI contract](lovelace-ui-contract.md).
-- UI-01 through UI-07 must pass at desktop and mobile widths before a control-capable Test View release.
+- UI-01 through UI-08 must pass at desktop and mobile widths before a control-capable Test View release; the deployment-gated procedure is in `test-view-computer-use-runbook.md`.
 - The Help subview renders or links to `user-guide.md`; the Markdown source remains canonical.
 
 ## Non-negotiable boundary

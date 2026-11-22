@@ -12,11 +12,11 @@ This guide describes the planned **Ramses Test** dashboard. It is a software-onl
 
 Each zone shows its current temperature, effective target, the source of that target, and what changes next. The source is one of **Schedule**, **Temporary override**, **Permanent override**, a whole-system action, or **Optimisation**. The dashboard also shows alerts such as an unavailable test device.
 
-## Change a temperature
+## Change a temperature when the test path is enabled
 
-From a zone thermostat card, select a target. Choose either a temporary end time or **Make permanent**. A temporary override automatically returns to the schedule at its expiry. A permanent override remains active until **Return to schedule** is selected.
+When the test-only climate control path has passed its safety and computer-use tests, a zone thermostat card will allow a target to be selected. A temporary override will return to the schedule at its expiry. A permanent override will remain active until **Return to schedule** is selected.
 
-Until the test-only climate control path has passed its safety and computer-use tests, these controls are explanatory mock-ups and cannot publish a command.
+Until then, any control is an explanatory mock-up and cannot publish a command. This guide does not authorise a Test View deployment or a live heating change.
 
 ## Use the schedule
 
@@ -32,7 +32,7 @@ Optimum start is optional. When enough test evidence has trained the model, it m
 
 ## Help and safety
 
-The Ramses Test dashboard will provide this guide through a Help subview. The Markdown source in this file remains canonical; the Help card is a generated rendering. If a UI appears to affect a live entity, stop: the test dashboard must use only `RAMSES/TEST/...` entities and topics.
+The Ramses Test dashboard will provide this guide through a Help subview. The Markdown source in this file remains canonical; the Help card is a generated rendering. See the [dashboard contract](lovelace-ui-contract.md) for the planned layout and the [computer-use acceptance runbook](test-view-computer-use-runbook.md) for the separately authorised test-only deployment procedure. If a UI appears to affect a live entity, stop: the test dashboard must use only `RAMSES/TEST/...` entities and topics.
 
 ## Read evidence status
 

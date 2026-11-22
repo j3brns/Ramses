@@ -75,8 +75,8 @@ This map records what I have observed. It is not permission to control a device.
 | Temporary and permanent changes | I have a baseline contract and deterministic behaviour tests. |
 | Optimum start | I have a model core. It needs real, bounded evidence before it learns from the house. |
 | Virtual TRVs | I have the core response model. Some local-override detail remains open. |
-| MQTT test transport | This is the next implementation step. It must reject live MQTT roots. |
-| Home Assistant and Lovelace | I will add test-only entities and cards after the isolated transport is proven. |
+| MQTT test transport | The isolated transport core is complete and rejects live MQTT roots. Broker I/O remains deliberately unwired. |
+| Home Assistant and Lovelace | Test-only schedule mapping, diagnostics, climate seam and blueprint are staged; the dashboard is not deployed. |
 | Live control | Deliberately not started. It needs a separate cutover decision. |
 
 The [delivery breakdown](docs/task-breakdown.md) shows the versioned roadmap. The local `tk` queue records the work in progress.
@@ -98,10 +98,11 @@ The gate scans for secrets, checks the documentation review structure, compiles 
 | --- | --- |
 | What should the programmer do? | [Programmer Contract](docs/programmer-contract.md) |
 | How will people use the future Test View? | [Ramses Test user guide](docs/user-guide.md) |
+| What is the Test View blueprint and how will its UI be accepted? | [Dashboard contract](docs/lovelace-ui-contract.md) and [computer-use acceptance runbook](docs/test-view-computer-use-runbook.md) |
 | What am I trying to achieve? | [System objectives](docs/system-objectives.md) |
 | How do the parts fit together? | [System architecture](docs/system-architecture.md) |
 | What crosses the MQTT boundary? | [Test transport contract](docs/contract.md) |
-| How do I collect observations without growing logs forever? | [Ingest contract](docs/ingest-contract.md) and [scenario recording](docs/scenario-recording.md) |
+| How do I collect observations without growing logs forever, and when do they prove behaviour? | [Ingest contract](docs/ingest-contract.md), [scenario recording](docs/scenario-recording.md) and [scenario qualification](docs/scenario-qualification.md) |
 | How do I make, review and roll back a change? | [Repository contract](docs/repository-contract.md) and [change management](docs/change-management.md) |
 | What decisions are already made? | [ADRs](docs/adr/) |
 | What can another agent rely on? | [Skills inventory](docs/skills-inventory.md) and [repertoire](docs/repertoire/index.md) |

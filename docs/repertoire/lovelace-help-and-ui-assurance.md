@@ -16,4 +16,4 @@ The user guide is authored in Markdown under `docs/`. A read-only Help card or s
 
 ## Computer-use acceptance
 
-Before a UI release, exercise Test View at desktop and mobile widths. Verify schedule presentation, temporary/permanent override, expiry, return-to-schedule, disabled/live-test boundaries, readable status and error copy. Retain sanitised screenshots and scenario identifiers as evidence; never use UI automation to change live heating. The dashboard contract assigns these checks IDs UI-01 through UI-07.
+Before a UI release, exercise Test View at desktop and mobile widths. Verify schedule presentation, temporary/permanent override, expiry, return-to-schedule, disabled/live-test boundaries, readable status and error copy. Retain sanitised screenshots and scenario identifiers as evidence; never use UI automation to change live heating. The dashboard contract assigns these checks IDs UI-01 through UI-08; the [acceptance runbook](../test-view-computer-use-runbook.md) gives the deployment-gated procedure.
