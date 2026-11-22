@@ -64,4 +64,7 @@ def test_evidence_status_is_test_only_and_does_not_claim_live_packet_access() ->
     ):
         assert entity_id in blueprint
 
-    assert "live packet stream" not in blueprint.lower()
+    # Generated Help may describe the safety boundary, but it must not offer
+    # packet-console access as a dashboard capability.
+    assert "never exposes a live packet stream" in blueprint.lower()
+    assert "view live packet stream" not in blueprint.lower()

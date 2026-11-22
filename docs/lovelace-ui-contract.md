@@ -54,7 +54,7 @@ An override view must show its expiry and a visible **Return to schedule** path.
 
 ## Help subview contract
 
-The Help view is a dashboard subview with a defined `back_path` to Ramses Test. It is reachable through a visible Help navigation action. It shows a Markdown rendering of the canonical guide and identifies it as test-only. The render/export step must fail CI when it is stale; until that exporter exists, the Help card remains a planned artefact rather than a manually copied guide.
+The Help view is a dashboard subview with a defined `back_path` to Ramses Test. It is reachable through a visible Help navigation action. It shows a Markdown rendering of the canonical guide and identifies it as test-only. `scripts/render_lovelace_help.py --check` must fail CI when the generated region is stale; `docs/user-guide.md` remains the canonical source.
 
 ## Computer-use acceptance
 
