@@ -38,3 +38,23 @@ An ordered capture starts as baseline or candidate evidence. Before calling it a
 schedule, override, or restart scenario, add and validate its explicit
 [qualification manifest](scenario-qualification.md). A candidate hypothesis is
 not a qualified behaviour claim.
+
+## Windows-safe file retrieval
+
+Do not redirect `ssh ... cat` output into a PowerShell file: Windows PowerShell
+can create UTF-16 text and make valid NDJSON unreadable by the selector. Fetch a
+completed, bounded capture as ASCII base64 and write decoded bytes instead:
+
+```powershell
+.\scripts\fetch_rx_capture.ps1 `
+  -SshHost ha `
+  -RemotePath /home/hassio/kitchen_schedule_watch.ndjson `
+  -Destination "$env:TEMP\kitchen_schedule_watch.ndjson" `
+  -Force
+```
+
+The helper is receive-only: it invokes `ssh` and remote `base64`, has no MQTT
+credentials, and cannot publish, transmit RF, bind a device, or alter Home
+Assistant. It rejects oversized files before it writes them. Its output remains
+an untracked local input until the normal scenario review and qualification
+steps decide whether a bounded fixture belongs in the repository.
