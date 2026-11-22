@@ -63,6 +63,40 @@ views:
               action: navigate
               navigation_path: /ramses-test/help
 
+      - type: grid
+        cards:
+          - type: heading
+            heading: Evidence status
+            heading_style: title
+          - type: entities
+            title: Passive RX evidence
+            entities:
+              - entity: sensor.ramses_test_capture_receipt_time
+                name: Latest broker receipt time
+              - entity: binary_sensor.ramses_test_capture_time_valid
+                name: Gateway time valid for elapsed-time claims
+              - entity: sensor.ramses_test_capture_event_count
+                name: Bounded event count
+          - type: entities
+            title: Scenario qualification
+            entities:
+              - entity: sensor.ramses_test_evidence_baseline
+                name: Baseline traffic
+              - entity: sensor.ramses_test_evidence_kitchen_schedule
+                name: Kitchen schedule change
+              - entity: sensor.ramses_test_evidence_local_override
+                name: Local override expiry
+              - entity: sensor.ramses_test_evidence_restart_reconnect
+                name: Restart or reconnect
+          - type: markdown
+            title: Evidence boundary
+            content: >-
+              **Baseline** means ordered receive traffic only. **Candidate**
+              means a rule selected an event for review. **Qualified** means a
+              named scenario passed its evidence and replay checks. Gateway
+              epoch time never proves real elapsed time; use broker receipt
+              time instead.
+
   - title: Help
     path: help
     subview: true

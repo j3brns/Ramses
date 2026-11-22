@@ -33,3 +33,7 @@ Optimum start is optional. When enough test evidence has trained the model, it m
 ## Help and safety
 
 The Ramses Test dashboard will provide this guide through a Help subview. The Markdown source in this file remains canonical; the Help card is a generated rendering. If a UI appears to affect a live entity, stop: the test dashboard must use only `RAMSES/TEST/...` entities and topics.
+
+## Read evidence status
+
+Evidence status shows what the test system has actually observed. **Baseline** means bounded ordered receive traffic. **Candidate** means a rule found an event that still needs corroboration. **Qualified** means the named capture and replay checks passed. A gateway timestamp near 1970 is invalid for elapsed-time claims; use the displayed broker receipt time to assess capture freshness. Evidence status is read-only and never exposes a live packet stream.

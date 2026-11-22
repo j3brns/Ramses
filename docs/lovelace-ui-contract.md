@@ -29,11 +29,14 @@ Use a native **Sections** view. It is the default responsive Home Assistant layo
 | Zone detail | Thermostat card | Current temperature, target, active mode/source | Test-only target action once enabled; otherwise disabled/explained |
 | Programme status | Tile/Entities card | Schedule target, next switch, override expiry | Navigate to schedule/help; no silent cancellation |
 | System status | Tile/Heading card | Test-world state, optimiser readiness, relay/demand diagnostics | Read-only diagnostics |
+| Evidence status | Entities/Markdown card | Broker receipt-time health, bounded event count, baseline/candidate/qualified scenario states | Read-only provenance; no live packet stream |
 | Help | Subview + Markdown card | Generated canonical guide, source/version and back navigation | Read-only |
 
 Sunnydays is the visual reference: calm hierarchy, compact room grouping, legible temperatures and restrained status. Ramses Test keeps native card semantics, names and state colours. It does not imitate Sunnydays card code or make a test entity look live.
 
 The version-controlled native-card blueprint is [`../target-system/ramses-test-dashboard.yaml`](../target-system/ramses-test-dashboard.yaml). It is deliberately not loaded by Home Assistant: a separate Test View deployment and computer-use evidence are required before it becomes an HA dashboard. Its current cards name the required test entities, including diagnostic/override entities that the future adapter must expose before deployment.
+
+Evidence status is an audit surface, not a packet console. It must show the latest **broker receipt** time separately from the gateway time-validity state, because a gateway epoch timestamp cannot support elapsed-time claims. Its scenario states are constrained to **Baseline**, **Candidate**, and **Qualified**: a baseline is ordered RX traffic, a candidate awaits corroboration, and qualified means the named evidence/replay contract passed. No card may imply that a baseline has proved a schedule, override, restart, thermal, or live-heating behaviour.
 
 ## Explainability requirements
 
@@ -64,6 +67,7 @@ Run these checks only against Ramses Test at desktop and mobile widths. Store sa
 | UI-05 | The Help action | The Help subview opens, identifies its source/test boundary, and returns via `back_path`. |
 | UI-06 | Mobile width | Cards remain readable, targets are not accidentally changed, and vertical flow needs no horizontal scroll. |
 | UI-07 | Desktop width | Sections retain Sunnydays-like grouping and hierarchy without large empty gaps or clipped status. |
+| UI-08 | Evidence status | Receipt-time health, event count and all four scenario states are readable; the copy distinguishes baseline, candidate and qualified evidence without claiming a live or timed result. |
 
 ## Done
 
