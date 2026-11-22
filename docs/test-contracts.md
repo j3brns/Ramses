@@ -56,6 +56,7 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 - The optimiser proposes an earlier use of an existing scheduled target; it does not create a new RF command type.
 - Persist only learned per-zone coefficients; do not retain an unbounded observation history in the runtime state store.
 - Training evidence aligns reference temperature, outdoor temperature, valve demand, boiler availability, and timestamps; isolated packet snapshots are insufficient.
+- An optimiser candidate sample requires complete bounded inputs and strictly increasing timezone-aware broker receipt timestamps. Gateway time is diagnostic only: a 1970 epoch value is labelled but cannot supply chronology. Candidate validation constructs no intervals, trains no coefficient, and makes no thermal-fidelity claim.
 
 ## Scenario and replay contract
 
