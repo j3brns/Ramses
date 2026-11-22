@@ -36,6 +36,8 @@ Sunnydays is the visual reference: calm hierarchy, compact room grouping, legibl
 
 The version-controlled native-card blueprint is [`../target-system/ramses-test-dashboard.yaml`](../target-system/ramses-test-dashboard.yaml). It is deliberately not loaded by Home Assistant: a separate Test View deployment and computer-use evidence are required before it becomes an HA dashboard. Its current cards name the required test entities, including diagnostic/override entities that the future adapter must expose before deployment.
 
+The deployment-gated [computer-use acceptance runbook](test-view-computer-use-runbook.md) supplies the observable desktop/mobile procedure, screenshot discipline, evidence oracle and negative cases. Reading it does not authorise a deployment or a browser session.
+
 Evidence status is an audit surface, not a packet console. It must show the latest **broker receipt** time separately from the gateway time-validity state, because a gateway epoch timestamp cannot support elapsed-time claims. Its scenario states are constrained to **Baseline**, **Candidate**, and **Qualified**: a baseline is ordered RX traffic, a candidate awaits corroboration, and qualified means the named evidence/replay contract passed. No card may imply that a baseline has proved a schedule, override, restart, thermal, or live-heating behaviour.
 
 ## Explainability requirements
@@ -71,4 +73,4 @@ Run these checks only against Ramses Test at desktop and mobile widths. Store sa
 
 ## Done
 
-The UI slice is ready only when its entities are proven test-only, the generated Help content matches `user-guide.md`, UI-01 through UI-07 pass by computer use, and the related schedule/override scenarios pass their deterministic model tests.
+The UI slice is ready only when its entities are proven test-only, the generated Help content matches `user-guide.md`, UI-01 through UI-08 pass by computer use, and the related schedule/override scenarios pass their deterministic model tests.
