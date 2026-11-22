@@ -20,6 +20,8 @@ This is a small, version-controlled Open Knowledge Format (OKF) bundle. It store
 - [Scenario qualification](../scenario-qualification.md) â€” prevents candidate RX from becoming named behaviour evidence without corroboration.
 - [Passive capture client recovery](passive-capture-runbook.md) â€” credential-free local operation, bounded capture, and broker-restart recovery.
 
+- [Temporal Kitchen capture](temporal-kitchen-capture.md) â€” bounded time-window selection when ordinary RX traffic is too dense.
+
 ## Source policy
 
 Every concept identifies its source, scope and verification state. Manual sources are paraphrased; copied prose, images, serial numbers, credentials, HA configuration and live packet logs are excluded. The canonical rendered user guide remains ordinary Markdown under `docs/`.

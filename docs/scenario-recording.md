@@ -58,3 +58,13 @@ credentials, and cannot publish, transmit RF, bind a device, or alter Home
 Assistant. It rejects oversized files before it writes them. Its output remains
 an untracked local input until the normal scenario review and qualification
 steps decide whether a bounded fixture belongs in the repository.
+
+## Dense traffic
+
+If a 500-event window is filled by ordinary TRV traffic before a rare
+controller broadcast, use the temporal selector on an already bounded local
+capture. It enforces independent byte, event and broker-receipt-time limits,
+keeps only a small pre-transition ring, and writes nothing unless it has both
+a controller-originated target change and its required following context. See
+[Temporal Kitchen capture](repertoire/temporal-kitchen-capture.md). It does
+not relax device-direction checks or qualify a candidate as a scheduled change.
