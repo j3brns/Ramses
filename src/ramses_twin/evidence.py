@@ -33,7 +33,11 @@ def normalise_rx_event(event: dict[str, Any], topic_root: str = "RAMSES/GATEWAY"
         "gateway_ts": timestamp,
         "gateway_time_quality": _gateway_time_quality(timestamp),
     }
-    receipt_timestamp = event.get("tst")
+    # A raw ``mosquitto_sub -F %J`` envelope uses ``tst``.  A portable
+    # scenario has already been normalised and carries the same broker clock
+    # under ``receipt_ts``.  Preserve either form so replay does not silently
+    # discard the only trustworthy chronology source.
+    receipt_timestamp = event.get("tst", event.get("receipt_ts"))
     if isinstance(receipt_timestamp, str) and receipt_timestamp:
         result["receipt_ts"] = receipt_timestamp
     return result
