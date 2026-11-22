@@ -56,6 +56,24 @@ def test_selector_ignores_other_controller_zone_and_repeated_target() -> None:
     assert candidates == ()
 
 
+def test_selector_ignores_a_trv_report_addressed_to_the_kitchen_controller() -> None:
+    candidates = kitchen_setpoint_transitions(
+        _scenario(
+            _event("010708", "2026-11-21T06:59:59+00:00"),
+            {
+                "topic": "RAMSES/GATEWAY/18:016440/rx",
+                "tst": "2026-11-21T07:00:00+00:00",
+                "payload": {
+                    "msg": "060 I --- 04:118027 --:------ 12:216487 2309 003 010834",
+                    "ts": "1970-01-01T00:00:00+00:00",
+                },
+            },
+        )
+    )
+
+    assert candidates == ()
+
+
 def test_selector_requires_current_increasing_broker_receipt_times() -> None:
     with pytest.raises(ValueError, match="receipt times must increase"):
         kitchen_setpoint_transitions(
