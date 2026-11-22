@@ -204,9 +204,7 @@ def weekly_schedule_from_ha_blocks(
             raise ValueError(f"unknown Home Assistant schedule day: {day!r}") from error
         if not isinstance(blocks, Sequence) or isinstance(blocks, (str, bytes)):
             raise ValueError(f"schedule blocks for {day} must be a sequence")
-        # Make the inactive period before the first block explicit. This also
-        # supplies a valid prior-week target to the repeating pure model.
-        events[(weekday, 0)] = off
+        parsed_blocks: list[tuple[int, int, float]] = []
         for block in blocks:
             if not isinstance(block, Mapping):
                 raise ValueError(f"schedule block for {day} must be a mapping")
@@ -214,9 +212,20 @@ def weekly_schedule_from_ha_blocks(
             end = _minute_of_day(block.get("to"), "block.to")
             if end <= start:
                 raise ValueError("schedule blocks must end later on the same day")
+            parsed_blocks.append((start, end, _block_target(block)))
+
+        parsed_blocks.sort(key=lambda item: item[0])
+        for previous, current in zip(parsed_blocks, parsed_blocks[1:]):
+            if current[0] < previous[1]:
+                raise ValueError("schedule blocks must not overlap")
+
+        # Make the inactive period before the first block explicit. This also
+        # supplies a valid prior-week target to the repeating pure model.
+        events[(weekday, 0)] = off
+        for start, end, target in parsed_blocks:
             # An adjacent block start intentionally overwrites a preceding end.
             events[(weekday, end)] = off
-            events[(weekday, start)] = _block_target(block)
+            events[(weekday, start)] = target
     if not events:
         raise ValueError("Home Assistant schedule must contain at least one block")
     return WeeklySchedule(tuple(SwitchPoint(day, minute, target) for (day, minute), target in events.items()))

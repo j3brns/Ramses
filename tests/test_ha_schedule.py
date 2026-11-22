@@ -23,6 +23,38 @@ def test_ha_blocks_create_weekly_targets_and_explicit_off_periods() -> None:
     assert schedule.target_at(datetime(2026, 11, 23, 22, 0, tzinfo=utc)) == 12.0
 
 
+def test_ha_blocks_keep_an_adjacent_weekly_boundary_unambiguous() -> None:
+    schedule = weekly_schedule_from_ha_blocks(
+        {
+            "sunday": [
+                {"from": "23:00", "to": "23:30", "data": {"target_temperature": 20}},
+            ],
+            "monday": [
+                {"from": "06:30", "to": "08:00", "data": {"target_temperature": 21}},
+            ],
+        },
+        off_target=12.0,
+    )
+    utc = timezone.utc
+    sunday = datetime(2026, 11, 29, 23, 30, tzinfo=utc)
+
+    assert schedule.target_at(sunday) == 12.0
+    assert schedule.next_change_after(sunday) == datetime(2026, 11, 30, 6, 30, tzinfo=utc)
+
+
+def test_ha_blocks_reject_overlap_even_when_input_is_not_time_ordered() -> None:
+    with pytest.raises(ValueError, match="must not overlap"):
+        weekly_schedule_from_ha_blocks(
+            {
+                "monday": [
+                    {"from": "09:00", "to": "10:00", "data": {"target_temperature": 19}},
+                    {"from": "06:00", "to": "09:30", "data": {"target_temperature": 20}},
+                ]
+            },
+            off_target=12.0,
+        )
+
+
 def test_ha_schedule_snapshot_reads_active_data_and_dst_aware_next_event() -> None:
     snapshot = schedule_snapshot_from_ha(
         "on",
