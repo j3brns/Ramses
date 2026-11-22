@@ -40,7 +40,7 @@ a promise that a dashboard control exists.
 | Permanent override | p. 11 | Test-world zone model only; UI and persistence pending |
 | Eco/Boost | p. 12 | Timed per-zone Boost test-world model only; Eco unimplemented |
 | Away | p. 13 | Pure in-memory test-world model; UI/persistence/live control pending |
-| Day Off | p. 14 | Not implemented |
+| Day Off | p. 14 | Pure in-memory test-world model; UI/persistence/live control pending |
 | Heating Off / Custom | pp. 12, 15-16 | Not implemented |
 | Optimisation | pp. 6-7 | Test-world proposal only |
 | Explainability | pp. 2, 11, 16 | UI contract defined; UI pending |
@@ -49,10 +49,13 @@ a promise that a dashboard control exists.
 
 Proposed precedence is `Heating Off`/frost-protect > active timed whole-system
 action > active permanent whole-system action > active zone override > scheduled
-target. The pure test-world timed Away action is the first implemented
-whole-system action: it applies 15 C to its declared zones for 1--99 days or
-until cancellation. It preserves zone-local state; expiry or cancellation
-immediately reveals the then-current lower-precedence target.
+target. The pure test-world timed Away and Day Off actions are mutually
+exclusive: starting either replaces the other, so one whole-system result is
+always explainable. Away applies 15 C to declared zones; Day Off applies each
+weekly zone's Saturday programme at the current local wall time. Each runs for
+1--99 days or until cancellation, preserves zone-local state, and reveals the
+then-current lower-precedence target on expiry or cancellation. Day Off rejects
+a fixed-target zone rather than inventing a Saturday programme.
 This is an HA decision inferred from the guide's modes, not a claimed Evohome
 state machine. It must not become a control feature without a dedicated state
 model and deterministic tests.
@@ -75,6 +78,16 @@ Boost is active. The resulting target is capped at the model's 35 C upper
 bound. At expiry it immediately returns to the current scheduled target. This
 is a project decision for an isolated test-world state model, not a claim about
 Evohome or CM67z internals, RF messages, persistence, UI, or live control.
+
+### Implemented test-world timed Day Off rule
+
+Timed Day Off applies the Saturday programme to every declared weekly zone for
+an explicit, timezone-aware 1--99-day interval. The Saturday programme retains
+its normal carry-in target before its first Saturday switch point. It masks but
+does not mutate zone-local override state. Away and Day Off replace one another;
+cancelling or expiring either reveals the then-current lower-precedence target.
+This is a pure project decision in the in-memory test-world model, not a claim
+about Evohome or CM67z internals, RF messages, persistence, UI, or live control.
 
 ## Virtual TRV local override
 
@@ -100,6 +113,7 @@ A virtual TRV local override is separate from the programmer's zone override. In
 | HA schedule mapping | `tests/test_ha_schedule.py` | Rendered test-only cards and UI-01â€“UI-08 |
 | Permanent override | Pure test-world zone state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
 | Timed zone Boost | Pure test-world state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
+| Timed Day Off | Pure test-world state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
 | Other Quick Actions | Manual-derived only | State model, deterministic tests, UI acceptance and adversarial review |
 | Optimisation | Manual-derived indication; test-world model contract | Bounded observation/replay evidence, accuracy criteria and UI acceptance |
 | Restart/reconnect | Project rule, not guide evidence | Ordered evidence plus replay contract |

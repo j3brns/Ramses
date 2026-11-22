@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from ramses_twin.model import ZoneController
+from ramses_twin.model import SwitchPoint, WeeklySchedule, ZoneController
 from ramses_twin.programmer import AWAY_TARGET, Programmer
 
 
@@ -50,3 +50,57 @@ def test_away_requires_aware_future_times_and_known_zone() -> None:
         programmer.start_away(now + timedelta(days=100), now)
     with pytest.raises(KeyError, match="unknown zone"):
         programmer.target_at("bedroom", now)
+
+
+def _scheduled_programmer() -> tuple[Programmer, ZoneController, ZoneController]:
+    schedule = WeeklySchedule(
+        (
+            SwitchPoint(4, 18 * 60, 17.0),  # Friday carry-in for early Saturday
+            SwitchPoint(5, 8 * 60, 20.0),
+            SwitchPoint(5, 22 * 60, 16.0),
+        )
+    )
+    kitchen = ZoneController("12:900001", 1, schedule=schedule)
+    lounge = ZoneController("12:900002", 2, schedule=schedule)
+    return Programmer({"kitchen": kitchen, "lounge": lounge}), kitchen, lounge
+
+
+def test_day_off_uses_saturday_programme_and_preserves_zone_state() -> None:
+    now = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)  # Monday
+    programmer, kitchen, lounge = _scheduled_programmer()
+    kitchen.set_permanent_override(22.0)
+    lounge.boost(21.0, now + timedelta(hours=2))
+
+    programmer.start_day_off(now + timedelta(days=2), now)
+    assert programmer.target_at("kitchen", now) == 17.0
+    assert programmer.target_at("lounge", now.replace(hour=9)) == 20.0
+
+    programmer.cancel_day_off()
+    assert programmer.target_at("kitchen", now) == 22.0
+    assert programmer.target_at("lounge", now) == 21.0
+
+
+def test_day_off_replaces_away_and_expiry_reveals_current_zone_target() -> None:
+    now = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)
+    programmer, kitchen, _ = _scheduled_programmer()
+    kitchen.set_permanent_override(22.0)
+    programmer.start_away(now + timedelta(days=2), now)
+    programmer.start_day_off(now + timedelta(days=1), now)
+
+    assert programmer.away_until is None
+    assert programmer.target_at("kitchen", now) == 17.0
+    assert programmer.target_at("kitchen", now + timedelta(days=1)) == 22.0
+    assert programmer.day_off_until is None
+
+
+def test_day_off_requires_schedules_and_aware_valid_duration() -> None:
+    now = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)
+    fixed, _, _ = _programmer()
+    scheduled, _, _ = _scheduled_programmer()
+
+    with pytest.raises(ValueError, match="weekly schedule"):
+        fixed.start_day_off(now + timedelta(days=1), now)
+    with pytest.raises(ValueError, match="timezone-aware"):
+        scheduled.start_day_off(now.replace(tzinfo=None) + timedelta(days=1), now)
+    with pytest.raises(ValueError, match="between 1 and 99"):
+        scheduled.start_day_off(now, now)

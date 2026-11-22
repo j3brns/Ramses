@@ -21,6 +21,12 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
   expiry immediately exposes each zone's then-current target. `Programmer` is
   an in-memory test-world boundary with no persistence, HA, MQTT, RF, or UI
   seam.
+- A timed Day Off action applies each declared weekly zone's Saturday programme
+  at the current local wall time for an aware 1--99-day duration or until
+  explicit cancellation. Its programme includes Saturday's normal carry-in
+  target. It outranks but does not mutate zone-local state, rejects a fixed
+  target zone, and is mutually exclusive with Away. `Programmer` remains an
+  in-memory test-world boundary with no persistence, HA, MQTT, RF, or UI seam.
 
 ## Home Assistant Schedule helper contract
 

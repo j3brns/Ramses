@@ -79,6 +79,22 @@ class WeeklySchedule:
             raise RuntimeError("no active schedule switch point")
         return max(candidates, key=lambda item: item[0])[1]
 
+    def target_for_weekday_at(self, weekday: int, now: datetime) -> float:
+        """Return ``weekday``'s local programme target at ``now``'s wall time.
+
+        This supplies the pure test-world Day Off rule.  It evaluates the
+        existing repeating schedule on the requested weekday, including that
+        day's carry-in target before its first switch point; it does not alter
+        the saved schedule.
+        """
+        if not 0 <= weekday <= 6:
+            raise ValueError("weekday must be between Monday (0) and Sunday (6)")
+        self._require_aware(now)
+        days_forward = (weekday - now.weekday()) % 7
+        date = (now + timedelta(days=days_forward)).date()
+        surrogate = datetime.combine(date, now.timetz(), now.tzinfo)
+        return self.target_at(surrogate)
+
     def next_change_after(self, now: datetime) -> datetime:
         """Return the first later switch that changes the active target.
 
