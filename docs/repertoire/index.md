@@ -23,6 +23,8 @@ This is a small, version-controlled Open Knowledge Format (OKF) bundle. It store
 - [Temporal Kitchen capture](temporal-kitchen-capture.md) â€” bounded time-window selection when ordinary RX traffic is too dense.
 - [Replay readiness](replay-readiness.md) â€” deterministic evidence coverage, without promoting a baseline to behaviour.
 
+- [Hardware visual inventory](hardware-visual-inventory.md) - source-linked component context and an original Legacy-to-Target diagram.
+
 ## Source policy
 
 Every concept identifies its source, scope and verification state. Manual sources are paraphrased; copied prose, images, serial numbers, credentials, HA configuration and live packet logs are excluded. The canonical rendered user guide remains ordinary Markdown under `docs/`.
