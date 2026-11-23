@@ -59,6 +59,20 @@ each room and the whole-system communication contract, then compares that model
 with bounded observed evidence. I will transfer TRV or boiler control to Home
 Assistant only after the relevant model and contract have proved themselves.
 
+## At a glance
+
+![Logical household system: observe, model, prove, then evidence-gated future control](assets/architecture/logical-household-system-v1.png)
+
+I start with the existing heating estate and observe it passively through the
+Elecram bridge. Home Assistant combines that evidence with the room and
+system-level digital twin, alongside the separate Zigbee lighting system. The
+model has to prove its schedule, override, recovery and communication behaviour
+before any direct TRV or boiler tasking can move to Home Assistant.
+
+The image is an original explanatory illustration, not a product photograph,
+dashboard screenshot or assertion that live control is enabled. The editable
+logical source remains the [Mermaid system diagram](docs/diagrams/logical-ha-system.md).
+
 ## Prove first
 
 During development, the system must prove itself before it gets a live role.
