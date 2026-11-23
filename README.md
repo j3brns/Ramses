@@ -43,6 +43,22 @@ The board can use Wi-Fi and USB power. It does not need a PC-resident serial bri
 
 For the exact upstream hardware and software references, see [Hardware foundation](docs/hardware-foundation.md): [Elecram](https://elecram.com/), [the board](https://elecram.com/products/esp32-c6-wifi-zigbee-to-855-925mhz-wireless?variant=52605637099853), [ramses_esp](https://github.com/IMMRMKW/ramses_esp), and [ramses_cc](https://github.com/ramses-rf/ramses_cc).
 
+## Logical household system
+
+Home Assistant on a Raspberry Pi is the household controller. The Elecram
+bridge is mounted remotely and provides the RAMSES-II radio/MQTT boundary. A
+Sonoff Zigbee radio supports the lighting system. These are logical roles, not
+a configuration guide.
+
+The Home Assistant mobile app provides household access and identity. Alexa and
+NSPanel are additional physical and voice interaction surfaces. Sunnydays is a
+Lovelace dashboard within that same Home Assistant system.
+
+This project is a digital twin above the RAMSES-II data-link layer. It models
+each room and the whole-system communication contract, then compares that model
+with bounded observed evidence. I will transfer TRV or boiler control to Home
+Assistant only after the relevant model and contract have proved themselves.
+
 ## Prove first
 
 During development, the system must prove itself before it gets a live role.

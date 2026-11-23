@@ -15,6 +15,10 @@ def test_readme_routes_agents_and_household_users_to_canonical_documents() -> No
         "docs/user-guide.md",
         "The isolated transport core is complete",
         "the dashboard is not deployed",
+        "## Logical household system",
+        "Sonoff Zigbee radio",
+        "The Home Assistant mobile app provides household access and identity.",
+        "This project is a digital twin above the RAMSES-II data-link layer.",
     ):
         assert required in readme
 
