@@ -1,5 +1,21 @@
 # System architecture
 
+## Household context
+
+Home Assistant runs on a Raspberry Pi as the household controller. The mobile
+app supplies household access and identity; Alexa and NSPanel are interaction
+surfaces. A Sonoff Zigbee radio serves lighting. A remotely mounted Elecram
+bridge observes RAMSES traffic for this project.
+
+The heating work is a digital twin: it models each room and the system-level
+communication contract above the RAMSES-II data-link layer. The existing
+heating estate remains authoritative. Direct TRV or boiler tasking is a future,
+evidence-gated decision, not a current architectural capability.
+
+See the editable [logical system diagram](diagrams/logical-ha-system.md). It
+shows roles and boundaries only; it deliberately excludes configuration,
+addresses, credentials and live-control paths.
+
 ```text
 Home Assistant test integration
         | MQTT command frame (RAMSES/TEST/.../tx)

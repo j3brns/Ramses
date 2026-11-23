@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "title": "Logical Home Assistant system",
+  "description": "Logical responsibilities only. This diagram does not describe configuration, network addresses, credentials, or live heating authority.",
+  "diagrams": [
+    {
+      "id": "logical_ha_system",
+      "title": "Legacy heating and target digital twin",
+      "description": "Home Assistant unifies household interfaces and observes the RAMSES heating system. Direct heating authority remains evidence-gated.",
+      "accessibility": "A left-to-right logical diagram of household interfaces, Home Assistant, lighting, the passive RAMSES bridge, the legacy heating estate, and the test-world digital twin.",
+      "kind": "flowchart",
+      "data": {
+        "direction": "LR",
+        "nodes": [
+          {"id": "mobile", "label": "HA mobile app\\naccess and identity", "class": "interface"},
+          {"id": "alexa", "label": "Alexa", "class": "interface"},
+          {"id": "nspanel", "label": "NSPanel", "class": "interface"},
+          {"id": "ha", "label": "Home Assistant\\nRaspberry Pi household controller", "class": "core"},
+          {"id": "zigbee", "label": "Sonoff Zigbee radio\\nlighting system", "class": "household"},
+          {"id": "elecram", "label": "Elecram bridge\\npassive RAMSES observation", "class": "observe"},
+          {"id": "legacy", "label": "Legacy heating estate\\nCM67z x2, BDR91, V4073, TRVs, cylinder", "class": "legacy"},
+          {"id": "twin", "label": "Room and system digital twin\\nRAMSES contract model and evidence", "class": "test"},
+          {"id": "future", "label": "Future direct zone and boiler tasking\\nevidence-gated only", "class": "future"}
+        ],
+        "edges": [
+          {"from": "mobile", "to": "ha", "label": "household access", "arrow": "-->"},
+          {"from": "alexa", "to": "ha", "label": "voice", "arrow": "-->"},
+          {"from": "nspanel", "to": "ha", "label": "physical navigation", "arrow": "-->"},
+          {"from": "ha", "to": "zigbee", "label": "lighting", "arrow": "-->"},
+          {"from": "legacy", "to": "elecram", "label": "bounded RX only", "arrow": "-->"},
+          {"from": "elecram", "to": "ha", "label": "observed state", "arrow": "-->"},
+          {"from": "ha", "to": "twin", "label": "test-world schedule and model", "arrow": "-->"},
+          {"from": "twin", "to": "future", "label": "only after evidence gate", "arrow": "-.->"}
+        ]
+      },
+      "styles": [
+        {"name": "interface", "definition": "fill:#e8f1fb,stroke:#326a9b,color:#132b40"},
+        {"name": "core", "definition": "fill:#d8f3e5,stroke:#26734d,color:#103a26"},
+        {"name": "household", "definition": "fill:#fff3cd,stroke:#926b00,color:#503c00"},
+        {"name": "observe", "definition": "fill:#f1edff,stroke:#6650a4,color:#31266a"},
+        {"name": "legacy", "definition": "fill:#f7e7e7,stroke:#985454,color:#542323"},
+        {"name": "test", "definition": "fill:#e7f5f7,stroke:#267b86,color:#16444a"},
+        {"name": "future", "definition": "fill:#f2f2f2,stroke:#6a6a6a,color:#333333"
+        }
+      ]
+    }
+  ]
+}
