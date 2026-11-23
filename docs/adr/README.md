@@ -30,6 +30,7 @@ gateway, or boiler change.
 | [0004](0004-virtual-trv-response.md) | Use an explicit virtual TRV response model. |
 | [0005](0005-replacement-target-and-retained-devices.md) | Replace controls while retaining TRVs and planning cylinder telemetry. |
 | [0006](0006-virtual-bdr-response.md) | Model virtual BDR demand as a declared test-world aggregate. |
+| [0007](0007-rf-validation-gate.md) | Keep RF validation behind explicit evidence, authority, and rollback gates. |
 
 ## Adding or changing an ADR
 
