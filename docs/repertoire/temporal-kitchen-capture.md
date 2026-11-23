@@ -33,3 +33,29 @@ qualification manifest and known schedule-edge corroboration.
 
 The helper has no MQTT client, credentials, Home Assistant, RF or filesystem
 write outside its explicit local output path. It never appends a capture.
+
+## Starting one bounded listener
+
+Use the launcher only from the development workstation. It starts one passive
+subscriber on Home Assistant using the pre-existing, local-only Mosquitto
+options file; that file is never read into this repository or printed. The
+remote runner is process-group isolated, writes to a temporary file, and only
+replaces its bounded capture when it exits. Its duration and byte limit are
+independent.
+
+```powershell
+.\scripts\start_temporal_rx_capture.ps1 -SshHost ha
+```
+
+Check rather than duplicate a running capture:
+
+```powershell
+.\scripts\start_temporal_rx_capture.ps1 -SshHost ha -Status
+```
+
+`-ReplaceKnownRun` is an explicit recovery action. It will stop only a runner
+whose PID file and process command both match this launcher's private runner
+path and isolated process group. Any malformed PID file, unrelated process or
+non-isolated process group is refused. After it exits, fetch the bounded file
+with `fetch_rx_capture.ps1`, then run the temporal selector above. A negative
+selection is discarded; it is not a repository fixture.
