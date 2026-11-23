@@ -21,6 +21,7 @@ This is a small, version-controlled Open Knowledge Format (OKF) bundle. It store
 - [Passive capture client recovery](passive-capture-runbook.md) â€” credential-free local operation, bounded capture, and broker-restart recovery.
 
 - [Temporal Kitchen capture](temporal-kitchen-capture.md) â€” bounded time-window selection when ordinary RX traffic is too dense.
+- [Replay readiness](replay-readiness.md) â€” deterministic evidence coverage, without promoting a baseline to behaviour.
 
 ## Source policy
 
