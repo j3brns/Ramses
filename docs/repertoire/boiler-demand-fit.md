@@ -26,4 +26,9 @@ pairs gave 1.23 percentage points mean absolute error. Recorded demand can vary
 at the same displayed error. Internal thermostat state, low-demand response and
 minimum switching times remain open. Both captures and the later recorder
 intervals had already been examined during investigation. A future unseen
-episode is needed for prospective validation.
+episode was subsequently scored using the [shadow observer](relay-shadow-run.md).
+
+On 24 November, thermostat demand was 68% at the 23:06:11.049 UTC relay
+falling edge. At 23:06:13.093 the observer logged an expected rising edge at
+23:09:23.689. The receiver saw the rising edge at 23:09:23.054, 0.635 seconds
+early. This is one prospective relay-state prediction.

@@ -28,6 +28,11 @@ from `target-system/ramses-test-dashboard.yaml` first.
    → Devices & services → Helpers support editing the example timetables.
 
 On 24 November 2026 all four boost and cancel actions passed on HA 2026.11.1.
+An installed-clock test temporarily gave CMQ JGB a 23:07 switch to 19°C.
+At 23:06:47 its boosted target was 22°C. At 23:07:01.868 the card template
+showed the scheduled 19°C. The three other zone deadlines stayed fixed.
+The original timetable and deadlines were restored and compared after the test.
+
 The desktop HA window displayed the four zones, their targets, next switches
 and action buttons. Mobile appearance and reboot recovery on the deployed
 instance still require separate checks.
