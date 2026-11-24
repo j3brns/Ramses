@@ -21,6 +21,7 @@ def test_forecast_is_frozen_before_outcome():
     forecast, result = forecasts(packets)
     assert forecast["demand"] == 78
     assert result["error_seconds"] == -0.44
+    assert result["error_600s_seconds"] == 0
     assert list(forecasts(packets[:3]))[-1]["event"] == "pending_at_end"
 
 

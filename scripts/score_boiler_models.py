@@ -44,12 +44,14 @@ def score(lines):
         if all((valve, "3150") in fresh for valve in valves):
             demands = [fresh[valve, "3150"] for valve in valves]
             models.update(max_valve=max(demands), mean_valve=mean(demands))
+            if models["stat226"] is not None:
+                models["max_stat_or_valve"] = max(models["stat226"], max(demands))
         models["previous_relay"] = previous if previous_time is not None and time-previous_time <= 600 else None
         for name, prediction in models.items():
             if prediction is not None:
                 error = abs(value - prediction)
                 scores[name].append(error)
-                if len(models) == 6 and all(p is not None for p in models.values()):
+                if "max_stat_or_valve" in models and all(p is not None for p in models.values()):
                     jointly_scored[name].append(error)
         previous = value
         previous_time = time

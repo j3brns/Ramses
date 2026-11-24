@@ -12,6 +12,8 @@ def forecasts(lines):
     for line in lines:
         event = normalise_rx_event(json.loads(line))
         now = datetime.fromisoformat(event["receipt_ts"])
+        if now.utcoffset() is None:
+            raise ValueError("broker receipt time requires a UTC offset")
         if previous is not None and now < previous:
             raise ValueError("capture is out of order")
         if previous and (now - previous).total_seconds() > 600:
@@ -40,13 +42,15 @@ def forecasts(lines):
         if state is True and not active:
             if demand and 0 < demand[1] < 100 and (now-demand[0]).total_seconds() <= 600:
                 prediction = now + timedelta(seconds=602 * (1 - demand[1]/100))
+                ten_minutes = now + timedelta(seconds=600 * (1 - demand[1]/100))
                 yield {"event": "forecast", "at": now.isoformat(), "demand": demand[1],
-                       "expected_on": prediction.isoformat()}
+                       "expected_on": prediction.isoformat(), "expected_on_600s": ten_minutes.isoformat()}
             else:
                 yield {"event": "unscored", "at": now.isoformat(), "reason": "stale or endpoint demand"}
         elif active and prediction:
             yield {"event": "result", "at": now.isoformat(),
-                   "error_seconds": round((now-prediction).total_seconds(), 3)}
+                   "error_seconds": round((now-prediction).total_seconds(), 3),
+                   "error_600s_seconds": round((now-ten_minutes).total_seconds(), 3)}
             prediction = None
         state = active
     if prediction:

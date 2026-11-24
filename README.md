@@ -67,6 +67,9 @@ it to schedule. The timetables on this view are examples.
 
 The [valve membership report](docs/repertoire/zone-membership-analysis.md)
 maps all eight valves to their programmers. The
+[programme observations](docs/repertoire/observed-zone-programme.md) show
+which zones advertise their next target and how closely a valve followed a
+scheduled change. The
 [boiler model](docs/repertoire/boiler-demand-fit.md) explains how the twin
 predicts relay 642 from thermostat 226 and how to score that prediction.
 
