@@ -7,6 +7,8 @@
 
 ## Canonical routes
 
+- `software-baseline-status.md` - completed test-world baseline and remaining evidence gates.
+
 - `programmer-contract.md` — user-visible programmer behaviour and implementation status.
 - `user-guide.md` — canonical household-facing Ramses Test Help source; dashboard Help is a rendering, not a competing guide.
 - `test-view-computer-use-runbook.md` — deployment-gated desktop/mobile UI observation procedure, evidence semantics and screenshot discipline.

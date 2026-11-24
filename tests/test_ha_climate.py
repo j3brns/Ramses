@@ -7,6 +7,8 @@ import pytest
 from ramses_twin.coordinator import ZoneCoordinator
 from ramses_twin.ha_adapter import TestAdapterDescriptor, apply_test_temporary_override
 from ramses_twin.model import SwitchPoint, WeeklySchedule, ZoneController
+from ramses_twin.runtime import TwinRuntime
+from ramses_twin.store import JsonStateStore
 from ramses_twin.thermal import ThermalModel
 
 
@@ -20,12 +22,13 @@ def _coordinator() -> ZoneCoordinator:
     return ZoneCoordinator(ZoneController("12:900001", 1, schedule=schedule), ThermalModel())
 
 
-def test_temporary_climate_override_changes_only_virtual_zone_and_returns_test_tx() -> None:
+def test_temporary_climate_override_changes_only_virtual_zone_and_returns_test_tx(tmp_path) -> None:
     now = datetime(2026, 11, 23, 7, 0, tzinfo=timezone.utc)
     until = now + timedelta(hours=1)
     coordinator = _coordinator()
+    runtime = TwinRuntime({"Kitchen": coordinator}, JsonStateStore(tmp_path / "state.json"))
     command = apply_test_temporary_override(
-        TestAdapterDescriptor("18:990001", "Kitchen"), coordinator, 22.0, until, now
+        TestAdapterDescriptor("18:990001", "Kitchen"), runtime, 22.0, until, now
     )
 
     assert command.entity_id == "climate.ramses_test_kitchen"
@@ -34,6 +37,9 @@ def test_temporary_climate_override_changes_only_virtual_zone_and_returns_test_t
     assert command.payload["ts"] == now.isoformat()
     assert coordinator.controller.target_at(now) == 22.0
     assert coordinator.controller.target_at(until) == 21.0
+    recovered = TwinRuntime({"Kitchen": _coordinator()}, JsonStateStore(tmp_path / "state.json"))
+    recovered.restore(now)
+    assert recovered.recovery_frames(now)["Kitchen"].endswith("010898")
 
 
 @pytest.mark.parametrize(
@@ -45,11 +51,13 @@ def test_temporary_climate_override_changes_only_virtual_zone_and_returns_test_t
     ],
 )
 def test_temporary_climate_override_rejects_invalid_input(
+    tmp_path,
     target: float,
     until: datetime,
     now: datetime,
 ) -> None:
     coordinator = _coordinator()
+    runtime = TwinRuntime({"Kitchen": coordinator}, JsonStateStore(tmp_path / "state.json"))
     with pytest.raises(ValueError):
-        apply_test_temporary_override(TestAdapterDescriptor("18:990001", "Kitchen"), coordinator, target, until, now)
+        apply_test_temporary_override(TestAdapterDescriptor("18:990001", "Kitchen"), runtime, target, until, now)
     assert coordinator.controller.override_target is None

@@ -14,6 +14,7 @@ from datetime import datetime
 from ramses_twin.coordinator import ZoneCoordinator
 from ramses_twin.model import SwitchPoint, WeeklySchedule
 from ramses_twin.mqtt import topics, tx_envelope
+from ramses_twin.runtime import TwinRuntime
 
 
 TEST_ENTITY_PREFIX = "ramses_test"
@@ -120,16 +121,17 @@ def read_test_zone_diagnostics(
 
 def apply_test_temporary_override(
     descriptor: TestAdapterDescriptor,
-    coordinator: ZoneCoordinator,
+    runtime: TwinRuntime,
     target_temperature: object,
     expires_at: datetime,
     now: datetime,
 ) -> TestClimateCommand:
     """Apply a virtual temporary target and return its test-only TX command.
 
-    This is the narrow write seam for a future climate entity. It changes the
-    virtual controller only; it opens no broker connection and cannot select a
-    live topic. The normal controller expiry path returns the zone to schedule.
+    This is the narrow write seam for a future climate entity. It routes through
+    the bounded runtime checkpoint, opens no broker connection, and cannot
+    select a live topic. The normal controller expiry path returns the zone to
+    schedule.
     """
     if now.tzinfo is None or now.utcoffset() is None:
         raise ValueError("command time must be timezone-aware")
@@ -138,8 +140,7 @@ def apply_test_temporary_override(
     if expires_at <= now:
         raise ValueError("override expiry must be later than command time")
     target = _temperature(target_temperature, "target_temperature")
-    coordinator.controller.boost(target, expires_at)
-    frame = coordinator.controller.setpoint_frame(now)
+    frame = runtime.apply_temporary_override(descriptor.zone_id, target, expires_at, now)
     return TestClimateCommand(
         entity_id=descriptor.climate_entity_id,
         target_temperature=target,

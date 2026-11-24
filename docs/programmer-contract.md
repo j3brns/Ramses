@@ -37,7 +37,7 @@ a promise that a dashboard control exists.
 | Zones | pp. 4-5 | Core schedule model; UI pending |
 | Weekly programme | pp. 9-10 | Core model and pure HA mapping; UI pending |
 | Temporary override | p. 11 | Virtual test seam only |
-| Permanent override | p. 11 | Test-world zone model only; UI and persistence pending |
+| Permanent override | p. 11 | Test-world zone model with bounded restart persistence; UI pending |
 | Eco/Boost | p. 12 | Timed per-zone Boost and timed whole-system Eco test-world models only |
 | Away | p. 13 | Pure in-memory test-world model; UI/persistence/live control pending |
 | Day Off | p. 14 | Pure in-memory test-world model; UI/persistence/live control pending |
@@ -71,7 +71,11 @@ effective across schedule edges. A subsequent temporary override replaces the
 permanent override. **Return to schedule** clears either kind of zone override
 and immediately exposes the scheduled target. This is an explicit project
 decision for the pure test-world model, exercised with fixed clocks including a
-DST boundary; it does not claim physical-controller behaviour or persistence.
+DST boundary. The bounded runtime store restores an active permanent,
+temporary or timed-Boost override on restart, drops an expired override when a
+fixed recovery clock is supplied, and ignores invalid or retired zone state.
+It does not claim physical-controller behaviour, dashboard persistence or live
+control.
 
 ### Implemented test-world timed Boost rule
 
@@ -80,8 +84,9 @@ timezone-aware expiry. It replaces any other zone override and applies to the
 current scheduled target, so a later schedule edge remains visible while the
 Boost is active. The resulting target is capped at the model's 35 C upper
 bound. At expiry it immediately returns to the current scheduled target. This
-is a project decision for an isolated test-world state model, not a claim about
-Evohome or CM67z internals, RF messages, persistence, UI, or live control.
+is a project decision for an isolated test-world state model. Its bounded
+state survives a test-runtime restart; it is not a claim about Evohome or
+CM67z internals, RF messages, UI, or live control.
 
 ### Implemented test-world timed Day Off rule
 
@@ -124,9 +129,9 @@ A virtual TRV local override is separate from the programmer's zone override. In
 | Contract slice | Present evidence | Required before control-capable release |
 | --- | --- | --- |
 | Weekly schedule and temporary expiry | `tests/test_timer.py`; `tests/test_model.py`; `tests/test_ha_climate.py` | Test View and computer-use acceptance |
-| HA schedule mapping | `tests/test_ha_schedule.py` | Rendered test-only cards and UI-01â€“UI-08 |
-| Permanent override | Pure test-world zone state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
-| Timed zone Boost | Pure test-world state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
+| HA schedule mapping | `tests/test_ha_schedule.py` | Rendered test-only cards and UI-01 through UI-08 |
+| Permanent override | Test-world zone state model and bounded restart persistence | UI, computer-use acceptance and adversarial review of any control-capable seam |
+| Timed zone Boost | Test-world state model and bounded restart persistence | UI, computer-use acceptance and adversarial review of any control-capable seam |
 | Timed Day Off | Pure test-world state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
 | Timed Eco | Pure test-world state model | UI, persistence, computer-use acceptance and adversarial review of any control-capable seam |
 | Other Quick Actions | Manual-derived only | State model, deterministic tests, UI acceptance and adversarial review |

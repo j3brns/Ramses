@@ -8,7 +8,7 @@ This file is the versioned delivery roadmap. The project-local `tk` queue manage
 |---|---|---|---|
 | 0. Governance | CI, secret scan, review gate | push is rejected without required checks/review | complete |
 | 1. Evidence | topology, packet corpus, ordered scenarios | bounded live feeder plus schedule, override, and restart/reconnect scenarios | in progress |
-| 2. Timer | weekly schedule and boost expiry | fixed-clock tests cover current/next target and expiry | complete |
+| 2. Timer | weekly schedule, boost expiry and restart state | fixed-clock tests cover current/next target, expiry and bounded zone-override recovery | complete |
 | 3. Thermal model | per-zone gain/loss learner | trained/untrained and capped-prediction tests pass; aligned telemetry is available | complete core; evidence pending |
 | 4. Virtual devices | TRV and BDR response model | TRV core plus resolved local-override semantics and BDR demand response | complete test-world model; physical calibration pending |
 | 5. Test transport | isolated MQTT runner | consume test TX, publish simulated RX, and reject non-`RAMSES/TEST` roots at runtime | complete |

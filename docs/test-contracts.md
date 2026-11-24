@@ -9,12 +9,16 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 - At expiry, the zone immediately returns to its scheduled target.
 - A weekly schedule uses timezone-aware local wall-clock switch points; a boost-until-next-switch expires at the first later switch point.
 - A permanent zone override replaces a temporary zone override and survives a schedule edge; a later temporary override replaces it. **Return to schedule** clears either and immediately exposes the current schedule target.
-- This permanent-override rule is pure test-world state only: it has no UI, persistence or live-control seam. Whole-house quick actions remain unimplemented.
+- This permanent-override rule is pure test-world state only. The bounded
+  runtime store persists zone-local temporary, permanent and timed-Boost state
+  across a restart; it has no UI or live-control seam. Whole-house quick
+  actions remain in-memory only.
 - A timed zone Boost is a positive delta no greater than 3 C, with an explicit
   timezone-aware future expiry. It replaces other zone overrides, follows the
   current scheduled target across schedule edges, and returns to that target at
-  expiry. The model caps the absolute result at 35 C. It is a pure test-world
-  decision, not a physical-controller, UI, persistence, MQTT, or RF claim.
+  expiry. The model caps the absolute result at 35 C. Its zone-local state is
+  persisted only by the bounded test runtime. It is not a physical-controller,
+  UI, MQTT, or RF claim.
 - A timed Away action applies 15 C to every explicitly declared zone for an
   aware 1--99-day duration or until explicit cancellation. While active it
   outranks every zone-local target but does not mutate it; cancellation or
@@ -50,7 +54,9 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 ## Test climate command contract
 
 - A temporary target requires an explicit, timezone-aware expiry later than its command time.
-- The climate seam validates the bounded target, changes only virtual-controller state, and returns a test `tx` envelope; it does not publish, call Home Assistant, or create a permanent override.
+- The climate seam validates the bounded target, routes it through the runtime
+  checkpoint, and returns a test `tx` envelope; it does not publish, call Home
+  Assistant, or create a permanent override.
 - Expiry returns through the existing schedule/override contract.
 
 ## Virtual TRV contract
@@ -71,10 +77,13 @@ The source of user-visible scheduler semantics is the [Programmer Contract](prog
 
 - On startup or MQTT reconnect, recompute the active target from schedule and override state.
 - Reissue the active target; do not wait for the next timetable boundary.
+- `TwinRuntime.restore(now)` loads bounded thermal coefficients and zone-local
+  override state, ignores invalid or retired-zone override records, and clears
+  expiry at the supplied timezone-aware recovery time.
 - `TwinRuntime.recovery_frames(now)` is the pure test-world seam: it requires an
   explicit timezone-aware time and returns one current setpoint frame per
   configured zone in stable zone-ID order. A later test-only adapter owns
-  publication and durable schedule/override reconstruction.
+  publication and durable schedule reconstruction.
 
 ## Optimiser contract
 

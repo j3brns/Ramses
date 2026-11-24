@@ -41,7 +41,7 @@ Virtual CM67z controllers <-> Virtual TRVs <-> Virtual BDR91
 | Test transport | Publishes/consumes only `RAMSES/TEST/...` MQTT messages. |
 | HA adapter descriptor | Pure-Python test-zone names, validated test topics, and read-only effective-target/next-change/optimiser/planned-start diagnostics; it imports no Home Assistant runtime. |
 | Fixture runner | Replays sanitised traces and checks expected outcomes. |
-| Runtime/state store | Learns per-zone coefficients and atomically persists only those coefficients across restart. |
+| Runtime/state store | Learns per-zone coefficients and atomically persists bounded zone-local temporary, permanent and timed-Boost state across restart; it retains no raw observations or broker traffic. |
 
 ## Boundary
 
