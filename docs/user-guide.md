@@ -6,7 +6,9 @@ source_contract: programmer-contract.md
 
 # Ramses Test programmer guide
 
-This guide describes the planned **Ramses Test** dashboard. It is a software-only test system. It does not control the live heating installation or publish to the live MQTT root.
+Open **Ramses Test → Programmer** to try the household programme in Home Assistant. Kitchen, EJMB + RDGB, Lounge and CMQ JGB each have a separate test timetable. The example starts at 07:00 with a target of 20°C and returns to 16°C at 22:00 every day. These are sample settings.
+
+Tap **Boost to 22°C** on one zone. The card shows its target and the end of the boost. The zone follows its schedule again at the next scheduled switch, or immediately when you tap **Return to schedule**. The other zones keep their own targets. The control stores the deadline in a Home Assistant helper. It changes only the simulated programme.
 
 ## Read a zone
 
@@ -16,7 +18,7 @@ Each zone shows its current temperature, effective target, the source of that ta
 
 When the test-only climate control path has passed its safety and computer-use tests, a zone thermostat card will allow a target to be selected. A temporary override will return to the schedule at its expiry. A permanent override will remain active until **Return to schedule** is selected.
 
-Until then, any control is an explanatory mock-up and cannot publish a command. This guide does not authorise a Test View deployment or a live heating change.
+The Programmer buttons work with native Home Assistant test helpers. The separate thermostat card on the Ramses Test overview is a diagnostic display.
 
 ## Use the schedule
 

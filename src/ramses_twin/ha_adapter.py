@@ -140,12 +140,14 @@ def apply_test_temporary_override(
     if expires_at <= now:
         raise ValueError("override expiry must be later than command time")
     target = _temperature(target_temperature, "target_temperature")
+    entity_id = descriptor.climate_entity_id
+    topic = descriptor.mqtt_topics["tx"]
     frame = runtime.apply_temporary_override(descriptor.zone_id, target, expires_at, now)
     return TestClimateCommand(
-        entity_id=descriptor.climate_entity_id,
+        entity_id=entity_id,
         target_temperature=target,
         expires_at=expires_at,
-        topic=descriptor.mqtt_topics["tx"],
+        topic=topic,
         payload=tx_envelope(frame, now),
     )
 

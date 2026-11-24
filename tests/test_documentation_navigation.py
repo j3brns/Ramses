@@ -43,4 +43,5 @@ def test_user_guide_identifies_its_test_only_help_and_deployment_boundary() -> N
 
     assert "canonical" in guide
     assert "test-view-computer-use-runbook.md" in guide
-    assert "does not authorise a Test View deployment" in guide
+    assert "Ramses Test → Programmer" in guide
+    assert "changes only the simulated programme" in guide

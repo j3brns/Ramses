@@ -61,6 +61,15 @@ Assistant only after the relevant model and contract have proved themselves.
 
 ## At a glance
 
+In Home Assistant, open **Ramses Test → Programmer** to try the four-zone
+schedule. Choose a room, boost it to 22°C until the next change, or return
+it to schedule. The timetables on this view are examples.
+
+The [valve membership report](docs/repertoire/zone-membership-analysis.md)
+maps all eight valves to their programmers. The
+[boiler model](docs/repertoire/boiler-demand-fit.md) explains how the twin
+predicts relay 642 from thermostat 226 and how to score that prediction.
+
 ![Logical household system: observe, model, prove, then evidence-gated future control](assets/architecture/logical-household-system-v1.png)
 
 I start with the existing heating estate and observe it passively through the
